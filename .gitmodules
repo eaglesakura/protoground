@@ -1,9 +1,0 @@
-[submodule "bullet3"]
-	path = bullet3
-	url = git@github.com:bulletphysics/bullet3.git
-[submodule "libpng-android"]
-	path = libpng-android
-	url = git@github.com:julienr/libpng-android.git
-[submodule "glm"]
-	path = glm
-	url = git@github.com:g-truc/glm.git
