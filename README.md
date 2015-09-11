@@ -8,6 +8,7 @@
 
 1. boost
 1. bullet3
+1. glm
 1. freetype
 1. libpng
 1. gtest
