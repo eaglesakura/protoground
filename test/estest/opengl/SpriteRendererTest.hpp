@@ -62,9 +62,9 @@ TEST(SpriteRendererTest, DeviceProjection) {
     spriteRenderer->setCallback(callback);
 
     spriteRenderer->begin();
-    spriteRenderer->renderingRect(0, 0, 200, 100, 0xFFFFFFFF);
-    spriteRenderer->renderingRect(0, 0, 0, 100, 0xFFFFFFFF);
-    spriteRenderer->renderingRect(0, 0, 200, 0, 0xFFFFFFFF);
+    spriteRenderer->renderingRect(0, 0, 200, 100, Color::white());
+    spriteRenderer->renderingRect(0, 0, 0, 100, Color::white());
+    spriteRenderer->renderingRect(0, 0, 200, 0, Color::white());
     spriteRenderer->end();
 
     // 無駄なコールバックが呼ばれていないことを確認する
