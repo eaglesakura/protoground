@@ -1,40 +1,37 @@
-############################################################
-##                 Prebuild Modules                       ##
-############################################################
+LOCAL_PATH := $(call my-dir)
 # ndk-build -B NDK_DEBUG=1 -j8
 
-
-LOCAL_PATH := $(call my-dir)
+#######################################################################
+##                           Prebuild Modules                        ##
+#######################################################################
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := prebuild-protoground
 LOCAL_CPP_FLAGS += -std=gnu++11
-# LOCAL_SHORT_COMMANDS := true
 
 ############################################################
 ##                     Arch Options                       ##
 ############################################################
-## RTTI & Exception
-# LOCAL_CPPFLAGS += -fexceptions
-# LOCAL_CPPFLAGS += -frtti
-
 LOCAL_CPPFLAGS += -pthread
 LOCAL_CPPFLAGS +=-ffast-math
 LOCAL_CFLAGS   +=-ffast-math
 ifeq ($(TARGET_ARCH_ABI), armeabi-v7a-hard)
-# LOCAL_ARM_MODE := arm
-# LOCAL_ARM_NEON := true
-# LOCAL_CPPFLAGS += -mfpu=neon
+	LOCAL_ARM_MODE := arm
+	LOCAL_ARM_NEON := true
+	LOCAL_CPPFLAGS += -mfpu=neon
+	LOCAL_CFLAGS += -mfpu=neon
 endif
 
 ifeq ($(TARGET_ARCH_ABI), x86)
-LOCAL_CPPFLAGS += -mfpmath=sse -msse2 -msse3
-LOCAL_CFLAGS += -mfpmath=sse -msse2 -msse3
+	LOCAL_ARM_MODE := arm
+	LOCAL_ARM_NEON := true
+	LOCAL_CPPFLAGS += -mfpmath=sse -msse2 -msse3
+	LOCAL_CFLAGS += -mfpmath=sse -msse2 -msse3
 endif
 
 ifeq ($(TARGET_ARCH_ABI), x86_64)
-LOCAL_CPPFLAGS += -mfpmath=sse -msse2 -msse3
-LOCAL_CFLAGS += -mfpmath=sse -msse2 -msse3
+	LOCAL_CPPFLAGS += -mfpmath=sse -msse2 -msse3
+	LOCAL_CFLAGS += -mfpmath=sse -msse2 -msse3
 endif
 
 ############################################################
@@ -53,8 +50,6 @@ LOCAL_SRC_FILES += ../freetype/src/base/ftapi.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftbase.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftbbox.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftbitmap.c
-LOCAL_SRC_FILES += ../freetype/src/base/ftdbgmem.c
-LOCAL_SRC_FILES += ../freetype/src/base/ftdebug.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftglyph.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftinit.c
 LOCAL_SRC_FILES += ../freetype/src/base/ftpic.c
@@ -68,7 +63,6 @@ LOCAL_SRC_FILES += ../freetype/src/raster/raster.c
 LOCAL_SRC_FILES += ../freetype/src/sfnt/sfnt.c
 LOCAL_SRC_FILES += ../freetype/src/smooth/smooth.c
 LOCAL_SRC_FILES += ../freetype/src/truetype/truetype.c
-
 LOCAL_SRC_FILES += ../freetype/src/psaux/psaux.c
 LOCAL_SRC_FILES += ../freetype/src/type1/type1.c
 LOCAL_SRC_FILES += ../freetype/src/type42/type42.c
@@ -77,6 +71,9 @@ LOCAL_SRC_FILES += ../freetype/src/cid/type1cid.c
 LOCAL_SRC_FILES += ../freetype/src/pfr/pfr.c
 LOCAL_SRC_FILES += ../freetype/src/pcf/pcf.c
 LOCAL_SRC_FILES += ../freetype/src/winfonts/winfnt.c
+
+LOCAL_SRC_FILES += ../freetype/src/base/ftdbgmem.c
+LOCAL_SRC_FILES += ../freetype/src/base/ftdebug.c
 
 ############################################################
 ##                       libpng                           ##
@@ -98,7 +95,9 @@ LOCAL_SRC_FILES += ../libpng/jni/pngwio.c
 LOCAL_SRC_FILES += ../libpng/jni/pngwrite.c
 LOCAL_SRC_FILES += ../libpng/jni/pngwtran.c
 LOCAL_SRC_FILES += ../libpng/jni/pngwutil.c
-
+LOCAL_SRC_FILES += ../libpng/jni/arm/arm_init.c
+LOCAL_SRC_FILES += ../libpng/jni/arm/filter_neon_intrinsics.c
+LOCAL_SRC_FILES += ../libpng/jni/arm/filter_neon.S
 
 ############################################################
 ##                       bullet3                          ##
