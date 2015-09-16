@@ -2,11 +2,11 @@ LOCAL_PATH := $(call my-dir)
 # ndk-build -B NDK_DEBUG=1 -j8
 
 #######################################################################
-##                           Prebuild Modules                        ##
+##                           Prebuilt Modules                        ##
 #######################################################################
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := prebuild-protoground
+LOCAL_MODULE := prebuilt-protoground
 LOCAL_CPP_FLAGS += -std=gnu++11
 
 ############################################################
@@ -33,6 +33,21 @@ ifeq ($(TARGET_ARCH_ABI), x86_64)
 	LOCAL_CPPFLAGS += -mfpmath=sse -msse2 -msse3
 	LOCAL_CFLAGS += -mfpmath=sse -msse2 -msse3
 endif
+
+############################################################
+##                       sqlite3                          ##
+############################################################
+LOCAL_CFLAGS += -DSQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576
+LOCAL_CFLAGS += -DSQLITE_THREADSAFE=1
+LOCAL_CFLAGS += -DSQLITE_ENABLE_MEMORY_MANAGEMENT=1
+LOCAL_CFLAGS += -DSQLITE_DEFAULT_AUTOVACUUM=1
+LOCAL_CFLAGS += -DSQLITE_TEMP_STORE=3
+LOCAL_CFLAGS += -DSQLITE_ENABLE_FTS3
+LOCAL_CFLAGS += -DSQLITE_ENABLE_FTS3_BACKWARDS
+LOCAL_CFLAGS += -DSQLITE_ENABLE_POISON
+
+LOCAL_SRC_FILES += ../sqlite3/shell.c
+LOCAL_SRC_FILES += ../sqlite3/sqlite3.c
 
 ############################################################
 ##                       freetype                         ##
