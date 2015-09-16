@@ -150,9 +150,7 @@ void GLTexture::dispose() {
 }
 
 Object::QueryResult_e GLTexture::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
-    if (interfaceId == InterfaceId_OpenGL_Texture) {
-        return query_cast<GLTexture>(this, resultInterfacePtr);
-    }
+    PGD_SUPPORT_QUERY(InterfaceId_OpenGL_Texture, GLTexture);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
 }
 
@@ -161,7 +159,7 @@ void GLTexture::getImageArea(RectI16 *existArea) const {
     existArea->setXYWH(0, 0, (int16_t) size.img_width, (int16_t) size.img_height);
 }
 
-ITexture::Type_e GLTexture::geType() const {
+ITexture::Type_e GLTexture::getType() const {
     switch (target) {
 #if defined(GL_TEXTURE_1D)
         case GL_TEXTURE_1D:

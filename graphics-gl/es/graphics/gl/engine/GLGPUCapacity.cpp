@@ -274,10 +274,7 @@ const IGPUCapacity::GPUFamily_e GLGPUCapacity::getGPUFamily() const {
 }
 
 Object::QueryResult_e GLGPUCapacity::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
-    if (interfaceId == InterfaceId_OpenGL_GPUCapacity) {
-        return query_cast<GLGPUCapacity>((GLGPUCapacity *) this, resultInterfacePtr);
-    }
-
+    PGD_SUPPORT_QUERY(InterfaceId_OpenGL_GPUCapacity, GLGPUCapacity);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
 }
 

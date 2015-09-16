@@ -5,8 +5,7 @@ namespace es {
 namespace gl {
 
 
-GLTextureDecodeCallback::GLTextureDecodeCallback(const GLDevice::query &device) {
-    this->device = device;
+GLTextureDecodeCallback::GLTextureDecodeCallback(const GLDevice::query &device) : device(device) {
 }
 
 void GLTextureDecodeCallback::setDecodeTarget(const std::shared_ptr<GLTexture> &texture) {

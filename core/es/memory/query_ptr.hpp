@@ -13,7 +13,7 @@ namespace es {
 template<typename T, uint64_t InterfaceId>
 class query_ptr {
 public:
-    static T* from(const Object *base) {
+    static T *from(const Object *base) {
         T *p = nullptr;
         if (base->queryInterface(InterfaceId, (void **) &p) == Object::QueryResult_Success) {
             assert(p);
@@ -57,7 +57,7 @@ public:
         this->p = nullptr;
         this->base = base;
 
-        if (base->queryInterface(InterfaceId, (void **) &p) == Object::QueryResult_Success) {
+        if (base && (base->queryInterface(InterfaceId, (void **) &p) == Object::QueryResult_Success)) {
             // queryに成功した場合は常にポインタが有効でなければならない
             assert(p);
         }

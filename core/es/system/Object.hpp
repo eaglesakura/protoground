@@ -5,7 +5,11 @@
 namespace es {
 
 enum InterfaceId_e {
-    InterfaceId_OpenGL_Engine = 0x01000000,
+    InterfaceId_Object = 0x01000000,
+
+    InterfaceId_Graphics_ITexture,
+
+    InterfaceId_OpenGL_Engine,
     InterfaceId_OpenGL_GPUCapacity,
     InterfaceId_OpenGL_Device,
     InterfaceId_OpenGL_Surface,
@@ -39,13 +43,6 @@ public:
         return QueryResult_Failed;
     }
 
-protected:
-    template<typename T>
-    static QueryResult_e query_cast(const T *self, void **resultInterfacePtr) {
-        *((T **) resultInterfacePtr) = (T *) self;
-        return QueryResult_Success;
-    }
-
 private:
     /**
      * 明示的にコピーを禁止する
@@ -63,7 +60,7 @@ private:
  * Objectの変換を行う。
  * typo防止のため、マクロとして扱う。
  */
-#define ES_SUPPORT_QUERY(id, type)  if(interfaceId == id){ return Object::query_cast<type>(static_cast<const type *>(this), resultInterfacePtr); }
+#define PGD_SUPPORT_QUERY(id, type)  if(interfaceId == id){ *(reinterpret_cast<type **>(resultInterfacePtr)) = const_cast<type*>(this); return QueryResult_Success; }
 
 
 }

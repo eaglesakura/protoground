@@ -8,7 +8,7 @@ namespace gl_util {
 
 namespace gl {
 
-GLTextureState::GLTextureState(GLGPUCapacity::query capacity) {
+GLTextureState::GLTextureState(const GLGPUCapacity::query capacity) {
     // reset texture params
     util::valloc(&contexts, capacity->getMaxTextureUnits(), false);
     syncPlatform();

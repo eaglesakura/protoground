@@ -1,8 +1,5 @@
 #include "es/graphics/PixelFormat.hpp"
 #include "es/internal/protoground-internal.hpp"
-
-#include "es/OpenGL.hpp"
-
 namespace es {
 
 void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels) {

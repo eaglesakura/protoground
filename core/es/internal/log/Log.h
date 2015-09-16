@@ -30,9 +30,6 @@ public:
      */
     typedef void (*LogFunctionPtr)(const LogType_e type, const char *, const char *, ...);
 
-private:
-    static LogFunctionPtr func;
-public:
     /**
      * ログの実装を変更する
      */
@@ -46,6 +43,8 @@ public:
     static LogFunctionPtr get() {
         return func;
     }
+private:
+    static LogFunctionPtr func;
 };
 
 }

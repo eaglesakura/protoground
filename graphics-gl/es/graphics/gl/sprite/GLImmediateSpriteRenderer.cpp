@@ -10,10 +10,11 @@ namespace gl {
 
 
 bool GLImmediateSpriteRenderer::initialize(sp<IDevice> originDevice, std::shared_ptr<AssetManager> assets) {
-    GLDevice::query device(originDevice);
-
-    assert(device);
+    assert(originDevice);
     assert(assets);
+
+    GLDevice::query device(originDevice);
+    assert(device);
 
     setDevice(device);
 

@@ -25,8 +25,8 @@ std::shared_ptr<FontTextureAtlas::TextureAllocator> GLResourceFactory::newFontTe
 }
 
 std::shared_ptr<IDisplayTransfer2D> GLResourceFactory::newDisplayTransfer2D(std::shared_ptr<IDevice> device, const Bundle &hint) {
-    GLDevice::query glDevice(device);
-    return glDevice->getDisplayTransfer2D();
+    assert(device);
+    return GLDevice::query::from(device.get())->getDisplayTransfer2D();
 }
 
 std::shared_ptr<ISpriteRenderingCallback> GLResourceFactory::newSpriteRenderingCallback(std::shared_ptr<IDevice> device, const Bundle &hint) {

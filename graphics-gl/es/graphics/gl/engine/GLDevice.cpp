@@ -133,10 +133,7 @@ std::shared_ptr<IRenderingSurface> GLDevice::getSurface() const {
 }
 
 Object::QueryResult_e GLDevice::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
-    if (interfaceId == InterfaceId_OpenGL_Device) {
-        return query_cast<GLDevice>((GLDevice *) this, resultInterfacePtr);
-    }
-
+    PGD_SUPPORT_QUERY(InterfaceId_OpenGL_Device, GLDevice);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
 }
 

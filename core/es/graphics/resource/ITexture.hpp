@@ -27,7 +27,7 @@ public:
         /**
          * キューブマップ用テクスチャ
          */
-                Type_Cube,
+                Type_CubeMap,
 
         /**
          * 外部リソース画像(SurfaceTexture等)
@@ -61,7 +61,13 @@ public:
     /**
      * テクスチャの種類を取得する
      */
-    virtual Type_e geType() const = 0;
+    virtual Type_e getType() const = 0;
+
+
+    virtual QueryResult_e queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const override {
+        PGD_SUPPORT_QUERY(InterfaceId_Graphics_ITexture, ITexture);
+        return Object::queryInterface(interfaceId, resultInterfacePtr);
+    }
 
     virtual ~ITexture() = default;
 };

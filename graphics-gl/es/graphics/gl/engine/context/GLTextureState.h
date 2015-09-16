@@ -95,7 +95,7 @@ public:
 private:
     friend class GLDevice;
 
-    GLTextureState(GLGPUCapacity::query capacity);
+    GLTextureState(const GLGPUCapacity::query capacity);
 
     struct context {
         /**

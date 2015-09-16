@@ -245,7 +245,7 @@ void GLMesh::dispose() {
 }
 
 Object::QueryResult_e GLMesh::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
-    ES_SUPPORT_QUERY(InterfaceId_OpenGL_Mesh, GLMesh);
+    PGD_SUPPORT_QUERY(InterfaceId_OpenGL_Mesh, GLMesh);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
 }
 

@@ -119,7 +119,7 @@ public:
     virtual void getImageArea(RectI16 *existArea) const override;
 
 
-    virtual ITexture::Type_e geType() const override;
+    virtual ITexture::Type_e getType() const override;
 
     virtual ~GLTexture();
 
