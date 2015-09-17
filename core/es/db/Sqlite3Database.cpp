@@ -185,7 +185,6 @@ bool Sqlite3Database::hasMigrationRequest(const SqliteSchema *schema, int32_t *r
     if (!cursor || !cursor->next()) {
         // 初回データを投入する
         cursor.reset();
-        updateSchemaVersion(schema);
 
         if (resultOldVersion) {
             *resultOldVersion = 0;

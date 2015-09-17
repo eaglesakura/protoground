@@ -3,6 +3,7 @@
 #include "es/protoground.hpp"
 #include "es/db/Sqlite3Database.h"
 #include <es/system/Thread.hpp>
+#include <atomic>
 
 
 namespace es {

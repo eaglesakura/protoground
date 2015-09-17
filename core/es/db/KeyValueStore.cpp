@@ -19,6 +19,8 @@ std::shared_ptr<Sqlite3Database> KeyValueStore::openDatabase() {
             if (oldVeresion == 0) {
                 db->createTable(&schema);
             }
+
+            db->updateSchemaVersion(&schema);
         }
     }
 
@@ -70,6 +72,8 @@ void KeyValueStore::put(const string &key, const double value) {
 }
 
 void KeyValueStore::put(const string &key, const string &value) {
+    assert(db);
+
     DB_KEY_VALUE_DATA data;
     data.KEY = key;
     data.VALUE = value;

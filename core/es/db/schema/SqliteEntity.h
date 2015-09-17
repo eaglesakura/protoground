@@ -89,6 +89,8 @@ struct SqliteEntity {
 
         Query &and_equal(const Property &prop, const double &value);
 
+        Query &and_like(const Property &prop, const string &value);
+
         /**
          * インジェクション対策の置換を行う
          */
@@ -164,6 +166,10 @@ struct SqliteEntity {
      * プロパティを追加する
      */
     SqliteEntity &addProperty(const Property &prop, const void *headAddr, const ByteBuffer *value);
+
+    const Property &getProperty(const uint32_t index) const;
+
+    const Property &getProperty(const string &name) const;
 
 private:
     friend struct SqliteSchema;

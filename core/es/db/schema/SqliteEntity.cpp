@@ -142,6 +142,18 @@ SqliteEntity::Query &SqliteEntity::Query::and_equal(const SqliteEntity::Property
     return *this;
 }
 
+
+SqliteEntity::Query &SqliteEntity::Query::and_like(const SqliteEntity::Property &prop, const string &value) {
+    if (!where.empty()) {
+        where += "AND ";
+    }
+    where += prop.name;
+    where += " LIKE '";
+    where += wrapInjection(value);
+    where += "'";
+    return *this;
+}
+
 string SqliteEntity::Query::wrapInjection(const string &value) {
     return value;
 }
@@ -261,5 +273,19 @@ SqliteEntity::Property::Type_e SqliteEntity::Property::toType(const string &valu
 
 SqliteEntity::Property::Type_e SqliteEntity::Property::toType(const ByteBuffer &value) {
     return Type_Blob;
+}
+
+const SqliteEntity::Property &SqliteEntity::getProperty(const uint32_t index) const {
+    return properties[index];
+}
+
+const SqliteEntity::Property &SqliteEntity::getProperty(const string &name) const {
+    for (const auto &prop : properties) {
+        if (prop.name == name) {
+            return prop;
+        }
+    }
+    assert(false);
+    return properties[0];
 }
 }
