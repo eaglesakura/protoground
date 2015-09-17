@@ -12,3 +12,4 @@
 #include "estest/graphics/RenderSceneTest.hpp"
 #include "estest/opengl/OpenGLShaderTest.hpp"
 #include "estest/opengl/DebugRendererTest.hpp"
+#include "estest/db/SqliteRawTest.hpp"

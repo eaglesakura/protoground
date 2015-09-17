@@ -39,4 +39,8 @@ double NanoTimer::microSecond() const {
 nano_time NanoTimer::now() {
     return std::chrono::high_resolution_clock::now();
 }
+
+uint64_t NanoTimer::systemMilliSeconds() {
+    return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+}
 }

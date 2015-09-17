@@ -46,7 +46,7 @@ LOCAL_CFLAGS += -DSQLITE_ENABLE_FTS3
 LOCAL_CFLAGS += -DSQLITE_ENABLE_FTS3_BACKWARDS
 LOCAL_CFLAGS += -DSQLITE_ENABLE_POISON
 
-LOCAL_SRC_FILES += ../sqlite3/shell.c
+# LOCAL_SRC_FILES += ../sqlite3/shell.c
 LOCAL_SRC_FILES += ../sqlite3/sqlite3.c
 
 ############################################################
@@ -104,7 +104,6 @@ LOCAL_SRC_FILES += ../libpng/jni/pngrio.c
 LOCAL_SRC_FILES += ../libpng/jni/pngrtran.c
 LOCAL_SRC_FILES += ../libpng/jni/pngrutil.c
 LOCAL_SRC_FILES += ../libpng/jni/pngset.c
-LOCAL_SRC_FILES += ../libpng/jni/pngtest.c
 LOCAL_SRC_FILES += ../libpng/jni/pngtrans.c
 LOCAL_SRC_FILES += ../libpng/jni/pngwio.c
 LOCAL_SRC_FILES += ../libpng/jni/pngwrite.c
@@ -113,6 +112,7 @@ LOCAL_SRC_FILES += ../libpng/jni/pngwutil.c
 LOCAL_SRC_FILES += ../libpng/jni/arm/arm_init.c
 LOCAL_SRC_FILES += ../libpng/jni/arm/filter_neon_intrinsics.c
 LOCAL_SRC_FILES += ../libpng/jni/arm/filter_neon.S
+# LOCAL_SRC_FILES += ../libpng/jni/pngtest.c
 
 ############################################################
 ##                       bullet3                          ##

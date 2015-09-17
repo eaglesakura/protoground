@@ -26,6 +26,16 @@ std::string format(const uint workingBufferBytes, const char *fmt, ...);
 int split(const string &origin, const string &delim, std::vector<string> *result);
 
 /**
+ * Int変換を行う
+ */
+int64_t asInteger(const string &value);
+
+/**
+ * 実数変換を行う
+ */
+double asDouble(const string &value);
+
+/**
  * パスを分解し、ファイル名を取り出す。
  * 取り出せなかった場合はそのまま帰す。
  */

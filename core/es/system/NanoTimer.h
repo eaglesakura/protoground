@@ -50,7 +50,16 @@ public:
 
     static void sleepMs(const uint ms);
 
+    /**
+     * 適当な起点からの時刻を取得する。
+     * これは差分を取得するための起点時刻として利用するが、システム時刻としては利用できないことに注意する。
+     */
     static nano_time now();
+
+    /**
+     * システムのミリ秒単位の現在時刻を取得する
+     */
+    static uint64_t systemMilliSeconds();
 
 private:
     nano_time startTime;

@@ -54,6 +54,20 @@ const char *getFileName(const char *path) {
         return path;
     }
 }
+
+int64_t asInteger(const string &value) {
+    int64_t result = 0;
+    sscanf(value.c_str(), "%lld", &result);
+    return result;
+}
+
+double asDouble(const string &value) {
+    double result = 0;
+    sscanf(value.c_str(), "%lf", &result);
+    return result;
+
+}
+
 }
 
 }
