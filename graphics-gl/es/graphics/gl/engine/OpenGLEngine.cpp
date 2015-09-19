@@ -24,7 +24,29 @@ public:
 };
 
 
+/**
+ * GLFWでの関数ポインタ構築
+ */
+extern void *pgdGlfwGetGlProcAddress(void *, char *name);
+
+/**
+ * EGLでの関数ポインタ構築
+ */
+extern void *pglEglGetGlProcAddress(void *, char *name);
+
 OpenGLEngine::OpenGLEngine() {
+
+    // デバイスを新規生成
+    if (!pgdGlGetCompatVersion()) {
+        // 関数のロードを行う
+#if defined(BUILD_MacOSX)
+        pgdGlCompatInitialize(pgdGlfwGetGlProcAddress, nullptr);
+#elif defined(BUILD_Android)
+        pgdGlCompatInitialize(pglEglGetGlProcAddress, nullptr);
+#endif
+        eslog("OpenGL Compat Version(%d)", pgdGlGetCompatVersion());
+    }
+
     impl.reset(new OpenGLEngine::Impl());
     impl->capacity.reset(new GLGPUCapacity());
 }
@@ -37,6 +59,7 @@ std::shared_ptr<IGPUCapacity> OpenGLEngine::getCapacity() {
     return impl->capacity;
 }
 
+
 std::shared_ptr<IDevice> OpenGLEngine::getCurrentDevice() {
     const auto id = std::this_thread::get_id();
     auto itr = impl->devices.find(id);
@@ -44,7 +67,6 @@ std::shared_ptr<IDevice> OpenGLEngine::getCurrentDevice() {
         // デバイスが生成済み
         return itr->second;
     } else {
-        // デバイスを新規生成
 //        sp<GLDevice> device(new GLDevice(impl->capacity));
         auto device = this->newDevice(Hash64::from(id));
         impl->devices.insert(std::make_pair(id, device));

@@ -4,6 +4,19 @@
 
 namespace es {
 
+namespace gl {
+
+void *pgdGlfwGetGlProcAddress(void *, char *name) {
+    GLFWglproc address = ::glfwGetProcAddress(name);
+    if (!address) {
+        eslog("GL Proc fail(%s)", name);
+    }
+    return (void *) address;
+}
+
+}
+
+
 struct GlfwEngine::DeviceData {
     sp<GlfwDevice> offscreenDevice;
 };

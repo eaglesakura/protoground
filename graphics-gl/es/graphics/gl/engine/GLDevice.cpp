@@ -53,6 +53,7 @@ public:
 };
 
 GLDevice::GLDevice(sp<IGPUCapacity> caps) {
+
     impl.reset(new GLDevice::Impl());
     impl->caps.reset(caps);
     assert(impl->caps);

@@ -4,18 +4,6 @@
 
 namespace es {
 
-namespace {
-
-void *getGLPorcAddress(void *window, char *name) {
-    GLFWglproc address = ::glfwGetProcAddress(name);
-    if(!address) {
-        eslog("GL Proc fail(%s)", name);
-    }
-    return (void *) address;
-}
-
-}
-
 std::atomic<int> GlfwDevice::existDevices;
 
 GlfwDevice::GlfwDevice(GLFWwindow *newWindow) : window(newWindow) {
@@ -77,12 +65,6 @@ std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const uint width, const u
 
     result.reset(new GlfwDevice(window));
 
-    if (!pgdGlGetCompatVersion()) {
-        glfwMakeContextCurrent(window);
-        pgdGlCompatInitialize((pgdGetGlProcAddress_ptr) getGLPorcAddress, window);
-
-        eslog("OpenGL Compat Version(%d)", pgdGlGetCompatVersion());
-    }
     glfwMakeContextCurrent(nullptr);
     return result;
 }
@@ -114,12 +96,6 @@ std::shared_ptr<GlfwDevice> GlfwDevice::createOffscreenInstance(const uint width
     }
 
     result.reset(new GlfwDevice(window));
-    if (!pgdGlGetCompatVersion()) {
-        glfwMakeContextCurrent(window);
-        pgdGlCompatInitialize((pgdGetGlProcAddress_ptr) getGLPorcAddress, window);
-
-        eslog("OpenGL Compat Version(%d)", pgdGlGetCompatVersion());
-    }
     glfwMakeContextCurrent(nullptr);
     return result;
 }
