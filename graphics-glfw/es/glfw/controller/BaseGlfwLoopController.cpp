@@ -2,10 +2,10 @@
 #include <es/framework/app/ApplicationRunner.h>
 #include "es/system/NanoTimer.h"
 #include "BaseGlfwLoopController.h"
-
 #include "es/system/Thread.hpp"
-
 #include "es/internal/protoground-internal.hpp"
+#include "es/gl-compat.h"
+
 
 namespace es {
 
@@ -96,7 +96,7 @@ void BaseGlfwLoopController::onMouseAction(int button, int action, float x, floa
         bundle.putInt32(ApplicationRunner::TOUCH_DISPLAY_ACTION, ApplicationRunner::TouchAction_Move);
     }
 
-    if(action != ACTION_MOVE) {
+    if (action != ACTION_MOVE) {
         eslog("Mouse Action(%d) button(%d) pos(%.1f, %.1f)", action, button, (float) x, (float) y);
     }
     onMouseAction(bundle);
