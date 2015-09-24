@@ -16,7 +16,7 @@ public:
     /**
      * 実行されているプラットフォームを取得する
      */
-    virtual PlatformType_e getPlatform() override;
+    virtual PlatformType_e getPlatform() const override;
 
     /**
      * プロセス起動時に呼び出す

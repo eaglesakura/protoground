@@ -43,58 +43,72 @@ void SpriteRenderer::renderingImage(const ITexture *texture, const float srcX, c
 
 
 void SpriteRenderer::renderingText(IDevice *device, const std::string &text, const float x, const float y, const Color color, FontTextureAtlas *atlas) const {
-    assert(device);
-    assert(device->getSurface());
+    renderingText(
+            device, text, x, y, color,
+            i16vec2((int16_t) device->getSurface()->getWidth(), (int16_t) device->getSurface()->getHeight()),
+            atlas
+    );
+}
 
-    const auto wideString = IProcessContext::getInstance()->getStringConverter()->toWideString(text);
 
+void SpriteRenderer::layoutText(IDevice *device, FontTextureAtlas *atlas, TextLayoutManager *layout, const wide_string &str) const {
     const wide_char DOT = PGD_STRING(".")[0];
     const wide_char TOFU = PGD_STRING("□")[0];
     const wide_char SPACE = PGD_STRING(" ")[0];
     const wide_char ZEN_SPACE = PGD_STRING("　")[0];
 
+
     // テクスチャの焼きこみを行う
     {
-
         // 末尾"..."分も焼きこむ
-        atlas->bake(device, wideString);
+        atlas->bake(device, str);
         atlas->bake(device, wide_string(PGD_STRING(".")));
         atlas->bake(device, wide_string(PGD_STRING("□")));
     }
 
+    auto dotFace = atlas->pick(DOT)->getCharactor();
+    if (dotFace) {
+        std::vector<sp<FontCharactor> > footer = {dotFace, dotFace, dotFace};
+        layout->setFooderText(footer);
+    }
+
+    for (const wide_char &c : str) {
+        if (c == SPACE) {
+            // 半角スペースを開ける
+            layout->addSpace(atlas->getFont()->getSize().x / 3);
+        } else if (c == ZEN_SPACE) {
+            // 全角スペースを開ける
+            layout->addSpace(atlas->getFont()->getSize().x);
+        } else {
+            auto once = atlas->pick(c);
+            if (!once) {
+                once = atlas->pick(TOFU);
+            }
+            assert(once);
+            layout->add(once->getCharactor());
+        }
+    }
+}
+
+void SpriteRenderer::renderingText(IDevice *device, const std::string &text, const float x, const float y, const Color color, const i16vec2 &renderArea, FontTextureAtlas *atlas) const {
+    assert(device && device->getSurface());
+
+    const auto wideString = IProcessContext::getInstance()->getStringConverter()->toWideString(text);
 
     // 画面全体にレイアウトする
     TextLayoutManager layout(atlas->getFont());
-    {
-        layout.setLayoutSize(device->getSurface()->getWidth(), device->getSurface()->getHeight());
+    layout.setLayoutSize(renderArea.x, renderArea.y);
+    layoutText(device, atlas, &layout, wideString);
 
-        auto dotFace = atlas->pick(DOT)->getCharactor();
-        if (dotFace) {
-            std::vector<sp<FontCharactor> > footer = {dotFace, dotFace, dotFace};
-            layout.setFooderText(footer);
-        }
+    renderingText(device, x, y, color, &layout, atlas);
+}
 
-        for (const wide_char &c : wideString) {
-            if (c == SPACE) {
-                // 半角スペースを開ける
-                layout.addSpace(atlas->getFont()->getSize().x / 3);
-            } else if (c == ZEN_SPACE) {
-                // 全角スペースを開ける
-                layout.addSpace(atlas->getFont()->getSize().x);
-            } else {
-                auto once = atlas->pick(c);
-                if (!once) {
-                    once = atlas->pick(TOFU);
-                }
-                assert(once);
-                layout.add(once->getCharactor());
-            }
-        }
-    }
+void SpriteRenderer::renderingText(IDevice *device, const float x, const float y, const Color color, const TextLayoutManager *layout, FontTextureAtlas *atlas) const {
+    assert(device && atlas && layout);
 
     // レイアウト結果を描画する
-    auto layoutText = layout.getText();
-    auto textures = atlas->getTextures();
+    const auto &layoutText = layout->getText();
+    const auto &textures = atlas->getTextures();
     for (auto item : layoutText) {
         auto face = atlas->pick(item->getCharactor()->getCode());
         auto tex = textures[face->getIndex()];

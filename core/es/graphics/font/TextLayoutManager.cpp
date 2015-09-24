@@ -152,4 +152,19 @@ const std::vector<std::shared_ptr<TextLayoutManager::TextItem> > &TextLayoutMana
     return text;
 }
 
+const i16vec2 TextLayoutManager::getRenderingSize() const {
+    i16vec2 result(0, 0);
+    for (const auto &item : text) {
+        result.x = std::max<int16_t>(result.x, item->getBitmapArea().right);
+        result.y = std::max<int16_t>(result.y, item->getBitmapArea().bottom);
+    }
+    return result;
+}
+
+void TextLayoutManager::clearText() {
+    text.clear();
+    nextBaselinePosition.x = 0;
+    nextBaselinePosition.y = baselinePositionY;
+    currentLine = 0;
+}
 }

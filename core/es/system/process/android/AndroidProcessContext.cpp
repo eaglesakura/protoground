@@ -82,7 +82,7 @@ JNIEnv *AndroidProcessContext::getThreadEnv() const {
     return result;
 }
 
-IProcessContext::PlatformType_e AndroidProcessContext::getPlatform() {
+IProcessContext::PlatformType_e AndroidProcessContext::getPlatform() const {
     return PlatformType_Android;
 }
 

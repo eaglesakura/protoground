@@ -24,8 +24,6 @@ public:
         GraphicsEngine_Unknown,
     };
 
-    typedef std::shared_ptr<IGraphicsEngine> shared;
-
     /**
      * GPUスペックを取得する
      */

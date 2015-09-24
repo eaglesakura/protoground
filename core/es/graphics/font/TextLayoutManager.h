@@ -54,6 +54,11 @@ public:
     const i16vec2 &getLayoutSize() const;
 
     /**
+     * 実際にレンダリングされる領域のサイズを取得する
+     */
+    const i16vec2 getRenderingSize() const;
+
+    /**
      * レイアウトされる最大行数を指定する
      */
     void setMaxLines(const uint lines);
@@ -67,6 +72,11 @@ public:
      * 最終行をレイアウト中である場合trueを返す
      */
     bool isLastLine() const;
+
+    /**
+     * 既に配置されているテキストをクリアする
+     */
+    void clearText();
 
     /**
      * テキストリストを取得する

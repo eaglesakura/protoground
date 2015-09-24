@@ -20,7 +20,7 @@ ProcessContext::~ProcessContext() {
 
 }
 
-IProcessContext::PlatformType_e ProcessContext::getPlatform() {
+IProcessContext::PlatformType_e ProcessContext::getPlatform() const {
     return PlatformType_OSX;
 }
 

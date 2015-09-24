@@ -1,6 +1,8 @@
 #pragma once
 
 #include <es/graphics/resource/FontTextureAtlas.h>
+#include <es/graphics/font/TextLayoutManager.h>
+#include <es/graphics/engine/IDevice.hpp>
 #include "es/protoground.hpp"
 
 #include "es/graphics/resource/ITexture.hpp"
@@ -23,12 +25,30 @@ public:
     void setDisplay(const std::shared_ptr<IDisplayTransfer2D> display);
 
     /**
+     * 文字列の焼きこみとレイアウトを行う
+     */
+    void layoutText(IDevice *device, FontTextureAtlas *atlas, TextLayoutManager *layout, const wide_string &str) const;
+
+    /**
      * フォントレンダリングを行う
      *
      * レイアウトを動的に組み立てるため、多少動作は遅くなる。
      * また、メモリを細かくallocするため断片化の原因となる恐れが有ることに注意すること。
      */
-    void renderingText(IDevice *device, const std::string &text, const float x, const float y, const Color color, FontTextureAtlas *atlas) const;
+    void renderingText(IDevice *device, const string &text, const float x, const float y, const Color color, FontTextureAtlas *atlas) const;
+
+    /**
+     * フォントレンダリングを行う
+     *
+     * レイアウトを動的に組み立てるため、多少動作は遅くなる。
+     * また、メモリを細かくallocするため断片化の原因となる恐れが有ることに注意すること。
+     */
+    void renderingText(IDevice *device, const std::string &text, const float x, const float y, const Color color, const i16vec2 &renderArea, FontTextureAtlas *atlas) const;
+
+    /**
+     * レイアウト済みの文字列を描画する
+     */
+    void renderingText(IDevice *device, const float x, const float y, const Color color, const TextLayoutManager *layout, FontTextureAtlas *atlas) const;
 
     /**
      * 指定座標に直接レンダリングする

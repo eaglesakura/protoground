@@ -46,7 +46,7 @@ public:
     /**
      * 実行されているプラットフォームを取得する
      */
-    virtual PlatformType_e getPlatform() = 0;
+    virtual PlatformType_e getPlatform() const = 0;
 
     /**
      * 現在のプロセス情報を取得する

@@ -32,7 +32,7 @@ public:
     /**
      * 実行されているプラットフォームを取得する
      */
-    virtual PlatformType_e getPlatform() override;
+    virtual PlatformType_e getPlatform() const override;
 
 
     virtual void newThread(const std::string &name, const ThreadCallback callback) override;
