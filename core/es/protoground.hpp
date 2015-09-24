@@ -29,12 +29,14 @@ typedef std::string string;
 /**
  * ワイド文字列
  */
-typedef std::wstring wide_string;
+typedef std::u32string wide_string;
 
 /**
  * ワイド文字列の内部型
  * システム的に不都合があった場合は変更できるようにする。
  */
-typedef wchar_t wide_char;
+typedef char32_t wide_char;
+
+#define PGD_STRING(msg) U##msg
 
 }

@@ -15,7 +15,7 @@ Cpp11StringConverter::~Cpp11StringConverter() {
 
 }
 
-std::wstring Cpp11StringConverter::toWideString(const std::string &utf8) {
+wide_string Cpp11StringConverter::toWideString(const std::string &utf8) {
     return conversion.from_bytes(utf8);
 }
 

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <es/memory/query_ptr.hpp>
 #include "es/system/process/IProcessContext.h"
 #include "JointConnector.hpp"
 
@@ -9,6 +10,8 @@ namespace es {
 
 class AndroidProcessContext : public IProcessContext {
 public:
+    typedef query_ptr<AndroidProcessContext, InterfaceId_Android_ProcessContext> query;
+
     virtual ~AndroidProcessContext();
 
     /**
@@ -34,7 +37,15 @@ public:
 
     virtual void newThread(const std::string &name, const ThreadCallback callback) override;
 
-/**
+    /**
+     * Databaseをopenするためのpathを取得する
+     */
+    virtual string getDatabasePath(const string &basePath) const;
+
+
+    virtual QueryResult_e queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const override;
+
+    /**
      * プロセス初期化を行う
      */
     static void onBootProcess(JavaVM *vm);

@@ -1,6 +1,26 @@
 package com.eaglesakura.protoground;
 
+import android.content.Context;
+
+import java.io.File;
+
 class ProcessContextImpl {
+
+    /**
+     * データベースをOpenするためのpathを取得する
+     *
+     * @param context
+     * @param basePath
+     * @return
+     */
+    static String getDatabasePath(Context context, String basePath) {
+        File file = context.getDatabasePath(basePath);
+        if (file != null) {
+            return file.getAbsolutePath();
+        } else {
+            return null;
+        }
+    }
 
     static void newThread(String name, final long functionPtr, final long functionArgPtr) {
         Thread thread = new Thread() {

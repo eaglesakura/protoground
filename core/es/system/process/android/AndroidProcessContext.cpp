@@ -51,6 +51,7 @@ public:
         struct {
             jc::lang::class_wrapper clazz;
             jmethodID method_newThread = nullptr;
+            jmethodID method_getDatabasePath = nullptr;
         } processContextImpl;
     } protoground;
 
@@ -155,10 +156,16 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
         assert(impl->protoground.processContextImpl.clazz.hasObject());
         impl->protoground.processContextImpl.clazz.globalRef().multiThread(true);
 
+        // getDatabasePath
+        impl->protoground.processContextImpl.method_getDatabasePath =
+                impl->protoground.processContextImpl.clazz.getMethod("getDatabasePath", "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;", true);
+        assert(impl->protoground.processContextImpl.method_getDatabasePath);
+
         // newThread
         impl->protoground.processContextImpl.method_newThread =
                 impl->protoground.processContextImpl.clazz.getMethod("newThread", "(Ljava/lang/String;JJ)V", true);
         assert(impl->protoground.processContextImpl.method_newThread);
+
 
     }
 
@@ -195,8 +202,6 @@ void AndroidProcessContext::newThread(const std::string &name, const IProcessCon
     assert(env);
 
     jc::lang::string_wrapper jstr(name.c_str(), env);
-
-
     env->CallStaticVoidMethod(
             impl->protoground.processContextImpl.clazz.getJclass(),
             impl->protoground.processContextImpl.method_newThread,
@@ -206,6 +211,31 @@ void AndroidProcessContext::newThread(const std::string &name, const IProcessCon
     );
 }
 
+string AndroidProcessContext::getDatabasePath(const string &basePath) const {
+    JNIEnv *env = impl->protoground.processContextImpl.clazz.getEnv();
+    assert(env);
+
+    jc::lang::string_wrapper jBasePath(basePath.c_str(), env);
+    jobject fullPath = env->CallStaticObjectMethod(
+            impl->protoground.processContextImpl.clazz.getJclass(),
+            impl->protoground.processContextImpl.method_getDatabasePath,
+            impl->android.application.obj.getJobject(),
+            jBasePath.getJstring()
+    );
+    if (!fullPath) {
+        // パスを正常に取得できなかった
+        return string();
+    } else {
+        // パスを返す
+        jc::lang::string_wrapper jFullPath(fullPath, env, false);
+        return jFullPath.asString();
+    }
+}
+
+Object::QueryResult_e AndroidProcessContext::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
+    PGD_SUPPORT_QUERY(InterfaceId_Android_ProcessContext, AndroidProcessContext);
+    return Object::queryInterface(interfaceId, resultInterfacePtr);
+}
 }
 
 extern "C" {

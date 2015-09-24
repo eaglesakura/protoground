@@ -18,7 +18,7 @@ FontTextureAtlas::FontTextureAtlas(const std::shared_ptr<FontFace> newFont) : fo
     assert(font);
 }
 
-uint FontTextureAtlas::bake(IDevice *device, const std::wstring text) {
+uint FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
     class TempListener : public IImageDecodeCallback {
     public:
         ImageInfo info;
@@ -65,7 +65,7 @@ uint FontTextureAtlas::bake(IDevice *device, const std::wstring text) {
 
     const auto size = font->getSize();
     uint result = 0;
-    for (const wchar_t code : text) {
+    for (const wide_char code : text) {
         Hash64 hash = make_hash(code, size.x, size.y);
         if (atlasMap.find(hash) != atlasMap.end()) {
             // 既にatlasを保持している
@@ -128,7 +128,7 @@ void FontTextureAtlas::setAllocator(std::shared_ptr<TextureAllocator> allocator)
     this->allocator = allocator;
 }
 
-const std::shared_ptr<FontTextureAtlas::FontArea> FontTextureAtlas::pick(const wchar_t charactor) const {
+const std::shared_ptr<FontTextureAtlas::FontArea> FontTextureAtlas::pick(const wide_char charactor) const {
     auto size = font->getSize();
     return util::find(atlasMap, make_hash(charactor, size.x, size.y));
 }

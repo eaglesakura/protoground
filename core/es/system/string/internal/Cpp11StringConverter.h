@@ -19,13 +19,13 @@ public:
     /**
      * UTF8文字列をワイド文字列に変換する
      */
-    virtual std::wstring toWideString(const std::string &utf8) override;
+    virtual wide_string toWideString(const std::string &utf8) override;
 
 
     virtual string toUtf8String(const wide_string &wide) override;
 
 private:
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> conversion;
+    std::wstring_convert<std::codecvt_utf8_utf16<wide_char>, wide_char> conversion;
 };
 
 }

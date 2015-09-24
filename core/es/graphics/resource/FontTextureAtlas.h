@@ -30,7 +30,7 @@ public:
      * 新規に焼きこまれたテクスチャ数を返却する
      * bake中にgetTextures()するとiteratorが無効になる可能性があるため、外部でlockすることを推奨する。
      */
-    uint bake(IDevice *device, const std::wstring text);
+    uint bake(IDevice *device, const wide_string &text);
 
     /**
      * 管理しているテクスチャリストを取得する
@@ -56,7 +56,7 @@ public:
      * エリアをピックアップする。
      * bakeされていない場合、nullptrを返す。
      */
-    const std::shared_ptr<FontArea> pick(const wchar_t charactor) const;
+    const std::shared_ptr<FontArea> pick(const wide_char charactor) const;
 
     const std::shared_ptr<FontFace> &getFont() const { return font; }
 

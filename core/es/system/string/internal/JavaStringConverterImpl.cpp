@@ -17,7 +17,11 @@ JavaStringConverterImpl::~JavaStringConverterImpl() {
 
 }
 
-std::wstring JavaStringConverterImpl::toWideString(const std::string &utf8) {
+wide_string JavaStringConverterImpl::toWideString(const std::string &utf8) {
+    if (utf8.empty()) {
+        return wide_string();
+    }
+
     // 実行時の遅延初期化を行う
     initialize();
 
@@ -33,7 +37,7 @@ std::wstring JavaStringConverterImpl::toWideString(const std::string &utf8) {
     // byte配列から中味を取り出す
     int jConvertedArray_length = env->GetArrayLength(jConvertedArray);
     assert(jConvertedArray_length > 0);
-    std::vector<jbyte> rawBytes((size_t) jConvertedArray_length + sizeof(wchar_t));
+    std::vector<jbyte> rawBytes((size_t) jConvertedArray_length + sizeof(wide_char));
     util::zeromemory(&rawBytes);
     // 値をコピーする
     env->GetByteArrayRegion(jConvertedArray, 0, jConvertedArray_length, util::asPointer(rawBytes));
@@ -42,15 +46,25 @@ std::wstring JavaStringConverterImpl::toWideString(const std::string &utf8) {
     env->DeleteLocalRef(jConvertedArray);
     jConvertedArray = nullptr;
 
-    return std::wstring((wchar_t *) util::asPointer(rawBytes));
+    wide_char *msg = (wide_char *) util::asPointer(rawBytes);
+    return wide_string(msg);
 }
 
 void JavaStringConverterImpl::initialize() {
-    if (UTF32LE.hasObject()) {
+    if (stringImpl.clazz.hasObject()) {
         return;
     }
 
     JNIEnv *env = jc::jni::getThreadJniEnv();
+
+    {
+        stringImpl.clazz = class_wrapper::find(env, "com/eaglesakura/protoground/StringImpl");
+        assert(stringImpl.clazz.hasObject());
+        stringImpl.clazz.globalRef().multiThread(true);
+
+        stringImpl.method_UTF32toUTF8 = stringImpl.clazz.getMethod("UTF32toUTF8", "(Ljava/nio/ByteBuffer;)Ljava/lang/String;", true);
+        assert(stringImpl.method_UTF32toUTF8);
+    }
 
     UTF32LE = string_wrapper(env->NewStringUTF("UTF32LE"), env, false);
     UTF32LE.globalRef().multiThread(true);
@@ -64,31 +78,37 @@ void JavaStringConverterImpl::initialize() {
 }
 
 string JavaStringConverterImpl::toUtf8String(const wide_string &wide) {
+    if (wide.empty()) {
+        return string();
+    }
+
     // 実行時の遅延初期化を行う
     initialize();
 
     JNIEnv *env = jc::jni::getThreadJniEnv();
 
     // Java文字列に変換する
-    string_wrapper temp = string_wrapper(env->NewString((jchar *) wide.c_str(), wide.length()), env, false);
+    const wide_char *src = wide.c_str();
+    const uint32_t src_memLength = sizeof(wide_char) * wide.length();
 
-    // getBytesで変換する
-    jbyteArray jConvertedArray = (jbyteArray) env->CallObjectMethod(temp.getJobject(), javaString.method_getBytes, UTF8.getJobject());
-    assert(jConvertedArray);
+    jobject jUTF32Buffer = env->NewDirectByteBuffer((void *) src, src_memLength);
+    jobject jUTF8String = env->CallStaticObjectMethod(
+            stringImpl.clazz.getJclass(),
+            stringImpl.method_UTF32toUTF8,
+            jUTF32Buffer
+    );
 
-    // byte配列から中味を取り出す
-    int jConvertedArray_length = env->GetArrayLength(jConvertedArray);
-    assert(jConvertedArray_length > 0);
-    std::vector<jbyte> rawBytes((size_t) jConvertedArray_length + sizeof(uint8_t));
-    util::zeromemory(&rawBytes);
-    // 値をコピーする
-    env->GetByteArrayRegion(jConvertedArray, 0, jConvertedArray_length, util::asPointer(rawBytes));
+    // バッファを削除する
+    env->DeleteLocalRef(jUTF32Buffer);
 
-    // temp領域を解放する
-    env->DeleteLocalRef(jConvertedArray);
-    jConvertedArray = nullptr;
-
-    return std::string((char *) util::asPointer(rawBytes));
+    if (jUTF8String) {
+        // string convert
+        jc::lang::string_wrapper str(jUTF8String, env, false);
+        string result = str.asString();
+        return result;
+    } else {
+        return string();
+    }
 }
 }
 }

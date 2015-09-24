@@ -15,6 +15,8 @@ enum InterfaceId_e {
     InterfaceId_OpenGL_Surface,
     InterfaceId_OpenGL_Texture,
     InterfaceId_OpenGL_Mesh,
+
+    InterfaceId_Android_ProcessContext,
 };
 
 /**

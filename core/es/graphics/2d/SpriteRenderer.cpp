@@ -48,17 +48,18 @@ void SpriteRenderer::renderingText(IDevice *device, const std::string &text, con
 
     const auto wideString = IProcessContext::getInstance()->getStringConverter()->toWideString(text);
 
-    const wide_char DOT = L"."[0];
-    const wide_char TOFU = L"□"[0];
-    const wide_char SPACE = L" "[0];
-    const wide_char ZEN_SPACE = L"　"[0];
+    const wide_char DOT = PGD_STRING(".")[0];
+    const wide_char TOFU = PGD_STRING("□")[0];
+    const wide_char SPACE = PGD_STRING(" ")[0];
+    const wide_char ZEN_SPACE = PGD_STRING("　")[0];
 
     // テクスチャの焼きこみを行う
     {
+
         // 末尾"..."分も焼きこむ
         atlas->bake(device, wideString);
-        atlas->bake(device, std::wstring(L"."));
-        atlas->bake(device, std::wstring(L"□"));
+        atlas->bake(device, wide_string(PGD_STRING(".")));
+        atlas->bake(device, wide_string(PGD_STRING("□")));
     }
 
 
