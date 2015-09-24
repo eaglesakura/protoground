@@ -68,6 +68,7 @@ void GLTexture::genMipmaps() {
         return;
     }
     glGenerateMipmap(target);
+    assert_gl();
 }
 
 void GLTexture::setBindTarget(const GLenum target) {
