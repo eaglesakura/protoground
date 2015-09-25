@@ -63,6 +63,7 @@ void GLImmediateSpriteRenderer::beginRendering(SpriteRenderer *sender) {
 }
 
 int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const ISpriteRenderingCallback::RenderingState *state, const uint numInstances, ISpriteRenderingCallback::RenderingInstance *instanceArray) {
+    float oldLineWidth = -1;
     int numRendering = 0;
     if (state->mode == RenderingMode_QuadFill || state->mode == RenderingMode_QuadOutLine || state->mode == RenderingMode_Text) {
         RenderingQuadInstance *quadInstances = (RenderingQuadInstance *) instanceArray;
@@ -102,6 +103,19 @@ int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const IS
             uniform.rotate.upload(quadInstances->rotateRadian);
             // アスペクト比を転送する
             uniform.aspect.upload(state->surfaceAspect);
+
+            // ラインの太さを決める
+            if (state->mode == RenderingMode_QuadOutLine) {
+                if (oldLineWidth != quadInstances->lineWidth) {
+                    assert(quadInstances->lineWidth > 0);
+                    oldLineWidth = std::min<float>(quadInstances->lineWidth, (float) device->getCapacity().getMaxLineWidth());
+                    glLineWidth(oldLineWidth);
+                    assert_gl();
+                }
+                quad->setPrimitiveType(GL_LINE_LOOP);
+            } else {
+                quad->setPrimitiveType(GL_TRIANGLE_FAN);
+            }
 
             quad->rendering();
 

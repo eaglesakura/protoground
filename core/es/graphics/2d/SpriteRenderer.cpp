@@ -123,8 +123,13 @@ void SpriteRenderer::renderingImage(const ITexture *texture, const RectI16 &src,
     renderingImage(texture, src.left, src.top, src.width(), src.height(), dst.left, dst.top, dst.width(), dst.height(), 0, color);
 }
 
-void SpriteRenderer::renderingRect(const float x, const float y, const float w, const float h, const Color rgba) const {
-    renderingImage(nullptr, 0, 0, 0, 0, x, y, w, h, 0, rgba);
+void SpriteRenderer::renderingRect(const float x, const float y, const float w, const float h, const Color color) const {
+    renderingImage(nullptr, 0, 0, 0, 0, x, y, w, h, 0, color);
+}
+
+
+void SpriteRenderer::renderingRectLine(const float x, const float y, const float w, const float h, float lineWidth, const Color color) const {
+    rendering(Mode_Line, nullptr, 0, 0, 0, 0, x, y, w, h, 0, color, lineWidth);
 }
 
 void SpriteRenderer::begin() const {
@@ -138,7 +143,7 @@ void SpriteRenderer::end() const {
     callback->endRendering(const_cast<SpriteRenderer *>(this));
 }
 
-void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture *texture, const float srcX, const float srcY, const float srcW, const float srcH, const float dstX, const float dstY, const float dstW, const float dstH, const float degree, const Color rgba) const {
+void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture *texture, const float srcX, const float srcY, const float srcW, const float srcH, const float dstX, const float dstY, const float dstW, const float dstH, const float degree, const Color rgba, const float lineWidth) const {
     if (es::equals(dstW, 0.0f) || es::equals(dstH, 0.0f)) {
         // 幅か高さが0であれば、レンダリングの必要はない
         return;
@@ -147,9 +152,11 @@ void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture
     ISpriteRenderingCallback::RenderingState state;
     ISpriteRenderingCallback::RenderingQuadInstance instance;
 
-
     if (mode == Mode_Font) {
         state.mode = ISpriteRenderingCallback::RenderingMode_Text;
+    } else if (mode == Mode_Line) {
+        state.mode = ISpriteRenderingCallback::RenderingMode_QuadOutLine;
+        instance.lineWidth = lineWidth;
     } else {
         state.mode = ISpriteRenderingCallback::RenderingMode_QuadFill;
     }
@@ -184,5 +191,4 @@ void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture
 
     callback->requestRendering(const_cast<SpriteRenderer *>(this), &state, 1, &instance);
 }
-
 }

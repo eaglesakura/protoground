@@ -357,7 +357,11 @@ inline T *asPointer(const std::vector<T> &v, const size_t offset = 0) {
 
 template<typename T>
 inline unsafe_array<T> unsafe(const std::vector<T> &v, const size_t offset = 0) {
-    return unsafe_array<T>(asPointer(v, offset), v.size() - offset);
+    if (v.empty()) {
+        return unsafe_array<T>((T *) nullptr, 0);
+    } else {
+        return unsafe_array<T>(asPointer(v, offset), v.size() - offset);
+    }
 }
 
 template<typename T>

@@ -79,6 +79,11 @@ public:
          * ピクセルではなく、正規化座標が入力される
          */
         RectF dstQuad;
+
+        /**
+         * ライン描画をする場合の幅を指定する
+         */
+        float lineWidth = 0;
     };
 
     struct RenderingState {
