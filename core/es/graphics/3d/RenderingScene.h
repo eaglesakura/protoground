@@ -48,6 +48,12 @@ public:
     void pendingMessage(const Object *sender, const uint32_t groupMask, const Bundle &msg);
 
     /**
+     * メッセージを保留する
+     * 全てのオブジェクトに対して送信する
+     */
+    void pendingMessage(const Object *sender, const Bundle &msg);
+
+    /**
      * 全ての保留メッセージを送信する
      */
     void sendPendingMessages();

@@ -299,6 +299,10 @@ void RenderingScene::pendingMessage(const Object *sender, const uint32_t groupMa
     pendingMessages.push_back(pm);
 }
 
+void RenderingScene::pendingMessage(const Object *sender, const Bundle &msg) {
+    pendingMessage(sender, 0xFFFFFFFF, msg);
+}
+
 void RenderingScene::sendPendingMessages() {
     auto msgCache = pendingMessages;
     pendingMessages.clear();
@@ -342,4 +346,5 @@ void RenderingScene::removeListener(const selection_ptr<SceneListener> &listener
         }
     }
 }
+
 }
