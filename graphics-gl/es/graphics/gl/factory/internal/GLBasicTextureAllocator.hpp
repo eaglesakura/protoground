@@ -58,12 +58,11 @@ public:
                         ITexture *image,
                         const uint offsetX, const uint offsetY,
                         const uint width, const uint height,
-                        const unsafe_array <uint8_t> &buffer) override {
-        GLDevice::query glDevice(device);
+                        const unsafe_array<uint8_t> &buffer) override {
+        GLDevice *glDevice = GLDevice::query::from(device);
+        GLTexture *texture = GLTexture::query::from(image);
+        assert(glDevice && texture);
 
-
-        GLTexture::query texture(image);
-        assert((bool) texture);
         texture->bind(glDevice->getTextureState());
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexSubImage2D(
