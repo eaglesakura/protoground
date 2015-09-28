@@ -101,6 +101,15 @@ public:
      */
     void sortActors();
 
+
+    /**
+     * 現在のアップデートIDを取得する。
+     * updateBegin()を呼び出す度に更新される。
+     *
+     * 初期値は0となる。
+     */
+    uint64_t getUpdateId() const;
+
     /**
      * 更新を開始する
      */
@@ -229,6 +238,12 @@ private:
      * 各種オプション情報
      */
     Bundle options;
+
+    /**
+     * 現在のアップデートIDを収得する。
+     * updateBegin()を呼び出す度に更新される。
+     */
+    uint64_t updateId = 0;
 };
 
 }

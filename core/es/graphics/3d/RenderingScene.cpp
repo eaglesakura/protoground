@@ -213,6 +213,8 @@ void RenderingScene::findActors(const uint32_t groupMask, const std::function<vo
 }
 
 void RenderingScene::updateBegin() {
+    ++updateId;
+
     auto itr = listeners.begin();
     while (itr != listeners.end()) {
         auto item = itr->lock();
@@ -347,4 +349,7 @@ void RenderingScene::removeListener(const selection_ptr<SceneListener> &listener
     }
 }
 
+uint64_t RenderingScene::getUpdateId() const {
+    return updateId;
+}
 }
