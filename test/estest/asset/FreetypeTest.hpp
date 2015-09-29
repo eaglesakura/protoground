@@ -15,7 +15,7 @@ TEST(FreetypeTest, UtilWideStringConvert) {
     const char *jpn_c = "日本語あいうえお";
     ASSERT_NE(strlen(jpn_c), 8);
 
-    std::wstring wstr = IProcessContext::getInstance()->getStringConverter()->toWideString(std::string(jpn_c));
+    wide_string wstr = IProcessContext::getInstance()->getStringConverter()->toWideString(std::string(jpn_c));
 
     int count = 0;
     for (const wchar_t &w : wstr) {
@@ -24,25 +24,18 @@ TEST(FreetypeTest, UtilWideStringConvert) {
         }
     }
 
-    eslog("count(%d) len(%d)", count, wcslen(wstr.c_str()));
+    eslog("count(%d) len(%d)", count, wstr.length());
     ASSERT_TRUE(wstr.length() == 8);
 }
 
 TEST(FreetypeTest, WstringCheck) {
-    eslog("sizeof(wchar_t) = %d bytes", sizeof(wchar_t));
-    const wchar_t *wide = L"ABC";
-    ASSERT_EQ(wcslen(wide), 3);
-
-    const wchar_t *jpn = L"日本語あいうえお";
-    ASSERT_EQ(wcslen(jpn), 8);
-
+    eslog("sizeof(wchar_t) = %d bytes", sizeof(wide_char));
     const char *jpn_c = "日本語あいうえお";
     ASSERT_NE(strlen(jpn_c), 8);
 
-    std::wstring str = IProcessContext::getInstance()->getStringConverter()->toWideString(jpn_c);
+    wide_string str = IProcessContext::getInstance()->getStringConverter()->toWideString(jpn_c);
 
     ASSERT_TRUE(str.length() == 8);
-    ASSERT_TRUE(memcmp(str.c_str(), jpn, sizeof(wchar_t) * str.length()) == 0);
 }
 
 TEST(FreetypeTest, LoadFont) {
