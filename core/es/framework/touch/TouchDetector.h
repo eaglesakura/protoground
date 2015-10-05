@@ -34,6 +34,11 @@ public:
     std::shared_ptr<TouchPoint> getTouchPointFromId(const uint64_t id) const;
 
     /**
+     * 毎フレームのアップデートを行う
+     */
+    void onUpdateFrame(const float deltaTimeSec);
+
+    /**
      * イベントが行われたことを通知する。
      */
     void onTouchEvent(const TouchEvent &event);
@@ -53,6 +58,11 @@ private:
      * 最後にチェックした場所のポイント間の距離
      */
     float pinchDistance = 0;
+
+    /**
+     * ロングタップとして認識するミリ秒
+     */
+    int32_t longTapMs = 400;
 
     /**
      * IDを指定してポイントを削除する

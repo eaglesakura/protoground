@@ -53,7 +53,7 @@ public:
 
     uint32_t getTouchIndex() const { return touchIndex; }
 
-/**
+    /**
      * 一段階前の位置を取得する
      */
     const vec2 &getBeforePos() const { return beforePos; }

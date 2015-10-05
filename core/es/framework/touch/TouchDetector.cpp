@@ -92,6 +92,30 @@ void TouchDetector::removeTouchPointFromId(const uint64_t id) {
     }
 }
 
+void TouchDetector::onUpdateFrame(const float deltaTimeSec) {
+    auto itr = points.begin();
+    auto end = points.end();
+    while (itr != end) {
+        bool handle = false;
+        auto pt = (*itr);
+
+        if ((!pt->isDraging()) /* ドラッグされていない */ &&
+            pt->isLongTap(longTapMs) /* 規定時間以上押下している */) {
+            for (auto &listener : listeners) {
+                handle = (handle || listener->onLongClick(this, *pt));
+            }
+        }
+
+        if (handle) {
+            // ハンドリングされたら、これを削除
+            itr = points.erase(itr);
+            end = points.end();
+        } else {
+            ++itr;
+        }
+    }
+}
+
 void TouchDetector::onTouchEvent(const TouchEvent &event) {
 
     const uint64_t id = event.id; // タッチポイントのID
@@ -178,4 +202,5 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
         }
     }
 }
+
 }

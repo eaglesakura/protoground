@@ -24,6 +24,13 @@ public:
     virtual void onClick(const TouchDetector *detector, const TouchPoint &point) { }
 
     /**
+     * ロングクリックが行われた。
+     * ロングクリックとして処理しないなら、falseを返す。
+     * trueを返却した場合、ハンドリングされたとみなす。
+     */
+    virtual bool onLongClick(const TouchDetector *detector, const TouchPoint &point) { return false; }
+
+    /**
      * ドラッグを終了させた。
      * onClick()とどちらかが呼び出される。
      */
