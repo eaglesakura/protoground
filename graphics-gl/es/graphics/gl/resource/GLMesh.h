@@ -5,12 +5,19 @@
 #include "es/OpenGL.hpp"
 #include <vector>
 #include <es/graphics/gl/engine/GLGPUCapacity.h>
+#include "es/graphics/model/VertexAttribute.h"
 
 namespace es {
 namespace gl {
 
 /**
+ * OpenGL ES 3.0互換のメッシュを管理する
  *
+ * 1. オブジェクト生成
+ * 2. allocでメモリを確保
+ * 3. lock/unlockでオブジェクトの内容を転送
+ * 4. bindArrayObjectでThreadContextに対応する
+ * 5. addAttributeで属性情報を構築する
  */
 class GLMesh : public virtual IMesh {
 public:
@@ -21,6 +28,22 @@ public:
     GLMesh(std::shared_ptr<IDevice> device);
 
     virtual ~GLMesh();
+
+    /**
+     * バッファオブジェクトをThreadContextに対してバインドする
+     *
+     * レンダリングThreadを移動させる際に、利用Threadでバインドする必要がある。
+     * VAO非対応の場合は何もしない。
+     */
+    virtual void bindArrayObject();
+
+    /**
+     * バッファオブジェクトをThreadContextに対して解放する。
+     *
+     * レンダリングThreadを移動させる際に解放する必要がある。
+     * VAO非対応の場合は何もしない。
+     */
+    virtual void unbindArrayObject();
 
     /**
      * Contextに関連付ける
@@ -71,6 +94,11 @@ public:
     virtual void dispose() override;
 
     virtual QueryResult_e queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const override;
+
+    /**
+     * 属性情報を生成する
+     */
+    static Attribute makeAttribute(const VertexAttribute &vertexAttribute, const VertexAttribute::Complex &complex, const GLint location);
 
     /**
      * 設定する属性情報
@@ -133,6 +161,8 @@ private:
          */
         void *locked = nullptr;
     } vertices, indices;
+
+    bool supportArrayObject = false;
 
     /**
      * サポートしている場合はVAOを利用する。

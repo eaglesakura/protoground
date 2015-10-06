@@ -80,6 +80,7 @@ void GLQuadPolygon::updateVertices(sp<IDevice> device, const GLQuadPolygon::Vert
         }
         mesh->unlock(device, ptr);
     }
+    mesh->bindArrayObject();
 
     // 属性情報を指定する
     {
