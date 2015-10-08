@@ -52,6 +52,7 @@ public:
             jc::lang::class_wrapper clazz;
             jmethodID method_newThread = nullptr;
             jmethodID method_getDatabasePath = nullptr;
+            jmethodID method_isAndroidDebugable = nullptr;
         } processContextImpl;
     } protoground;
 
@@ -166,6 +167,11 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
                 impl->protoground.processContextImpl.clazz.getMethod("newThread", "(Ljava/lang/String;JJ)V", true);
         assert(impl->protoground.processContextImpl.method_newThread);
 
+        // debugable
+        impl->protoground.processContextImpl.method_isAndroidDebugable =
+                impl->protoground.processContextImpl.clazz.getMethod("isAndroidDebugable", "(Landroid/content/Context;)Z", true);
+        assert(impl->protoground.processContextImpl.method_isAndroidDebugable);
+
 
     }
 
@@ -235,6 +241,16 @@ string AndroidProcessContext::getDatabasePath(const string &basePath) const {
 Object::QueryResult_e AndroidProcessContext::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {
     PGD_SUPPORT_QUERY(InterfaceId_Android_ProcessContext, AndroidProcessContext);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
+}
+
+bool AndroidProcessContext::isApkDebuggalbe() const {
+    JNIEnv *env = impl->protoground.processContextImpl.clazz.getEnv();
+    assert(env);
+    return env->CallStaticBooleanMethod(
+            impl->protoground.processContextImpl.clazz.getJclass(),
+            impl->protoground.processContextImpl.method_isAndroidDebugable,
+            impl->android.application.obj.getJobject()
+    );
 }
 }
 

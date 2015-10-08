@@ -3,8 +3,25 @@ package com.eaglesakura.protoground;
 import android.content.Context;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 class ProcessContextImpl {
+
+    /**
+     * Android Packageがデバッグとしてビルドされている場合true
+     *
+     * @param context
+     * @return
+     */
+    static boolean isAndroidDebugable(Context context) {
+        try {
+            Class<?> clazz = Class.forName(context.getPackageName() + ".BuildConfig");
+            Field field = clazz.getField("DEBUG");
+            return field.getBoolean(clazz);
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * データベースをOpenするためのpathを取得する
