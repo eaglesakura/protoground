@@ -66,6 +66,11 @@ public:
     void renderingImage(const ITexture *texture, const RectI16 &src, const RectI16 &dst, const Color color) const;
 
     /**
+     * 四角形を描画する
+     */
+    void renderingRect(const RectI16 &area, const Color color) const;
+
+    /**
      * 四角形描画を行う
      */
     void renderingRect(const float x, const float y, const float w, const float h, const Color color) const;
