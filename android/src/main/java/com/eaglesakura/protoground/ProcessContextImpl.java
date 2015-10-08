@@ -1,9 +1,10 @@
 package com.eaglesakura.protoground;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import java.io.File;
-import java.lang.reflect.Field;
 
 class ProcessContextImpl {
 
@@ -14,13 +15,17 @@ class ProcessContextImpl {
      * @return
      */
     static boolean isAndroidDebugable(Context context) {
+        PackageManager manager = context.getPackageManager();
+        ApplicationInfo appInfo = null;
         try {
-            Class<?> clazz = Class.forName(context.getPackageName() + ".BuildConfig");
-            Field field = clazz.getField("DEBUG");
-            return field.getBoolean(clazz);
-        } catch (Exception e) {
+            appInfo = manager.getApplicationInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE) {
+            return true;
+        }
+        return false;
     }
 
     /**
