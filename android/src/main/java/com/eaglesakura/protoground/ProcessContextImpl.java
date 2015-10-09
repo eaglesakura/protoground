@@ -61,5 +61,5 @@ class ProcessContextImpl {
      * @param functionPtr    呼び出し先の関数ポインタvoid(*function)(void* ptr)
      * @param functionArgPtr 呼び出し対象の引数
      */
-    static native void newThreadCall(final long functionPtr, final long functionArgPtr);
+    static native void newThreadCall(long functionPtr, long functionArgPtr);
 }

@@ -256,7 +256,10 @@ bool AndroidProcessContext::isApkDebuggalbe() const {
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_eaglesakura_protoground_ProcessContextImpl_newThreadCall(JNIEnv *env, jlong funcPtr, jlong funcArg) {
+JNIEXPORT void JNICALL Java_com_eaglesakura_protoground_ProcessContextImpl_newThreadCall(JNIEnv *env, jclass clazz, jlong funcPtr, jlong funcArg) {
+    uint32_t lowod = funcPtr & 0xFFFFFFFF;
+    uint32_t highword = (funcPtr >> 32);
+
     ((es::AndroidProcessContext_ThreadCallback) funcPtr)((void *) funcArg);
 }
 

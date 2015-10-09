@@ -63,3 +63,17 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
  */
 #define PROTOGROUND_DEPRECATED(__METHOD__)        __METHOD__ __attribute__((deprecated))
 
+/**
+ * Alignmentを指定する
+ */
+#define PGD_DATA_ALIGN(type, __BYTES__)       type __attribute__((aligned(__BYTES__)))
+
+/**
+ * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
+ */
+#define PGD_FILE_ALIGN_OBJECT_BEGIN
+
+/**
+ * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
+ */
+#define PGD_FILE_ALIGN_OBJECT_END       __attribute__((aligned(4)))

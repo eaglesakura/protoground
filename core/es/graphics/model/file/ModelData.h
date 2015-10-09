@@ -15,9 +15,8 @@ class IAsset;
 
 namespace file {
 
-
 struct MeshData {
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         /**
          * 頂点属性情報
          */
@@ -47,11 +46,7 @@ struct MeshData {
          * 1 | 2 | 4
          */
         uint8_t indexDataBytes = 0;
-
-        uint8_t reserve0 = 0;
-        uint8_t reserve1 = 0;
-        uint8_t reserve2 = 0;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
 
     struct Serialize {
@@ -71,40 +66,44 @@ struct MeshData {
 };
 
 struct MaterialData {
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         uint8_t materialNum = 0;
         uint8_t textureNum = 0;
 
         uint8_t reserve0 = 0;
         uint8_t reserve1 = 0;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct Material {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Material {
         enum {
             Flag_NoCulling = 0x1 << 0,
             Flag_RenderingEdge = 0x1 << 1,
         };
         uint64_t symbol;
+
         /**
          * 上位ビットからRGBAの順番で指定される
          */
-        struct {
+        PGD_FILE_ALIGN_OBJECT_BEGIN  struct {
             uint8_t r;
             uint8_t g;
             uint8_t b;
             uint8_t a;
-        } diffuse;
+        } diffuse PGD_FILE_ALIGN_OBJECT_END;
+
         uint16_t flags;
+
         int16_t textureIndex;
+
         /**
          * レンダリングする頂点数
          */
         uint32_t indicesNum;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct Texture {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Texture {
         uint64_t symbol;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;
@@ -125,12 +124,12 @@ struct MaterialData {
 
 
 struct BoneData {
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN  struct Meta {
         uint16_t boneNum = 0;
         uint16_t ikLinkNum = 0;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct IkLink {
+    PGD_FILE_ALIGN_OBJECT_BEGIN  struct IkLink {
         enum {
             Flag_RotateLimited = 0x1 << 0,
         };
@@ -141,9 +140,9 @@ struct BoneData {
         uint16_t flags;
         vec3 minRadian;
         vec3 maxRadian;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct Bone {
+    PGD_FILE_ALIGN_OBJECT_BEGIN   struct Bone {
         /**
          * 初期位置
          */
@@ -196,12 +195,9 @@ struct BoneData {
          */
         uint8_t ikLoopCount;
 
-        uint8_t reserve0;
-        uint8_t reserve1;
-        uint8_t reserve2;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct Serialize {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Serialize {
         Meta meta;
         std::vector<IkLink> ikLinks;
         std::vector<Bone> bones;
@@ -214,22 +210,19 @@ struct BoneData {
 
 struct MorphData {
     enum Type_e {
-        Type_Position,
-        Type_UV,
+        Type_Position = 0,
+        Type_UV = 0,
     };
 
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         uint16_t positionMorphNum = 0;
 
         uint16_t uvMorphNum = 0;
 
         uint16_t targetNum = 0;
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-        uint8_t reserve0;
-        uint8_t reserve1;
-    };
-
-    struct Target {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Target {
         uint64_t symbol;
 
         /**
@@ -246,9 +239,9 @@ struct MorphData {
          * データ個数
          */
         uint32_t dataNum;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct PositionMorph {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct PositionMorph {
         /**
          * 移動量
          */
@@ -258,9 +251,9 @@ struct MorphData {
          * 頂点インデックス
          */
         int32_t index;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct UvMorph {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct UvMorph {
         /**
          * 移動量
          */
@@ -270,7 +263,7 @@ struct MorphData {
          * 頂点インデックス
          */
         uint32_t index;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;
@@ -299,12 +292,12 @@ struct PhysicsData {
         PhysicsFlag_Physics = 0x1 << 1,
     };
 
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         uint16_t bodyNum;
         uint16_t jointNum;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct RigidBody {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct RigidBody {
         uint64_t symbol;
 
         int16_t linkBoneIndex;
@@ -337,9 +330,9 @@ struct PhysicsData {
         float rotateAttenuation;
         float elasticity;
         float friction;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
-    struct RigidJoint {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct RigidJoint {
         uint64_t symbol;
 
         int16_t rigidBodyIndex;
@@ -379,7 +372,7 @@ struct PhysicsData {
          * バネの回転値
          */
         vec3 springRotate;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;
@@ -407,13 +400,13 @@ struct SkinMeshModelData {
     static bool deserialize(SkinMeshModelData *result, unsafe_array<uint8_t> buffer);
 
 private:
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         uint32_t meshDataBytes;
         uint32_t materialDataBytes;
         uint32_t boneDataBytes;
         uint32_t morphDataBytes;
         uint32_t physicsDataBytes;
-    };
+    }PGD_FILE_ALIGN_OBJECT_END;
 };
 
 }
