@@ -2,6 +2,10 @@
 #include <sstream>
 #include <es/memory/Buffer.hpp>
 
+// for Windows
+#include <cstdarg>
+#include <iosfwd>
+
 // for Android
 #include <iterator>
 
@@ -19,7 +23,7 @@ std::string format(const char *fmt, ...) {
     return std::string((char *) buffer.get());
 }
 
-std::string format(const uint workingBufferBytes, const char *fmt, ...) {
+std::string format(const unsigned workingBufferBytes, const char *fmt, ...) {
     ByteBuffer buffer = Buffer::createZeroBuffer(strlen(fmt) + workingBufferBytes);
 
     va_list ap;

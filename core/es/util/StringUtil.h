@@ -18,7 +18,7 @@ std::string format(const char *fmt, ...);
 /**
  * 文字列をフォーマットする
  */
-std::string format(const uint workingBufferBytes, const char *fmt, ...);
+std::string format(const unsigned workingBufferBytes, const char *fmt, ...);
 
 /**
  * 文字列を指定された分割文字に従って分割する

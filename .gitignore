@@ -54,3 +54,5 @@ test_report.xml
 *.filters
 *.user
 x64
+/Debug/
+/modules/Debug/

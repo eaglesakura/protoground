@@ -1,6 +1,6 @@
 #pragma once
 
-#include <assert.h>
+#include <cassert>
 
 #if defined(ES_BUILD_GTEST_MODE)
 

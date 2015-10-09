@@ -15,9 +15,10 @@
 #   define BUILD_MacOSX
 #elif defined(__APPLE__)
 #   define BUILD_iOS
-#elif defined(__CYGWIN__)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #define BUILD_Windows
-#define BUILD_Windows_Cygwin
+#define BUILD_64bit
+#include <Windows.h>
 #else
 #error  Unknown Platform
 #endif
@@ -25,12 +26,18 @@
 /**
  * アーキテクチャ32bit/64bit判定を行う
  */
+#if !defined(BUILD_32bit) && !defined(BUILD_64bit)
 #if ((ULONG_MAX) == (UINT_MAX))
-static_assert(sizeof(void *) == 4, "sizeof(void*) != 32bit");
 #define BUILD_32bit    1
 #else
-static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
 #define BUILD_64bit    1
+#endif
+#endif
+
+#if defined(BUILD_32bit)
+static_assert(sizeof(void *) == 4, "sizeof(void*) != 32bit");
+#else
+static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
 #endif
 
 /**
@@ -68,6 +75,20 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
  */
 #define PGD_DATA_ALIGN(type, __BYTES__)       type __attribute__((aligned(__BYTES__)))
 
+
+#if defined(BUILD_Windows)
+
+ /**
+ * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
+ */
+#define PGD_FILE_ALIGN_OBJECT_BEGIN
+
+ /**
+ * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
+ */
+#define PGD_FILE_ALIGN_OBJECT_END
+
+#else 
 /**
  * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
  */
@@ -77,3 +98,5 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
  * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
  */
 #define PGD_FILE_ALIGN_OBJECT_END       __attribute__((aligned(8)))
+
+#endif
