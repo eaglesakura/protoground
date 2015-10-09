@@ -30,6 +30,11 @@ public:
     jc::lang::object_wrapper getApplicationContext() const;
 
     /**
+     * apkがデバッグ状態でビルドされていればtrue
+     */
+    bool isApkDebuggalbe() const;
+
+    /**
      * 実行されているプラットフォームを取得する
      */
     virtual PlatformType_e getPlatform() const override;

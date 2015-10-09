@@ -389,7 +389,6 @@ void MeshBuilder::computeBones(const std::shared_ptr<FbxNodeTree> rootNode, es::
         dst.ikLinkOffset = 0;
         dst.ikLinkNum = 0;
         dst.ikLoopCount = 0;
-        dst.reserve0 = dst.reserve1 = dst.reserve2 = 0;
 
         ++nodeId;
     }

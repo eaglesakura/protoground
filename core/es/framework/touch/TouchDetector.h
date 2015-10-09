@@ -34,15 +34,47 @@ public:
     std::shared_ptr<TouchPoint> getTouchPointFromId(const uint64_t id) const;
 
     /**
+     * 毎フレームのアップデートを行う
+     */
+    void onUpdateFrame(const float deltaTimeSec);
+
+    /**
      * イベントが行われたことを通知する。
      */
     void onTouchEvent(const TouchEvent &event);
 
 private:
+
+    /**
+     * タップ情報を完全に排除する
+     */
+    void onHandlePoint(const uint64_t id);
+
+    /**
+     * 削除前の一時退避データ
+     * ダブルタップの判定に利用する
+     */
+    struct DropData {
+        sp<TouchPoint> point;
+        /**
+         * タップしたカウント
+         */
+        int numTaps = 0;
+        /**
+         * 最後に指を離してからのカウンタ
+         */
+        NanoTimer releaseTime;
+    };
+
     /**
      *
      */
     std::vector<sp<TouchPoint> > points;
+
+    /**
+     * 削除対象データの一覧
+     */
+    std::vector<DropData> dropPoints;
 
     /**
      * 通知するリスナ
@@ -55,9 +87,14 @@ private:
     float pinchDistance = 0;
 
     /**
-     * IDを指定してポイントを削除する
+     * ロングタップとして認識するミリ秒
      */
-    void removeTouchPointFromId(const uint64_t id);
+    uint16_t longTapMs = 400;
+
+    /**
+     * 連続タップとして認識するミリ秒
+     */
+    uint16_t continuationClickMs = 600;
 
     /**
      * 1点タッチをしている

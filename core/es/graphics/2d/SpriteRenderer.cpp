@@ -123,6 +123,10 @@ void SpriteRenderer::renderingImage(const ITexture *texture, const RectI16 &src,
     renderingImage(texture, src.left, src.top, src.width(), src.height(), dst.left, dst.top, dst.width(), dst.height(), 0, color);
 }
 
+void SpriteRenderer::renderingRect(const RectI16 &area, const Color color) const {
+    renderingRect(area.left, area.top, area.width(), area.height(), color);
+}
+
 void SpriteRenderer::renderingRect(const float x, const float y, const float w, const float h, const Color color) const {
     renderingImage(nullptr, 0, 0, 0, 0, x, y, w, h, 0, color);
 }
@@ -191,4 +195,5 @@ void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture
 
     callback->requestRendering(const_cast<SpriteRenderer *>(this), &state, 1, &instance);
 }
+
 }

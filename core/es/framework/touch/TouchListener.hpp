@@ -20,8 +20,25 @@ public:
      * Viewがクリックされた。
      * 指が離された瞬間に認識される
      * onDragEnd()とどちらかが呼び出される。
+     *
+     * trueを返した場合、ハンドリングが行われたため、複数回タップ（onContinuationClick)は呼び出されない。
      */
-    virtual void onClick(const TouchDetector *detector, const TouchPoint &point) { }
+    virtual bool onClick(const TouchDetector *detector, const TouchPoint &point) { return false; }
+
+    /**
+     * ロングクリックが行われた。
+     * ロングクリックとして処理しないなら、falseを返す。
+     * trueを返却した場合、ハンドリングされたとみなす。
+     */
+    virtual bool onLongClick(const TouchDetector *detector, const TouchPoint &point) { return false; }
+
+    /**
+     * 複数回タップ（ダブルタップ等）が行われた。
+     *
+     * numClicksは必ず2以上（ダブルタップ）となる。
+     * falseを返した場合、データをドロップせずに継続を行い、トリプルタップ以上の認識を行える。
+     */
+    virtual bool onContinuationClick(const TouchDetector *detector, const TouchPoint &point, const uint32_t numClicks) { return true; }
 
     /**
      * ドラッグを終了させた。

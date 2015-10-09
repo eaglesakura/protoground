@@ -52,6 +52,7 @@ public:
             jc::lang::class_wrapper clazz;
             jmethodID method_newThread = nullptr;
             jmethodID method_getDatabasePath = nullptr;
+            jmethodID method_isAndroidDebugable = nullptr;
         } processContextImpl;
     } protoground;
 
@@ -166,6 +167,11 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
                 impl->protoground.processContextImpl.clazz.getMethod("newThread", "(Ljava/lang/String;JJ)V", true);
         assert(impl->protoground.processContextImpl.method_newThread);
 
+        // debugable
+        impl->protoground.processContextImpl.method_isAndroidDebugable =
+                impl->protoground.processContextImpl.clazz.getMethod("isAndroidDebugable", "(Landroid/content/Context;)Z", true);
+        assert(impl->protoground.processContextImpl.method_isAndroidDebugable);
+
 
     }
 
@@ -236,11 +242,24 @@ Object::QueryResult_e AndroidProcessContext::queryInterface(const int64_t interf
     PGD_SUPPORT_QUERY(InterfaceId_Android_ProcessContext, AndroidProcessContext);
     return Object::queryInterface(interfaceId, resultInterfacePtr);
 }
+
+bool AndroidProcessContext::isApkDebuggalbe() const {
+    JNIEnv *env = impl->protoground.processContextImpl.clazz.getEnv();
+    assert(env);
+    return env->CallStaticBooleanMethod(
+            impl->protoground.processContextImpl.clazz.getJclass(),
+            impl->protoground.processContextImpl.method_isAndroidDebugable,
+            impl->android.application.obj.getJobject()
+    );
+}
 }
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_eaglesakura_protoground_ProcessContextImpl_newThreadCall(JNIEnv *env, jlong funcPtr, jlong funcArg) {
+JNIEXPORT void JNICALL Java_com_eaglesakura_protoground_ProcessContextImpl_newThreadCall(JNIEnv *env, jclass clazz, jlong funcPtr, jlong funcArg) {
+    uint32_t lowod = funcPtr & 0xFFFFFFFF;
+    uint32_t highword = (funcPtr >> 32);
+
     ((es::AndroidProcessContext_ThreadCallback) funcPtr)((void *) funcArg);
 }
 

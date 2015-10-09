@@ -53,6 +53,8 @@ void GLPrimitiveRenderer::initialize(sp<IDevice> originDevice, const VertexAttri
 
         assert(position.valid());
         assert(color.valid());
+
+        mesh->bindArrayObject();
         mesh->addAttribute(position);
         mesh->addAttribute(color);
     }

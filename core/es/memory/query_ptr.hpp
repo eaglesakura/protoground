@@ -15,7 +15,7 @@ class query_ptr {
 public:
     static T *from(const Object *base) {
         T *p = nullptr;
-        if (base->queryInterface(InterfaceId, (void **) &p) == Object::QueryResult_Success) {
+        if (base && base->queryInterface(InterfaceId, (void **) &p) == Object::QueryResult_Success) {
             assert(p);
             return p;
         } else {

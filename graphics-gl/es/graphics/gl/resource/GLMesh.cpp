@@ -2,6 +2,7 @@
 #include <es/graphics/gl/engine/GLDevice.h>
 #include <es/memory/Buffer.hpp>
 #include "es/internal/protoground-internal.hpp"
+#include "es/graphics/model/VertexAttribute.h"
 
 namespace es {
 namespace gl {
@@ -10,11 +11,7 @@ GLMesh::GLMesh(std::shared_ptr<IDevice> device) {
     GLDevice::query gl(device);
     assert(gl);
 
-    if (gl->getCapacity().isSupport(GLGPUCapacity::GPUExtension_VertexArrayObject)) {
-        glGenVertexArrays(1, &arrayObject);
-        assert(arrayObject);
-        assert_gl();
-    }
+    supportArrayObject = gl->getCapacity().isSupport(GLGPUCapacity::GPUExtension_VertexArrayObject);
 }
 
 GLMesh::~GLMesh() {
@@ -127,18 +124,10 @@ void GLMesh::alloc(std::shared_ptr<IDevice> device, const IMesh::AllocOption &op
         allocUsage = GL_STATIC_DRAW;
     }
 
-    if (arrayObject) {
-        glBindVertexArray(arrayObject);
-    }
-
     glBindBuffer(allocTarget, allocHandle);
     assert_gl();
     glBufferData(allocTarget, allocBytes, nullptr, allocUsage);
     assert_gl();
-
-    if (arrayObject) {
-        glBindVertexArray(0);
-    }
 }
 
 void GLMesh::addAttribute(const GLMesh::Attribute &attr) {
@@ -162,6 +151,35 @@ void GLMesh::addAttribute(const GLMesh::Attribute &attr) {
     } else {
         glEnableVertexAttribArray(attr.location);
         attributes.push_back(attr);
+        assert_gl();
+    }
+}
+
+void GLMesh::bindArrayObject() {
+    assert(!arrayObject);
+    if (!supportArrayObject) {
+        return;
+    }
+
+    glGenVertexArrays(1, &arrayObject);
+    assert(arrayObject);
+    assert_gl();
+
+    glBindVertexArray(arrayObject);
+    if (vertices.handle) {
+        glBindBuffer(GL_ARRAY_BUFFER, vertices.handle);
+    }
+    if (indices.handle) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices.handle);
+    }
+    glBindVertexArray(0);
+}
+
+void GLMesh::unbindArrayObject() {
+    if (arrayObject) {
+        glBindVertexArray(0);
+        glDeleteBuffers(1, &arrayObject);
+        arrayObject = 0;
         assert_gl();
     }
 }
@@ -253,5 +271,48 @@ bool GLMesh::Attribute::valid() const {
     return location >= 0 && offsetHeader >= 0;
 }
 
+
+GLMesh::Attribute GLMesh::makeAttribute(const VertexAttribute &vertexAttribute, const VertexAttribute::Complex &complex, const GLint location) {
+    GLMesh::Attribute attr;
+    const VertexAttribute *pVertexAttribute = &vertexAttribute;
+
+    attr.location = location;
+    attr.offsetHeader = VertexAttribute::getVertexOffset(vertexAttribute, complex);
+    attr.strideBytes = complex.vertexBytes;
+    attr.normalize = false;
+
+    if (pVertexAttribute == &VertexAttribute::POSITION_float3) {
+        attr.type = GL_FLOAT;
+        attr.size = 3;
+
+        // POSは存在しなければならないため、検証を行う
+        assert(attr.valid());
+    } else if (pVertexAttribute == &VertexAttribute::NORMAL_float3) {
+        attr.type = GL_FLOAT;
+        attr.size = 3;
+    } else if (pVertexAttribute == &VertexAttribute::NORMAL_i4) {
+        attr.type = GL_UNSIGNED_SHORT;
+        attr.size = 4;
+        attr.normalize = true;
+    } else if (pVertexAttribute == &VertexAttribute::UV_float2) {
+        attr.type = GL_FLOAT;
+        attr.size = 2;
+    } else if (pVertexAttribute == &VertexAttribute::BONE_INDEX_i4) {
+        attr.type = GL_UNSIGNED_SHORT;
+        attr.size = 4;
+    } else if (pVertexAttribute == &VertexAttribute::BONE_WEIGHT_i4) {
+        attr.type = GL_UNSIGNED_BYTE;
+        attr.size = 4;
+        attr.normalize = true;
+    } else if (pVertexAttribute == &VertexAttribute::COLOR_i4) {
+        attr.type = GL_UNSIGNED_BYTE;
+        attr.size = 4;
+        attr.normalize = true;
+    } else {
+        assert(false);
+    }
+
+    return attr;
+}
 }
 }

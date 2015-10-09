@@ -1,10 +1,32 @@
 package com.eaglesakura.protoground;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import java.io.File;
 
 class ProcessContextImpl {
+
+    /**
+     * Android Packageがデバッグとしてビルドされている場合true
+     *
+     * @param context
+     * @return
+     */
+    static boolean isAndroidDebugable(Context context) {
+        PackageManager manager = context.getPackageManager();
+        ApplicationInfo appInfo = null;
+        try {
+            appInfo = manager.getApplicationInfo(context.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+        if ((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * データベースをOpenするためのpathを取得する
@@ -39,5 +61,5 @@ class ProcessContextImpl {
      * @param functionPtr    呼び出し先の関数ポインタvoid(*function)(void* ptr)
      * @param functionArgPtr 呼び出し対象の引数
      */
-    static native void newThreadCall(final long functionPtr, final long functionArgPtr);
+    static native void newThreadCall(long functionPtr, long functionArgPtr);
 }

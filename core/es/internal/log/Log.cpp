@@ -60,7 +60,17 @@ namespace internal {
 
 const char *pathToFileName(const char *__file__) {
 #if (defined(BUILD_MacOSX) || defined(BUILD_Android) || defined(BUILD_MacOSX) )
-    return strrchr(__file__, '/') + 1;
+    char separator = '/';
+    #if defined(BUILD_Android)
+    // cygwin check
+    if(__file__[1] == ':') {
+        // Windows形式だった場合、セパレータが異なる
+        separator = '\\';
+    }
+
+    #endif
+
+    return strrchr(__file__, separator) + 1;
 #else
     return strrchr(__file__, '/') + 1;
 #endif

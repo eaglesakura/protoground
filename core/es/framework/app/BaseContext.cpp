@@ -37,7 +37,15 @@ void BaseContext::onAppFrame() {
     // 実行時間のチェックを開始
     frameRate.timer.start();
     {
+        // タッチ処理の更新
+        if (touchDetector) {
+            touchDetector->onUpdateFrame(frameRate.deltaTime);
+        }
+
+        // タスクキューを消化
         queue.execute(mainThreadId);
+
+        // アプリの処理を行う
         onAppFrame(frameRate.frameCount, frameRate.deltaTime);
     }
     // フレーム数カウンタを進める

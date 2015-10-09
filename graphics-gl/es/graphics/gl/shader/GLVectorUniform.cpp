@@ -13,6 +13,9 @@ GLVectorUniform<vector_type, vector_length>::GLVectorUniform() {
 }
 
 template
+class GLVectorUniform<int32_t, 1>;
+
+template
 class GLVectorUniform<float, 1>;
 
 template
@@ -60,6 +63,20 @@ bool uploadMatrixF(const GLint location, const float *vec, const float *pMatrix,
     return true;
 }
 
+}
+
+bool GLIntUniform::upload(const int32_t x) {
+    if (!valid()) {
+        return false;
+    }
+
+    if (vec[0] != x) {
+        glUniform1i(location, x);
+        assert_gl();
+        vec[0] = x;
+        return true;
+    }
+    return false;
 }
 
 bool GLFloatUniform::upload(const float x) {
@@ -149,5 +166,6 @@ bool GLMatrix4Uniform::upload(const mat4 &m, const GLboolean transpose) {
     }
     return internal::uploadMatrixF(location, vec, (const float *) (&m), 4, 1, transpose);
 }
+
 }
 }

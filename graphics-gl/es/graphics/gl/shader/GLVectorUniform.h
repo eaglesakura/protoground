@@ -23,6 +23,9 @@ protected:
 };
 
 extern template
+class GLVectorUniform<int32_t, 1>;
+
+extern template
 class GLVectorUniform<float, 1>;
 
 extern template
@@ -41,6 +44,18 @@ extern template
 class GLVectorUniform<float, 4 * 4>;
 
 }
+
+/**
+ * uniform float
+ * uniform float
+ */
+class GLIntUniform : public internal::GLVectorUniform<int32_t, 1> {
+public:
+    /**
+     * float値を1つ転送する
+     */
+    bool upload(const int32_t x);
+};
 
 /**
  * uniform float
