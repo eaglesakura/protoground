@@ -99,11 +99,11 @@ struct MaterialData {
          * レンダリングする頂点数
          */
         uint32_t indicesNum;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Texture {
         uint64_t symbol;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;
@@ -127,7 +127,7 @@ struct BoneData {
     PGD_FILE_ALIGN_OBJECT_BEGIN  struct Meta {
         uint16_t boneNum = 0;
         uint16_t ikLinkNum = 0;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN  struct IkLink {
         enum {
@@ -140,22 +140,28 @@ struct BoneData {
         uint16_t flags;
         vec3 minRadian;
         vec3 maxRadian;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
-    PGD_FILE_ALIGN_OBJECT_BEGIN   struct Bone {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Bone {
+        /**
+         * ボーン名
+         */
+        uint64_t symbol;
+
+        /**
+         * 初期回転角
+         */
+        quat rotate;
+
         /**
          * 初期位置
          */
         vec3 pos;
 
         /**
-         * 初期回転角
+         * IKの最大制御角度をラジアンで示す
          */
-        quat rotate;
-        /**
-         * ボーン名
-         */
-        uint64_t symbol;
+        float ikLimitedRadian;
 
         /**
          * 親ボーン番号
@@ -180,11 +186,6 @@ struct BoneData {
         uint16_t ikLinkOffset;
 
         /**
-         * IKの最大制御角度をラジアンで示す
-         */
-        float ikLimitedRadian;
-
-        /**
          * 所有しているIKリンク数
          * 0の場合はIKを保持・計算しない
          */
@@ -195,9 +196,9 @@ struct BoneData {
          */
         uint8_t ikLoopCount;
 
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
-    PGD_FILE_ALIGN_OBJECT_BEGIN struct Serialize {
+    struct Serialize {
         Meta meta;
         std::vector<IkLink> ikLinks;
         std::vector<Bone> bones;
@@ -220,7 +221,7 @@ struct MorphData {
         uint16_t uvMorphNum = 0;
 
         uint16_t targetNum = 0;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Target {
         uint64_t symbol;
@@ -239,7 +240,7 @@ struct MorphData {
          * データ個数
          */
         uint32_t dataNum;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct PositionMorph {
         /**
@@ -251,7 +252,7 @@ struct MorphData {
          * 頂点インデックス
          */
         int32_t index;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct UvMorph {
         /**
@@ -263,7 +264,7 @@ struct MorphData {
          * 頂点インデックス
          */
         uint32_t index;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;
@@ -295,7 +296,7 @@ struct PhysicsData {
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         uint16_t bodyNum;
         uint16_t jointNum;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct RigidBody {
         uint64_t symbol;
@@ -330,7 +331,7 @@ struct PhysicsData {
         float rotateAttenuation;
         float elasticity;
         float friction;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct RigidJoint {
         uint64_t symbol;
@@ -372,7 +373,7 @@ struct PhysicsData {
          * バネの回転値
          */
         vec3 springRotate;
-    }PGD_FILE_ALIGN_OBJECT_END;
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     struct Serialize {
         Meta meta;

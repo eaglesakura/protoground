@@ -9,7 +9,7 @@ namespace es {
 namespace file {
 
 struct AnimationData {
-    struct Meta {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         enum {
             /**
              * ボーンアニメーションに親からのオフセット情報も付与されている
@@ -39,12 +39,12 @@ struct AnimationData {
 
         uint8_t reserve0;
         uint8_t reserve1;
-    };
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     /**
      * ボーンやモーフごとに管理されるキーフレームの集まり
      */
-    struct SymbolTimeline {
+    PGD_FILE_ALIGN_OBJECT_BEGIN  struct SymbolTimeline {
         /**
          * 関連付けるボーン名
          */
@@ -67,9 +67,9 @@ struct AnimationData {
 
         uint8_t reserve0;
         uint8_t reserve1;
-    };
+    } PGD_FILE_ALIGN_OBJECT_END;
 
-    struct BoneKeyFrame {
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct BoneKeyFrame {
         /**
          * ローカル位置
          */
@@ -87,7 +87,7 @@ struct AnimationData {
 
         uint8_t reserve0;
         uint8_t reserve1;
-    };
+    } PGD_FILE_ALIGN_OBJECT_END;
 
     /**
      * 2つのキーが示すアニメーションが同じである場合trueを返却する
