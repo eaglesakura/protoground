@@ -50,3 +50,7 @@ proguard/
 CMakeLists.txt
 test_report.xml
 
+# Visual Studio
+*.filters
+*.user
+x64
