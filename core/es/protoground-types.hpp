@@ -1,10 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include    <limits.h>
 
 /**
- * BUILD_XXXでプラットフォームを示す。
- *
+ * Check Platform
  * BUILD_Android
  * BUILD_iOS
  * BUILD_MacOSX
@@ -18,7 +17,9 @@
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 #define BUILD_Windows
 #define BUILD_64bit
-#include <Windows.h>
+
+#pragma warning(disable:4819)
+
 #else
 #error  Unknown Platform
 #endif

@@ -1,4 +1,4 @@
-#include "AssetManager.h"
+﻿#include "AssetManager.h"
 #include "es/internal/protoground-internal.hpp"
 
 #include "es/asset/IAsset.hpp"
@@ -28,7 +28,7 @@ std::shared_ptr<IAsset> AssetManager::load(const std::string &path, const Bundle
     return std::shared_ptr<IAsset>();
 }
 
-std::shared_ptr<IWriter> AssetManager::write(const std::string &path, const uint flags, const Bundle &hint) {
+std::shared_ptr<IWriter> AssetManager::write(const std::string &path, const unsigned flags, const Bundle &hint) {
     for (std::shared_ptr<IAssetLoader> &loader : loaders) {
         auto result = loader->write(path, flags, hint);
         if (result) {

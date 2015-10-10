@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/graphics/PixelFormat.hpp>
@@ -37,7 +37,7 @@ public:
      * 0を指定した場合、全データを一括で読み込む。
      * デフォルトは0になっている。
      */
-    void setOnceReadHeight(const uint heightPixels);
+    void setOnceReadHeight(const unsigned heightPixels);
 
     /**
      * ピクセルフォーマットの変換リクエストを行う。

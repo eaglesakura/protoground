@@ -1,4 +1,4 @@
-#include "SqliteEntity.h"
+﻿#include "SqliteEntity.h"
 #include "es/util/StringUtil.h"
 
 namespace es {

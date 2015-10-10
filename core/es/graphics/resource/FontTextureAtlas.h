@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/math/Rect.hpp"
@@ -30,7 +30,7 @@ public:
      * 新規に焼きこまれたテクスチャ数を返却する
      * bake中にgetTextures()するとiteratorが無効になる可能性があるため、外部でlockすることを推奨する。
      */
-    uint bake(IDevice *device, const wide_string &text);
+    unsigned bake(IDevice *device, const wide_string &text);
 
     /**
      * 管理しているテクスチャリストを取得する
@@ -102,7 +102,7 @@ public:
          * 画素情報のアップロードを行わせる
          * メソッド呼び出し時点でTextureはバインド済みであるため、アップロードのみを行うこと。
          */
-        virtual void upload(IDevice *device, ITexture *texture, const uint offsetX, const uint offsetY, const uint width, const uint height, const unsafe_array<uint8_t> &buffer) = 0;
+        virtual void upload(IDevice *device, ITexture *texture, const unsigned offsetX, const unsigned offsetY, const unsigned width, const unsigned height, const unsafe_array<uint8_t> &buffer) = 0;
 
         virtual ~TextureAllocator() = default;
     };

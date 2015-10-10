@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/memory/Buffer.hpp>
 #include "es/protoground.hpp"
@@ -27,7 +27,7 @@ public:
     /**
      * 永続データの書き込みを行う
      */
-    virtual std::shared_ptr<IWriter> write(const std::string &path, const uint flags, const Bundle &hint = Bundle()) = 0;
+    virtual std::shared_ptr<IWriter> write(const std::string &path, const unsigned flags, const Bundle &hint = Bundle()) = 0;
 
     virtual ~IAssetLoader() = default;
 };

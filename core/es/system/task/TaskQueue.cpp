@@ -1,4 +1,4 @@
-#include <queue>
+﻿#include <queue>
 #include <es/system/Thread.hpp>
 #include "TaskQueue.h"
 #include <boost/unordered_map.hpp>
@@ -14,7 +14,7 @@ public:
 
     ~TaskRef() = default;
 
-    void execute(TaskQueue *queue, const hash &theradId) {
+    void execute(TaskQueue *queue, const Hash64 &theradId) {
         auto nTask = task.lock();
         if (nTask) {
             nTask->execute(queue, theradId);
@@ -50,9 +50,9 @@ public:
         return ref;
     }
 
-    void execute(TaskQueue *queue, const hash &threadId) {
+    void execute(TaskQueue *queue, const Hash64 &threadId) {
         // 正しいThreadで動いていることを検証
-        assert(hash::from(std::this_thread::get_id()) == threadId);
+        assert(Hash64::from(std::this_thread::get_id()) == threadId);
         std::vector<sp<TaskQueue::TaskRef> > cpyTasks;
 
         // ロック時間を最小限にするため、タスクをコピー実行
@@ -89,19 +89,19 @@ private:
 class TaskQueue::Impl {
 public:
     mutex mtx;
-    boost::unordered_map<hash, sp<TaskQueue::ThreadTaskQueue> > threadTasks;
+    boost::unordered_map<Hash64, sp<TaskQueue::ThreadTaskQueue> > threadTasks;
 };
 
 TaskQueue::TaskQueue() {
     impl.reset(new TaskQueue::Impl());
 }
 
-TaskQueue::TaskHandle TaskQueue::add(const hash &threadId, const TaskQueue::TaskFunction function) {
+TaskQueue::TaskHandle TaskQueue::add(const Hash64 &threadId, const TaskQueue::TaskFunction function) {
     class TaskImpl : public Task {
     public:
         TaskQueue::TaskFunction func;
 
-        virtual void execute(TaskQueue *queue, const hash &threadId) {
+        virtual void execute(TaskQueue *queue, const Hash64 &threadId) {
             func(queue, threadId);
         }
 
@@ -112,10 +112,10 @@ TaskQueue::TaskHandle TaskQueue::add(const hash &threadId, const TaskQueue::Task
     sp<TaskImpl> task(new TaskImpl());
     task->func = function;
 
-    return add(threadId, task);
+    return add(threadId, selection_ptr<Task>(task));
 }
 
-TaskQueue::TaskHandle TaskQueue::add(const hash &threadId, const selection_ptr<Task> &task) {
+TaskQueue::TaskHandle TaskQueue::add(const Hash64 &threadId, const selection_ptr<Task> &task) {
     sp<TaskQueue::ThreadTaskQueue> queue;
 
     {
@@ -142,7 +142,7 @@ void TaskQueue::execute() {
     execute(Hash64::from(std::this_thread::get_id()));
 }
 
-void TaskQueue::execute(const hash &threadId) {
+void TaskQueue::execute(const Hash64 &threadId) {
     sp<ThreadTaskQueue> queue;
     {
         mutex_lock lock(impl->mtx);
@@ -155,7 +155,7 @@ void TaskQueue::execute(const hash &threadId) {
     queue->execute(this, threadId);
 }
 
-void TaskQueue::clean(const hash &threadId) {
+void TaskQueue::clean(const Hash64 &threadId) {
     mutex_lock lock(impl->mtx);
     impl->threadTasks.erase(threadId);
 }

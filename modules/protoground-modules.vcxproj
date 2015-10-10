@@ -42,7 +42,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -89,7 +89,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;FT2_BUILD_LIBRARY=1;ZLIB_CONST;SQLITE_DEFAULT_JOURNAL_SIZE_LIMIT=1048576;SQLITE_THREADSAFE=1;SQLITE_ENABLE_MEMORY_MANAGEMENT=1;SQLITE_DEFAULT_AUTOVACUUM=1;SQLITE_TEMP_STORE=3;SQLITE_ENABLE_FTS3;SQLITE_ENABLE_FTS3_BACKWARDS;SQLITE_ENABLE_POISON;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\freetype\devel;$(MSBuildProjectDirectory)\freetype\include;$(MSBuildProjectDirectory)\freetype\src;$(MSBuildProjectDirectory)\bullet3\src;$(MSBuildProjectDirectory)\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

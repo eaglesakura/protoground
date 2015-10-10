@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 #include    <chrono>
@@ -48,7 +48,7 @@ public:
 
     const nano_time &getEndTime() const { return endTime; }
 
-    static void sleepMs(const uint ms);
+    static void sleepMs(const unsigned ms);
 
     /**
      * 適当な起点からの時刻を取得する。

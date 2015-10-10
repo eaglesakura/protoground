@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/graphics/resource/ITexture.hpp"
@@ -112,7 +112,7 @@ public:
      *
      * @result レンダリングしたインスタンス数を返す
      */
-    virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const uint numInstances, RenderingInstance *instanceArray) = 0;
+    virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const unsigned numInstances, RenderingInstance *instanceArray) = 0;
 
     /**
      * レンダリングを終了する

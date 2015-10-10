@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/system/Object.hpp"
@@ -39,7 +39,7 @@ public:
     /**
      * アセットへの書き込みを行う
      */
-    virtual std::shared_ptr<IWriter> write(const std::string &path, const uint flags = 0, const Bundle &hint = Bundle());
+    virtual std::shared_ptr<IWriter> write(const std::string &path, const unsigned flags = 0, const Bundle &hint = Bundle());
 
 private:
     std::list<std::shared_ptr<IAssetLoader> > loaders;

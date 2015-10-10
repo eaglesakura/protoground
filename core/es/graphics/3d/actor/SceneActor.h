@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/math/protoground-glm.hpp"
@@ -22,7 +22,7 @@ class SceneActor : public virtual Object {
 public:
     SceneActor();
 
-    SceneActor(const long_hash &hash);
+    SceneActor(const Hash128 &hash);
 
     class ActorListener;
 
@@ -54,7 +54,7 @@ public:
      * 検索用のハッシュを取得する
      * 標準では自身のポインタを基準とするが、任意で書き換えを行える
      */
-    const long_hash &getHash() const;
+    const Hash128 &getHash() const;
 
     /**
      * センタリング座標を取得する。
@@ -63,7 +63,7 @@ public:
      * XYZの順序で書き込む必要がある。
      * 要素を正常に書き込んだ場合はtrueを返し、正常に返せない場合はfalseを返す。
      */
-    virtual bool getCenter(float *vec3) const = 0;
+    virtual bool getCenter(float *xyz) const = 0;
 
     /**
      * 無効なオブジェクトであればtrueを返却する
@@ -95,7 +95,7 @@ public:
      * @param passId   パスを識別するためのUID
      * @param deltaSec 前のフレームからの差分時間。ただし、現実時間とは調整が行われる場合がある。
      */
-    virtual void update(RenderingScene *scene, const uint passId, const float deltaSec);
+    virtual void update(RenderingScene *scene, const unsigned passId, const float deltaSec);
 
     /**
      * メッセージングを行う
@@ -109,7 +109,7 @@ public:
     /**
      * レンダリング用パケットを生成する
      */
-    virtual void makeRenderingPacket(const RenderingScene *scene, AsyncGraphicsRenderer *renderer, const uint globalPass);
+    virtual void makeRenderingPacket(const RenderingScene *scene, AsyncGraphicsRenderer *renderer, const unsigned globalPass);
 
     /**
      * リスナを追加する
@@ -143,7 +143,7 @@ public:
         /**
          * アップデートを行う
          */
-        virtual void onUpdate(RenderingScene *scene, SceneActor *actor, const uint passId, const float deltaSec) { }
+        virtual void onUpdate(RenderingScene *scene, SceneActor *actor, const unsigned passId, const float deltaSec) { }
 
         /**
          * メッセージ受信ハンドリングを行う
@@ -171,7 +171,7 @@ public:
          * @param パケットを登録した場合trueを返却する。
          *        trueを返却した場合、AsyncGraphicsRendererでパケットがclearされるまで、オブジェクトの生存を保証する。
          */
-        virtual bool onMakeRenderingPacket(const RenderingScene *scene, const SceneActor *actor, AsyncGraphicsRenderer *renderer, const uint globalPass) = 0;
+        virtual bool onMakeRenderingPacket(const RenderingScene *scene, const SceneActor *actor, AsyncGraphicsRenderer *renderer, const unsigned globalPass) = 0;
 
         virtual ~ActorRenderer() = default;
     };
@@ -191,20 +191,20 @@ protected:
      *
      * デフォルトは1番のみに所属している。
      */
-    uint groupFlags = 0x01;
+    uint32_t groupFlags = 0x01;
 
     /**
      * 属性フラグ
      *
      * デフォルトは追加属性を持たない
      */
-    uint attributeFlags = 0;
+    uint32_t attributeFlags = 0;
 
 private:
     /**
      * 検索用ハッシュ
      */
-    long_hash hash;
+    Hash128 hash;
 
     /**
      * 登録されているリスナ一覧

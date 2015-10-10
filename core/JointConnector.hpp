@@ -1,4 +1,4 @@
-/*
+﻿/*
 
  JointConnector.hpp
 The MIT License (MIT)

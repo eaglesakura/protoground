@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/system/string/HashStringTable.h>
 #include "es/protoground.hpp"

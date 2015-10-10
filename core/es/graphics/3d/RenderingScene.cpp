@@ -1,4 +1,4 @@
-#include <es/system/string/HashStringTable.h>
+﻿#include <es/system/string/HashStringTable.h>
 #include "RenderingScene.h"
 #include "es/internal/protoground-internal.hpp"
 
@@ -55,7 +55,7 @@ public:
         return actor->isInvalidate();
     }
 
-    void update(RenderingScene *scene, const uint passId, const float deltaSec) {
+    void update(RenderingScene *scene, const unsigned passId, const float deltaSec) {
         actor->update(scene, passId, deltaSec);
     }
 
@@ -158,7 +158,7 @@ void RenderingScene::addActor(const std::shared_ptr<SceneActor> &actor, bool che
     // actorを登録する
     sp<ActorCache> cache(new ActorCache(actor));
     actors.push_back(cache);
-    hashActors.insert(std::pair<long_hash, sp<ActorCache> >(actor->getHash(), cache));
+    hashActors.insert(std::pair<Hash128, sp<ActorCache> >(actor->getHash(), cache));
 }
 
 void RenderingScene::removeActor(const std::shared_ptr<SceneActor> &actor) {
@@ -228,7 +228,7 @@ void RenderingScene::updateBegin() {
 }
 
 
-void RenderingScene::update(const uint passId, const float deltaSec) {
+void RenderingScene::update(const unsigned passId, const float deltaSec) {
     for (auto &actor : actors) {
         actor->update(this, passId, deltaSec);
     }
@@ -283,7 +283,7 @@ void RenderingScene::updateEnd() {
     }
 }
 
-void RenderingScene::pendingMessage(const Object *sender, const long_hash &target, const Bundle &msg) {
+void RenderingScene::pendingMessage(const Object *sender, const Hash128 &target, const Bundle &msg) {
     PendingMessage pm;
     pm.opt = msg;
     pm.sender = (Object *) sender;
@@ -318,7 +318,7 @@ void RenderingScene::sendPendingMessages() {
     }
 }
 
-void RenderingScene::sendMessage(const Object *sender, const long_hash &target, const Bundle &msg) {
+void RenderingScene::sendMessage(const Object *sender, const Hash128 &target, const Bundle &msg) {
     // 指定したオブジェクトに投げる
     auto itr = hashActors.find(target);
     if (itr != hashActors.end()) {

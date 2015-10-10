@@ -1,4 +1,4 @@
-#include <es/asset/file/SerializeHeader.h>
+﻿#include <es/asset/file/SerializeHeader.h>
 #include <es/internal/log/Log.h>
 #include "AnimationData.h"
 

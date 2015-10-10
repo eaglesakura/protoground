@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 
@@ -14,7 +14,7 @@ public:
      *
      * 書き込みに成功した場合trueを返却する。
      */
-    virtual bool write(const void *buffer, const uint size) = 0;
+    virtual bool write(const void *buffer, const unsigned size) = 0;
 
     /**
      * 明示的にバッファをファイルへ反映させ、ファイルを閉じる。

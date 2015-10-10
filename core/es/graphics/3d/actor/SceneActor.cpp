@@ -1,17 +1,17 @@
-#include "SceneActor.h"
+﻿#include "SceneActor.h"
 #include "es/graphics/3d/RenderingScene.h"
 #include "es/graphics/rendering/AsyncGraphicsRenderer.h"
 
 namespace es {
 
 SceneActor::SceneActor() {
-    hash = long_hash::from((void *) this);
+    hash = Hash128::from((void *) this);
 }
 
-SceneActor::SceneActor(const long_hash &hash) : hash(hash) {
+SceneActor::SceneActor(const Hash128 &hash) : hash(hash) {
 }
 
-const long_hash &SceneActor::getHash() const {
+const Hash128 &SceneActor::getHash() const {
     return hash;
 }
 
@@ -23,14 +23,14 @@ uint32_t SceneActor::getAttributeFlags() const {
     return attributeFlags;
 }
 
-void SceneActor::update(RenderingScene *scene, const uint passId, const float deltaSec) {
+void SceneActor::update(RenderingScene *scene, const unsigned passId, const float deltaSec) {
     // 更新を伝える
     for (auto &listener : listeners) {
         listener->onUpdate(scene, this, passId, deltaSec);
     }
 }
 
-void SceneActor::makeRenderingPacket(const RenderingScene *scene, AsyncGraphicsRenderer *gr, const uint globalPass) {
+void SceneActor::makeRenderingPacket(const RenderingScene *scene, AsyncGraphicsRenderer *gr, const unsigned globalPass) {
     for (auto &renderer : renderers) {
         if (renderer->onMakeRenderingPacket(scene, this, gr, globalPass)) {
             gr->addSaveObject(renderer.lock());

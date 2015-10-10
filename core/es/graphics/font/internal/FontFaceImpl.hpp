@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/internal/protoground-internal.hpp"
 #include <es/graphics/PixelFormat.hpp>
@@ -44,7 +44,7 @@ public:
      *
      * レンダリングされる文字はこのwidth/heightに収まるように設定される。
      */
-    virtual void setSize(const uint width, const uint height) {
+    virtual void setSize(const unsigned width, const unsigned height) {
         auto lock = mutex.lock();
 
         size.x = width;

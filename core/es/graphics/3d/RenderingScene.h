@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/system/Bundle.h>
@@ -40,7 +40,7 @@ public:
     /**
      * メッセージを保留する
      */
-    void pendingMessage(const Object *sender, const long_hash &target, const Bundle &msg);
+    void pendingMessage(const Object *sender, const Hash128 &target, const Bundle &msg);
 
     /**
      * メッセージを保留する
@@ -61,7 +61,7 @@ public:
     /**
      * 指定したオブジェクトにメッセージを投げる
      */
-    void sendMessage(const Object *sender, const long_hash &target, const Bundle &msg);
+    void sendMessage(const Object *sender, const Hash128 &target, const Bundle &msg);
 
     /**
      * 全てのオブジェクトにメッセージを投げる
@@ -118,7 +118,7 @@ public:
     /**
      * 更新を行わせる
      */
-    virtual void update(const uint passId, const float deltaSec);
+    virtual void update(const unsigned passId, const float deltaSec);
 
     /**
      * 更新を終了する
@@ -135,7 +135,7 @@ public:
         /**
          * 更新を行った後に呼び出される
          */
-        virtual void onUpdated(RenderingScene *scene, const uint passId, const float deltaSec) { }
+        virtual void onUpdated(RenderingScene *scene, const unsigned passId, const float deltaSec) { }
 
         /**
          * 更新を完了した
@@ -201,7 +201,7 @@ private:
         /**
          * ターゲットを固定する
          */
-        long_hash target;
+		Hash128 target;
     };
 
     /**
@@ -222,7 +222,7 @@ private:
     /**
      * ハッシュごとに管理されたアクター
      */
-    std::map<long_hash, sp<ActorCache>> hashActors;
+    std::map<Hash128, sp<ActorCache>> hashActors;
 
     /**
      * 保留されている送信メッセージ

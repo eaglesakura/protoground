@@ -1,9 +1,10 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
-#include    <math.h>
+#include    <cmath>
 #include    <cstdlib>
 #include    <complex>
+#include	<algorithm>
 
 namespace es {
 
@@ -46,8 +47,8 @@ inline bool isPowerOfTwo(const T n) {
 /**
  * サイズが2のn乗になるように修正する
  */
-inline uint toPowerOfTwo(const uint size) {
-    uint result = 1;
+inline unsigned toPowerOfTwo(const unsigned size) {
+	unsigned result = 1;
 
     while (result < size) {
         result <<= 1;
@@ -59,7 +60,7 @@ inline uint toPowerOfTwo(const uint size) {
 /**
  * サイズが2のn乗になるように修正する
  */
-inline uint toPowerOfTwo(const uint x, const uint y) {
+inline unsigned toPowerOfTwo(const unsigned x, const unsigned y) {
     return std::max(toPowerOfTwo(x), toPowerOfTwo(y));
 }
 

@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 
 #include "es/internal/protoground-internal.hpp"
 #include "AndroidProcessContext.h"

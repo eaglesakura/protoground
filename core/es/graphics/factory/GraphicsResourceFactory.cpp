@@ -1,4 +1,4 @@
-#include "GraphicsResourceFactory.h"
+﻿#include "GraphicsResourceFactory.h"
 #include <es/graphics/image/png/PngFileDecoder.h>
 #include "es/internal/protoground-internal.hpp"
 #include "es/graphics/2d/SpriteRenderer.h"

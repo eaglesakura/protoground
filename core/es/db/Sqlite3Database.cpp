@@ -1,4 +1,4 @@
-#include "Sqlite3Database.h"
+﻿#include "Sqlite3Database.h"
 #include <sqlite3.h>
 #include <es/internal/log/Log.h>
 #include <es/util/StringUtil.h>

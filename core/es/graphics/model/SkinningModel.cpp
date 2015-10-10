@@ -1,4 +1,4 @@
-#include "SkinningModel.h"
+﻿#include "SkinningModel.h"
 #include "es/graphics/model/file/ModelData.h"
 #include "es/graphics/model/pose/AnimationPose.h"
 
@@ -75,7 +75,7 @@ void SkinningModel::uploadVertices(std::shared_ptr<IDevice> device, const Vertex
     } else {
         void *vram = mesh->lock(device, opt);
 
-        const uint dataSize = attributes->getBytes();
+        const unsigned dataSize = attributes->getBytes();
         while (!attributes->isEnd()) {
             uint8_t *writeHeader = (uint8_t *) VertexAttribute::getWriteHeader(vram, *attributes, complex);
             uint8_t *readHeader = (uint8_t *) VertexAttribute::getWriteHeader(model->mesh.vertices.get(), *attributes, complex);

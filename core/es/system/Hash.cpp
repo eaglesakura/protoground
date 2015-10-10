@@ -1,4 +1,4 @@
-#include "hash64.h"
+﻿#include "hash64.h"
 #include "Hash128.h"
 
 #include "es/util/StringUtil.h"
@@ -128,6 +128,22 @@ Hash64 Hash64::from(const double value) {
 }
 
 namespace {
+	
+static uint64_t make_hash(const uint8_t *buffer, int length, uint64_t seed) {
+    assert(buffer);
+	assert(length);
+
+    uint64_t result = seed;
+    while (length--) {
+        assert(seed);
+        result ^= ((*buffer) & 0xFF) * seed;
+        seed = ~((seed << 7) | ((seed >> 57) & 0x00FFFFFFFFFFFFFFL));
+        ++buffer;
+    }
+
+    assert(result);
+    return result;
+}
 
 static uint64_t make_hash(const uint8_t *str, uint64_t seed) {
     assert(str);
@@ -159,14 +175,7 @@ Hash64 Hash64::from(const string &value) {
 
 Hash64 Hash64::from(const std::thread::id &id) {
     Hash64 result;
-#if defined(BUILD_32bit)
-    static_assert(sizeof(id) == 4, "thread id size error");
-    result.hash64 = *((uint32_t *) &id) & 0x00000000FFFFFFFFL;
-    result.hash64 |= ((uint64_t) ValueType_thread_id << 32);
-#else
-    static_assert(sizeof(id) == 8, "thread id size error");
-    result.hash64 = *((uint64_t *) &id);
-#endif
+    result.hash64 = make_hash((uint8_t*)&id, sizeof(id), 0x1234567887654321L);
     return result;
 }
 

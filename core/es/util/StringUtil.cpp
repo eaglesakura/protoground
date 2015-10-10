@@ -1,4 +1,4 @@
-#include    "StringUtil.h"
+﻿#include    "StringUtil.h"
 #include <sstream>
 #include <es/memory/Buffer.hpp>
 
@@ -39,7 +39,7 @@ int split(const std::string &origin, const std::string &delim, std::vector<std::
 
     std::istringstream iss(origin);
     copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(), std::back_inserter(*result));
-    return result->size() - oldSize;
+    return (int)(result->size() - oldSize);
 }
 
 const char *getFileExt(const char *path) {

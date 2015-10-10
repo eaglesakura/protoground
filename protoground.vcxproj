@@ -39,10 +39,10 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\modules\freetype\devel;$(MSBuildProjectDirectory)\modules\freetype\include;$(MSBuildProjectDirectory)\modules\freetype\src;$(MSBuildProjectDirectory)\modules\bullet3\src;$(MSBuildProjectDirectory)\modules\glm;$(MSBuildProjectDirectory)\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\modules\freetype\devel;$(MSBuildProjectDirectory)\modules\freetype\include;$(MSBuildProjectDirectory)\modules\freetype\src;$(MSBuildProjectDirectory)\modules\bullet3\src;$(MSBuildProjectDirectory)\modules\glm;$(MSBuildProjectDirectory)\\modules\sqlite3;$(MSBuildProjectDirectory)\modules\windows-lib;$(MSBuildProjectDirectory)\modules\boost;$(MSBuildProjectDirectory)\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -101,7 +101,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <TargetMachine>MachineX86</TargetMachine>
+      <TargetMachine>MachineX64</TargetMachine>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,15 +139,186 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="core\es\android\AndroidFactory.h" />
+    <ClInclude Include="core\es\android\internal\asset\AndroidAssetLoader.h" />
+    <ClInclude Include="core\es\android\internal\asset\AndroidMappedAsset.hpp" />
+    <ClInclude Include="core\es\asset\AssetManager.h" />
+    <ClInclude Include="core\es\asset\file\ChunkFile.h" />
+    <ClInclude Include="core\es\asset\file\SerializeHeader.h" />
+    <ClInclude Include="core\es\asset\IAsset.hpp" />
+    <ClInclude Include="core\es\asset\IAssetLoader.hpp" />
+    <ClInclude Include="core\es\asset\internal\InMemoryAsset.hpp" />
+    <ClInclude Include="core\es\asset\internal\LocalFileWriter.hpp" />
+    <ClInclude Include="core\es\asset\IWriter.hpp" />
+    <ClInclude Include="core\es\asset\LocalFileAssetLoader.h" />
+    <ClInclude Include="core\es\db\IDatabase.h" />
+    <ClInclude Include="core\es\db\internal\SqliteObjectWrapper.hpp" />
+    <ClInclude Include="core\es\db\KeyValueStore.h" />
+    <ClInclude Include="core\es\db\schema\SqliteEntity.h" />
+    <ClInclude Include="core\es\db\schema\SqliteSchema.h" />
+    <ClInclude Include="core\es\db\schema\SqliteSchemaSupport.hpp" />
+    <ClInclude Include="core\es\db\Sqlite3Cursor.h" />
+    <ClInclude Include="core\es\db\Sqlite3Database.h" />
     <ClInclude Include="core\es\debug\Testing.hpp" />
+    <ClInclude Include="core\es\framework\app\ApplicationRunner.h" />
+    <ClInclude Include="core\es\framework\app\BaseContext.h" />
+    <ClInclude Include="core\es\framework\app\IApplication.hpp" />
+    <ClInclude Include="core\es\framework\fragment\ApplicationFragmentController.hpp" />
+    <ClInclude Include="core\es\framework\fragment\IApplicationFragment.h" />
+    <ClInclude Include="core\es\framework\touch\TouchDetector.h" />
+    <ClInclude Include="core\es\framework\touch\TouchListener.hpp" />
+    <ClInclude Include="core\es\framework\touch\TouchPoint.h" />
+    <ClInclude Include="core\es\graphics\2d\IDisplayTransfer2D.h" />
+    <ClInclude Include="core\es\graphics\2d\ISpriteRenderingCallback.h" />
+    <ClInclude Include="core\es\graphics\2d\SpriteRenderer.h" />
+    <ClInclude Include="core\es\graphics\3d\actor\SceneActor.h" />
+    <ClInclude Include="core\es\graphics\3d\actor\SimpleSceneActor.h" />
+    <ClInclude Include="core\es\graphics\3d\camera\SceneCamera.h" />
+    <ClInclude Include="core\es\graphics\3d\camera\SceneLens.h" />
+    <ClInclude Include="core\es\graphics\3d\light\ILight.hpp" />
+    <ClInclude Include="core\es\graphics\3d\RenderingScene.h" />
+    <ClInclude Include="core\es\graphics\Color.hpp" />
+    <ClInclude Include="core\es\graphics\debug\GraphicsDebugDrawer.h" />
+    <ClInclude Include="core\es\graphics\engine\IDevice.hpp" />
+    <ClInclude Include="core\es\graphics\engine\IGPUCapacity.hpp" />
+    <ClInclude Include="core\es\graphics\engine\IGraphicsEngine.hpp" />
+    <ClInclude Include="core\es\graphics\engine\IGraphicsResource.h" />
+    <ClInclude Include="core\es\graphics\engine\IRenderingSurface.hpp" />
+    <ClInclude Include="core\es\graphics\factory\GraphicsResourceFactory.h" />
+    <ClInclude Include="core\es\graphics\font\FontCharactor.h" />
+    <ClInclude Include="core\es\graphics\font\FontFace.h" />
+    <ClInclude Include="core\es\graphics\font\Freetype.h" />
+    <ClInclude Include="core\es\graphics\font\internal\FontCharactorImpl.hpp" />
+    <ClInclude Include="core\es\graphics\font\internal\FontFaceImpl.hpp" />
+    <ClInclude Include="core\es\graphics\font\internal\FreetypeLibrary.hpp" />
+    <ClInclude Include="core\es\graphics\font\TextLayoutManager.h" />
+    <ClInclude Include="core\es\graphics\Graphics.hpp" />
+    <ClInclude Include="core\es\graphics\image\IImageDecodeCallback.hpp" />
+    <ClInclude Include="core\es\graphics\image\png\PngFileDecoder.h" />
+    <ClInclude Include="core\es\graphics\model\file\AnimationData.h" />
+    <ClInclude Include="core\es\graphics\model\file\ModelData.h" />
+    <ClInclude Include="core\es\graphics\model\file\SymbolTable.h" />
+    <ClInclude Include="core\es\graphics\model\pose\AnimationController.h" />
+    <ClInclude Include="core\es\graphics\model\pose\AnimationPose.h" />
+    <ClInclude Include="core\es\graphics\model\pose\BoneController.h" />
+    <ClInclude Include="core\es\graphics\model\pose\internal\ConstraintImpl.hpp" />
+    <ClInclude Include="core\es\graphics\model\pose\internal\MotionStateImpl.hpp" />
+    <ClInclude Include="core\es\graphics\model\pose\internal\RigidBodyImpl.hpp" />
+    <ClInclude Include="core\es\graphics\model\pose\PhysicsController.h" />
+    <ClInclude Include="core\es\graphics\model\pose\PhysicsWorld.h" />
+    <ClInclude Include="core\es\graphics\model\pose\Transform.h" />
+    <ClInclude Include="core\es\graphics\model\SkinningModel.h" />
+    <ClInclude Include="core\es\graphics\model\skin\CpuSkinningController.h" />
+    <ClInclude Include="core\es\graphics\model\skin\ISkinningController.hpp" />
+    <ClInclude Include="core\es\graphics\model\VertexAttribute.h" />
+    <ClInclude Include="core\es\graphics\PixelFormat.hpp" />
+    <ClInclude Include="core\es\graphics\rendering\AsyncGraphicsRenderer.h" />
+    <ClInclude Include="core\es\graphics\resource\FontTextureAtlas.h" />
+    <ClInclude Include="core\es\graphics\resource\IMesh.hpp" />
+    <ClInclude Include="core\es\graphics\resource\ITexture.hpp" />
+    <ClInclude Include="core\es\graphics\resource\RawImage.h" />
+    <ClInclude Include="core\es\internal\log\Log.h" />
+    <ClInclude Include="core\es\internal\protoground-internal.hpp" />
+    <ClInclude Include="core\es\math\Angle.hpp" />
+    <ClInclude Include="core\es\math\Math.hpp" />
+    <ClInclude Include="core\es\math\protoground-glm.hpp" />
+    <ClInclude Include="core\es\math\Rect.hpp" />
+    <ClInclude Include="core\es\math\VectorMath.hpp" />
+    <ClInclude Include="core\es\memory\AlignAllocator.h" />
+    <ClInclude Include="core\es\memory\BitFlags.hpp" />
+    <ClInclude Include="core\es\memory\buffer.hpp" />
+    <ClInclude Include="core\es\memory\query_ptr.hpp" />
+    <ClInclude Include="core\es\memory\safearray.hpp" />
+    <ClInclude Include="core\es\memory\selection_ptr.hpp" />
     <ClInclude Include="core\es\protoground-types.hpp" />
     <ClInclude Include="core\es\protoground.hpp" />
+    <ClInclude Include="core\es\system\Bundle.h" />
+    <ClInclude Include="core\es\system\Hash128.h" />
+    <ClInclude Include="core\es\system\Hash64.h" />
+    <ClInclude Include="core\es\system\LongPointer.hpp" />
+    <ClInclude Include="core\es\system\NanoTimer.h" />
+    <ClInclude Include="core\es\system\object.hpp" />
+    <ClInclude Include="core\es\system\OptionalMutex.h" />
+    <ClInclude Include="core\es\system\process\android\AndroidProcessContext.h" />
+    <ClInclude Include="core\es\system\process\basic\ProcessContext.h" />
+    <ClInclude Include="core\es\system\process\IProcessContext.h" />
+    <ClInclude Include="core\es\system\string\HashString.h" />
+    <ClInclude Include="core\es\system\string\HashStringTable.h" />
+    <ClInclude Include="core\es\system\string\internal\Cpp11StringConverter.h" />
+    <ClInclude Include="core\es\system\string\internal\JavaStringConverterImpl.h" />
+    <ClInclude Include="core\es\system\string\internal\SharedString.hpp" />
+    <ClInclude Include="core\es\system\string\IStringConverter.h" />
+    <ClInclude Include="core\es\system\task\TaskQueue.h" />
+    <ClInclude Include="core\es\system\Thread.hpp" />
     <ClInclude Include="core\es\util\AverageChecker.hpp" />
     <ClInclude Include="core\es\util\MapUtil.hpp" />
     <ClInclude Include="core\es\util\StringUtil.h" />
     <ClInclude Include="core\es\util\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="core\es\android\AndroidFactory.cpp" />
+    <ClCompile Include="core\es\android\internal\asset\AndroidAssetLoader.cpp" />
+    <ClCompile Include="core\es\asset\AssetManager.cpp" />
+    <ClCompile Include="core\es\asset\AssetUtil.cpp" />
+    <ClCompile Include="core\es\asset\file\ChunkFile.cpp" />
+    <ClCompile Include="core\es\asset\file\SerializeHeader.cpp" />
+    <ClCompile Include="core\es\asset\LocalFileAssetLoader.cpp" />
+    <ClCompile Include="core\es\db\IDatabase.cpp" />
+    <ClCompile Include="core\es\db\KeyValueStore.cpp" />
+    <ClCompile Include="core\es\db\schema\SqliteEntity.cpp" />
+    <ClCompile Include="core\es\db\schema\SqliteSchema.cpp" />
+    <ClCompile Include="core\es\db\Sqlite3Cursor.cpp" />
+    <ClCompile Include="core\es\db\Sqlite3Database.cpp" />
+    <ClCompile Include="core\es\framework\app\ApplicationRunner.cpp" />
+    <ClCompile Include="core\es\framework\app\BaseContext.cpp" />
+    <ClCompile Include="core\es\framework\fragment\IApplicationFragment.cpp" />
+    <ClCompile Include="core\es\framework\touch\TouchDetector.cpp" />
+    <ClCompile Include="core\es\framework\touch\TouchPoint.cpp" />
+    <ClCompile Include="core\es\graphics\2d\SpriteRenderer.cpp" />
+    <ClCompile Include="core\es\graphics\3d\actor\SceneActor.cpp" />
+    <ClCompile Include="core\es\graphics\3d\actor\SimpleSceneActor.cpp" />
+    <ClCompile Include="core\es\graphics\3d\camera\SceneCamera.cpp" />
+    <ClCompile Include="core\es\graphics\3d\camera\SceneLens.cpp" />
+    <ClCompile Include="core\es\graphics\3d\RenderingScene.cpp" />
+    <ClCompile Include="core\es\graphics\debug\GraphicsDebugDrawer.cpp" />
+    <ClCompile Include="core\es\graphics\engine\IGraphicsResource.cpp" />
+    <ClCompile Include="core\es\graphics\factory\GraphicsResourceFactory.cpp" />
+    <ClCompile Include="core\es\graphics\font\FontCharactor.cpp" />
+    <ClCompile Include="core\es\graphics\font\FontFace.cpp" />
+    <ClCompile Include="core\es\graphics\font\Freetype.cpp" />
+    <ClCompile Include="core\es\graphics\font\TextLayoutManager.cpp" />
+    <ClCompile Include="core\es\graphics\image\png\PngFileDecoder.cpp" />
+    <ClCompile Include="core\es\graphics\model\file\AnimationData.cpp" />
+    <ClCompile Include="core\es\graphics\model\file\ModelData.cpp" />
+    <ClCompile Include="core\es\graphics\model\file\ModelData_serialize.cpp.cpp" />
+    <ClCompile Include="core\es\graphics\model\file\SymbolTable.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\AnimationController.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\AnimationPose.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\BoneController.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\PhysicsController.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\PhysicsWorld.cpp" />
+    <ClCompile Include="core\es\graphics\model\pose\Transform.cpp" />
+    <ClCompile Include="core\es\graphics\model\SkinningModel.cpp" />
+    <ClCompile Include="core\es\graphics\model\skin\CpuSkinningController.cpp" />
+    <ClCompile Include="core\es\graphics\model\VertexAttribute.cpp" />
+    <ClCompile Include="core\es\graphics\PixelFormat.cpp" />
+    <ClCompile Include="core\es\graphics\rendering\AsyncGraphicsRenderer.cpp" />
+    <ClCompile Include="core\es\graphics\resource\FontTextureAtlas.cpp" />
+    <ClCompile Include="core\es\graphics\resource\RawImage.cpp" />
+    <ClCompile Include="core\es\internal\log\Log.cpp" />
+    <ClCompile Include="core\es\memory\AlignAllocator.cpp" />
+    <ClCompile Include="core\es\system\Bundle.cpp" />
+    <ClCompile Include="core\es\system\Hash.cpp" />
+    <ClCompile Include="core\es\system\NanoTimer.cpp" />
+    <ClCompile Include="core\es\system\OptionalMutex.cpp" />
+    <ClCompile Include="core\es\system\process\android\AndroidProcessContext.cpp" />
+    <ClCompile Include="core\es\system\process\basic\ProcessContext.cpp" />
+    <ClCompile Include="core\es\system\process\IProcessContext.cpp" />
+    <ClCompile Include="core\es\system\string\HashString.cpp" />
+    <ClCompile Include="core\es\system\string\HashStringTable.cpp" />
+    <ClCompile Include="core\es\system\string\internal\Cpp11StringConverter.cpp" />
+    <ClCompile Include="core\es\system\string\internal\JavaStringConverterImpl.cpp" />
+    <ClCompile Include="core\es\system\task\TaskQueue.cpp" />
     <ClCompile Include="core\es\util\StringUtil.cpp" />
     <ClCompile Include="core\es\util\Util.cpp" />
   </ItemGroup>

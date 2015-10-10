@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/engine/IRenderingSurface.hpp>
 #include "es/protoground.hpp"

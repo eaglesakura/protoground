@@ -1,4 +1,4 @@
-#include "HashString.h"
+﻿#include "HashString.h"
 #include "es/system/string/internal/SharedString.hpp"
 
 namespace es {

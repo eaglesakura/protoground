@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/graphics/font/FontCharactor.h"
@@ -30,7 +30,7 @@ public:
     /**
      * 指定した間隔を開ける
      */
-    void addSpace(const uint xPixels);
+    void addSpace(const unsigned xPixels);
 
     /**
      * 改行を行う
@@ -46,7 +46,7 @@ public:
     /**
      * レイアウトに配置されるサイズを指定する
      */
-    void setLayoutSize(const uint width, const uint height);
+    void setLayoutSize(const unsigned width, const unsigned height);
 
     /**
      * レイアウトに配置されるサイズを取得する
@@ -61,12 +61,12 @@ public:
     /**
      * レイアウトされる最大行数を指定する
      */
-    void setMaxLines(const uint lines);
+    void setMaxLines(const unsigned lines);
 
     /**
      * 最大行数を取得する
      */
-    uint getMaxLines() const;
+	unsigned getMaxLines() const;
 
     /**
      * 最終行をレイアウト中である場合trueを返す
@@ -100,7 +100,7 @@ public:
         /**
          * 配置されている行を取得する
          */
-        const uint getLine() const;
+        const unsigned getLine() const;
 
     private:
         /**

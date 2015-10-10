@@ -1,4 +1,4 @@
-#include "Cpp11StringConverter.h"
+﻿#include "Cpp11StringConverter.h"
 
 #if defined(BUILD_MacOSX)
 

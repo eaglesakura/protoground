@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/memory/SafeArray.hpp"
 #include    "es/graphics/PixelFormat.hpp"
@@ -14,12 +14,12 @@ public:
     /**
      * フォーマットを指定してピクセルバッファを生成する
      */
-    virtual void alloc(const PixelFormat_e format, const uint width, const uint height);
+    virtual void alloc(const PixelFormat_e format, const unsigned width, const unsigned height);
 
     /**
      * ピクセルバッファの格納先を外部から指定する
      */
-    virtual void setBuffer(const void *buffer, const uint length);
+    virtual void setBuffer(const void *buffer, const unsigned length);
 
     /**
      * 縦方向に反転する。
@@ -30,7 +30,7 @@ public:
     /**
      * ピクセルバッファの長さを取得する
      */
-    uint getPixelBufferLength() const {
+    unsigned getPixelBufferLength() const {
         return pBuffer.length;
     }
 
@@ -44,7 +44,7 @@ public:
     /**
      * 1ピクセルの容量を取得するう
      */
-    uint getPixelBytes() const {
+    unsigned getPixelBytes() const {
         return Pixel::getPixelBytes(getPixelFormat());
     }
 
@@ -55,25 +55,25 @@ public:
     /**
      * 指定したY位置のピクセルバッファを取得する
      */
-    void *getPixels(const uint y) {
+    void *getPixels(const unsigned y) {
         return ((uint8_t *) getPixels()) + (y * getWidth() * getPixelBytes());
     }
 
     /**
      * ピクセルバッファ幅を取得する
      */
-    uint getWidth() const {
+    unsigned getWidth() const {
         return width;
     }
 
     /**
      * ピクセルバッファ高を取得する
      */
-    uint getHeight() const {
+    unsigned getHeight() const {
         return height;
     }
 
-    static uint getBufferSize(const PixelFormat_e format, const uint width, const uint height) {
+    static unsigned getBufferSize(const PixelFormat_e format, const unsigned width, const unsigned height) {
         return Pixel::getPixelBytes(format) * width * height;
     }
 
@@ -96,17 +96,17 @@ private:
     /**
      * 画像幅
      */
-    uint width;
+    unsigned width;
 
     /**
      * 画像高
      */
-    uint height;
+	unsigned height;
 
     /**
      * y0行とy1行のピクセルを入れ替える
      */
-    void swapLineY(const uint y0, const uint y1);
+    void swapLineY(const unsigned y0, const unsigned y1);
 };
 
 

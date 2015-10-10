@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 
 #include "JavaStringConverterImpl.h"
 #include "es/memory/Buffer.hpp"

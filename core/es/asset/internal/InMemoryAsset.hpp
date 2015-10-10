@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include "es/asset/IAsset.hpp"
 #include <vector>
 #include <fstream>
+#include <algorithm>
 
 namespace es {
 
@@ -21,12 +22,12 @@ class InMemoryAsset : public Object, public IAsset {
     /**
      * 現在指しているオフセット値
      */
-    uint offset = 0;
+    unsigned offset = 0;
 
 public:
     InMemoryAsset(std::ifstream &stream) {
         stream.seekg(0, std::ifstream::end);
-        uint bufferSize = stream.tellg();
+        unsigned bufferSize = stream.tellg();
         stream.clear();
         stream.seekg(0, std::ifstream::beg);
 
@@ -54,9 +55,9 @@ public:
      *
      * リクエストされたsizeの容量を読み込むように努めるが、ファイル終端になった場合はsize以下の値を返却する
      */
-    virtual unsafe_array<uint8_t> read(const uint size) {
+    virtual unsafe_array<uint8_t> read(const unsigned size) {
 
-        uint sliceSize = std::min(size, available());
+        unsigned sliceSize = std::min(size, available());
         assert(sliceSize <= buffer.size());
 
         if (sliceSize == 0) {
@@ -72,9 +73,9 @@ public:
     /**
      * 残容量を取得する
      */
-    virtual uint available() const {
+    virtual unsigned available() const {
         assert(offset <= buffer.size());
-        return (uint) (buffer.size()) - offset;
+        return (unsigned) (buffer.size()) - offset;
     }
 };
 

@@ -1,4 +1,4 @@
-#include "es/internal/protoground-internal.hpp"
+﻿#include "es/internal/protoground-internal.hpp"
 #include "FontTextureAtlas.h"
 #include "es/graphics/font/FontCharactor.h"
 #include "es/util/MapUtil.hpp"
@@ -18,7 +18,7 @@ FontTextureAtlas::FontTextureAtlas(const std::shared_ptr<FontFace> newFont) : fo
     assert(font);
 }
 
-uint FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
+unsigned FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
     class TempListener : public IImageDecodeCallback {
     public:
         ImageInfo info;
@@ -34,7 +34,7 @@ uint FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
          *
          * 引数lineは使いまわされる可能性があるため、内部的にテクスチャコピー等を行うこと。
          */
-        virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const uint height) {
+        virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const unsigned height) {
             this->pixels = pixels;
         }
 
@@ -64,7 +64,7 @@ uint FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
     }
 
     const auto size = font->getSize();
-    uint result = 0;
+    unsigned result = 0;
     for (const wide_char code : text) {
         Hash64 hash = make_hash(code, size.x, size.y);
         if (atlasMap.find(hash) != atlasMap.end()) {

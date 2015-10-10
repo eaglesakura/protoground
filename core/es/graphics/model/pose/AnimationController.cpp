@@ -1,4 +1,4 @@
-#include <es/math/Math.hpp>
+﻿#include <es/math/Math.hpp>
 #include "AnimationController.h"
 #include "es/graphics/model/file/AnimationData.h"
 

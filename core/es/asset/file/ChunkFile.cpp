@@ -1,4 +1,4 @@
-#include <es/math/Math.hpp>
+﻿#include <es/math/Math.hpp>
 #include "ChunkFile.h"
 
 namespace es {
@@ -93,7 +93,7 @@ bool ChunkFile::parse(std::shared_ptr<IAsset> asset, ChunkFile::ReadCallback *ca
         ParseOption option;
         callback->getChunkParseOption(&chunkHeader, &option);
 
-        uint onceReadBytes = std::min(chunkHeader.bytes, option.onceReadBytes);
+        unsigned onceReadBytes = std::min(chunkHeader.bytes, option.onceReadBytes);
         // 0byteである場合は一括読み込み
         if (!onceReadBytes) {
             onceReadBytes = chunkHeader.bytes;
