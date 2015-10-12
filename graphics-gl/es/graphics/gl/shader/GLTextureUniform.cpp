@@ -1,4 +1,4 @@
-#include "GLTextureUniform.h"
+﻿#include "GLTextureUniform.h"
 #include "es/graphics/gl/engine/GLDevice.h"
 #include "es/graphics/gl/resource/GLTexture.h"
 
@@ -13,7 +13,7 @@ bool GLTextureUniform::upload(es::gl::GLDevice *device, es::gl::GLTexture *textu
         return false;
     }
 
-    uint texUnitIndex = texture->bind(device->getTextureState());
+	unsigned texUnitIndex = texture->bind(device->getTextureState());
 
     if (bindUnit != texUnitIndex) {
         glUniform1i(location, texUnitIndex);

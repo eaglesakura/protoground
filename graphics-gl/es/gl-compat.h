@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** Copyright (c) 2013-2014 The Khronos Group Inc.
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a
@@ -57,6 +57,30 @@ typedef int GLint;
 typedef unsigned char GLboolean;
 typedef int GLsizei;
 typedef khronos_uint8_t GLubyte;
+#elif defined(_WIN32) || defined(_WIN64)
+
+typedef unsigned int GLenum;
+typedef unsigned char GLboolean;
+typedef unsigned int GLbitfield;
+typedef signed char GLbyte;
+typedef short GLshort;
+typedef int GLint;
+typedef int GLsizei;
+typedef unsigned char GLubyte;
+typedef unsigned short GLushort;
+typedef unsigned int GLuint;
+typedef float GLfloat;
+typedef float GLclampf;
+typedef double GLdouble;
+typedef double GLclampd;
+typedef void GLvoid;
+typedef struct __GLsync *GLsync;
+typedef long long GLint64;
+typedef unsigned long long GLuint64;
+typedef signed long int GLintptr;
+typedef char GLchar;
+typedef signed   long  int GLsizeiptr;
+
 #endif
 
 #ifdef __cplusplus

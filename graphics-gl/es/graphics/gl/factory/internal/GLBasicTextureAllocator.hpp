@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/gl/engine/GLDevice.h>
 #include "es/graphics/resource/FontTextureAtlas.h"
@@ -12,7 +12,7 @@ namespace internal {
 
 class BasicTextureAllocator : public FontTextureAtlas::TextureAllocator {
 public:
-    BasicTextureAllocator(uint newSize) : size(newSize) {
+    BasicTextureAllocator(unsigned newSize) : size(newSize) {
         assert(isPowerOfTwo(newSize));
         assert(newSize >= 2);
     }
@@ -31,8 +31,8 @@ public:
         result->setFilter(GL_NEAREST, GL_NEAREST);
         result->allocPixelMemory(PixelFormat_R8, 0, size, size);
 
-        const uint BUFFER_DIV = 8;
-        const uint BUFFER_SIZE = size / BUFFER_DIV;
+        const unsigned BUFFER_DIV = 8;
+        const unsigned BUFFER_SIZE = size / BUFFER_DIV;
         std::vector<uint8_t> cache((BUFFER_SIZE) * (BUFFER_SIZE));
         util::zeromemory(&cache);
         for (int i = 0; i < BUFFER_DIV; ++i) {
@@ -56,8 +56,8 @@ public:
      */
     virtual void upload(IDevice *device,
                         ITexture *image,
-                        const uint offsetX, const uint offsetY,
-                        const uint width, const uint height,
+                        const unsigned offsetX, const unsigned offsetY,
+                        const unsigned width, const unsigned height,
                         const unsafe_array<uint8_t> &buffer) override {
         GLDevice *glDevice = GLDevice::query::from(device);
         GLTexture *texture = GLTexture::query::from(image);
@@ -83,7 +83,7 @@ private:
     /**
      * 生成するテクスチャのサイズ
      */
-    uint size;
+	unsigned size;
 };
 
 

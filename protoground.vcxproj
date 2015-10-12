@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\modules\freetype\devel;$(MSBuildProjectDirectory)\modules\freetype\include;$(MSBuildProjectDirectory)\modules\freetype\src;$(MSBuildProjectDirectory)\modules\bullet3\src;$(MSBuildProjectDirectory)\modules\glm;$(MSBuildProjectDirectory)\\modules\sqlite3;$(MSBuildProjectDirectory)\modules\windows-lib;$(MSBuildProjectDirectory)\modules\boost;$(MSBuildProjectDirectory)\core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\modules\freetype\devel;$(MSBuildProjectDirectory)\modules\freetype\include;$(MSBuildProjectDirectory)\modules\freetype\src;$(MSBuildProjectDirectory)\modules\bullet3\src;$(MSBuildProjectDirectory)\modules\glm;$(MSBuildProjectDirectory)\\modules\sqlite3;$(MSBuildProjectDirectory)\modules\windows-lib;$(MSBuildProjectDirectory)\modules\boost;$(MSBuildProjectDirectory)\core;$(MSBuildProjectDirectory)\graphics-gl;$(MSBuildProjectDirectory)\graphics-glfw;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -254,6 +254,27 @@
     <ClInclude Include="core\es\util\MapUtil.hpp" />
     <ClInclude Include="core\es\util\StringUtil.h" />
     <ClInclude Include="core\es\util\Util.h" />
+    <ClInclude Include="graphics-gl\es\gl-compat.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\debug\GLPrimitiveRenderer.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\decoder\GLTextureDecodeCallback.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\engine\context\GLTextureState.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\engine\GLDevice.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\engine\GLGPUCapacity.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\engine\OpenGLEngine.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\factory\GLResourceFactory.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\factory\internal\GLBasicTextureAllocator.hpp" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\resource\GLMesh.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\resource\GLShaderProgram.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\resource\GLTexture.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\resource\GLUniformBlockData.hpp" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\shader\GLColorUniform.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\shader\GLTextureUniform.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\shader\GLVectorUniform.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\shader\internal\GLUniformBase.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\sprite\GLImmediateSpriteRenderer.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\sprite\GLQuadPolygon.h" />
+    <ClInclude Include="graphics-gl\es\graphics\gl\surface\VirtualDisplay.hpp" />
+    <ClInclude Include="graphics-gl\es\OpenGL.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core\es\android\AndroidFactory.cpp" />
@@ -321,6 +342,26 @@
     <ClCompile Include="core\es\system\task\TaskQueue.cpp" />
     <ClCompile Include="core\es\util\StringUtil.cpp" />
     <ClCompile Include="core\es\util\Util.cpp" />
+    <ClCompile Include="graphics-gl\es\gl-compat.c" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\android\AndroidGLSupport.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\debug\GLPrimitiveRenderer.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\debug\OpenGLUtil.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\decoder\GLTextureDecodeCallback.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\engine\context\GLTextureState.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\engine\GLDevice.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\engine\GLGPUCapacity.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\engine\OpenGLEngine.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\factory\GLResourceFactory.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\internal\PixelFormat_gl.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\resource\GLMesh.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\resource\GLShaderProgram.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\resource\GLTexture.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\shader\GLColorUniform.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\shader\GLTextureUniform.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\shader\GLVectorUniform.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\shader\internal\GLUniformBase.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\sprite\GLImmediateSpriteRenderer.cpp" />
+    <ClCompile Include="graphics-gl\es\graphics\gl\sprite\GLQuadPolygon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

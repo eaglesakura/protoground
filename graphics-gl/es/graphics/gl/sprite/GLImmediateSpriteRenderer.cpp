@@ -1,4 +1,4 @@
-#include "GLImmediateSpriteRenderer.h"
+﻿#include "GLImmediateSpriteRenderer.h"
 #include <es/asset/IAsset.hpp>
 #include <es/asset/AssetManager.h>
 #include "es/graphics/gl/sprite/GLQuadPolygon.h"
@@ -62,7 +62,7 @@ void GLImmediateSpriteRenderer::beginRendering(SpriteRenderer *sender) {
     quad->bind();
 }
 
-int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const ISpriteRenderingCallback::RenderingState *state, const uint numInstances, ISpriteRenderingCallback::RenderingInstance *instanceArray) {
+int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const ISpriteRenderingCallback::RenderingState *state, const unsigned numInstances, ISpriteRenderingCallback::RenderingInstance *instanceArray) {
     float oldLineWidth = -1;
     int numRendering = 0;
     if (state->mode == RenderingMode_QuadFill || state->mode == RenderingMode_QuadOutLine || state->mode == RenderingMode_Text) {

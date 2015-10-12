@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/graphics/PixelFormat.hpp>
@@ -22,12 +22,12 @@ public:
     /**
      * テクスチャ幅を取得する。
      */
-    virtual uint getWidth() const override;
+    virtual unsigned getWidth() const override;
 
     /**
      * テクスチャの高さを取得する
      */
-    virtual uint getHeight() const override;
+    virtual unsigned getHeight() const override;
 
     /**
      * 画像としての幅と高さを指定する。
@@ -36,7 +36,7 @@ public:
      * その場合、画像サイズとしてデータを残しておくことでSpriteを正常に描画する。
      * この設定はSpriteとして使用する際に重要となるが、実際のテクスチャサイズを超えて生成することは出来ない。
      */
-    void setImageSize(uint x, uint y);
+    void setImageSize(unsigned x, unsigned y);
 
     /**
      * テクスチャのアスペクト比を取得する
@@ -89,12 +89,12 @@ public:
      *
      * @return バインドしたテクスチャユニット番号 0,1,2...
      */
-    uint bind(std::shared_ptr<GLTextureState> state);
+	unsigned bind(std::shared_ptr<GLTextureState> state);
 
     /**
      * テクスチャをindex番のユニットに関連付ける
      */
-    void bind(const uint index, std::shared_ptr<GLTextureState> state);
+    void bind(const unsigned index, std::shared_ptr<GLTextureState> state);
 
     /**
      * テクスチャを明示的にバインド解除する

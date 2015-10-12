@@ -1,4 +1,4 @@
-#include "GLTextureDecodeCallback.h"
+﻿#include "GLTextureDecodeCallback.h"
 
 
 namespace es {
@@ -61,7 +61,7 @@ void GLTextureDecodeCallback::onImageInfoDecoded(const IImageDecodeCallback::Ima
     assert_gl();
 }
 
-void GLTextureDecodeCallback::onImageLineDecoded(const IImageDecodeCallback::ImageInfo *info, const unsafe_array<uint8_t> pixels, const uint height) {
+void GLTextureDecodeCallback::onImageLineDecoded(const IImageDecodeCallback::ImageInfo *info, const unsafe_array<uint8_t> pixels, const unsigned height) {
     // 部分転送 for 2D
     glTexSubImage2D(
             GL_TEXTURE_2D,

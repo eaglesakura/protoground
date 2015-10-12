@@ -1,4 +1,4 @@
-#include "GLQuadPolygon.h"
+﻿#include "GLQuadPolygon.h"
 #include "es/memory/SafeArray.hpp"
 #include <es/graphics/gl/resource/GLMesh.h>
 #include "es/graphics/gl/engine/GLDevice.h"

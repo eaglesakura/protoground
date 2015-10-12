@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 
 #include <EGL/egl.h>
 #include <es/internal/log/Log.h>

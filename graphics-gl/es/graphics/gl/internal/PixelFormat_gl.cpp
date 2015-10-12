@@ -1,4 +1,4 @@
-#include "es/graphics/PixelFormat.hpp"
+﻿#include "es/graphics/PixelFormat.hpp"
 #include "es/OpenGL.hpp"
 
 namespace es {

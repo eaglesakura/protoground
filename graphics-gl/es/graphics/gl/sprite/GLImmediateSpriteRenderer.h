@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/OpenGL.hpp"
@@ -42,7 +42,7 @@ public:
     virtual void beginRendering(SpriteRenderer *sender) override;
 
 
-    virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const uint numInstances, RenderingInstance *instanceArray) override;
+    virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const unsigned numInstances, RenderingInstance *instanceArray) override;
 
     virtual void endRendering(SpriteRenderer *sender) override;
 

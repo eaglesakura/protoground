@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/graphics/gl/shader/internal/GLUniformBase.h"
 #include "es/graphics/Color.hpp"

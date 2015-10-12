@@ -1,10 +1,10 @@
-#include "GLVectorUniform.h"
+﻿#include "GLVectorUniform.h"
 
 namespace es {
 namespace gl {
 namespace internal {
 
-template<typename vector_type, uint vector_length>
+template<typename vector_type, unsigned vector_length>
 GLVectorUniform<vector_type, vector_length>::GLVectorUniform() {
     // 0で初期化する
     for (int i = 0; i < vector_length; ++i) {
@@ -33,10 +33,10 @@ class GLVectorUniform<float, 3 * 3>;
 template
 class GLVectorUniform<float, 4 * 4>;
 
-bool uploadMatrixF(const GLint location, const float *vec, const float *pMatrix, const uint matrix_size, const uint matrix_num, const GLboolean transpose) {
+bool uploadMatrixF(const GLint location, const float *vec, const float *pMatrix, const unsigned matrix_size, const unsigned matrix_num, const GLboolean transpose) {
     assert(pMatrix);
 
-    const uint vector_length = (matrix_size * matrix_size); // 正方形マトリクス
+    const unsigned vector_length = (matrix_size * matrix_size); // 正方形マトリクス
     // 転送チェック
     if (memcmp(vec, pMatrix, sizeof(float) * vector_length) == 0) {
         // メモリ内容が一致したから何もしない

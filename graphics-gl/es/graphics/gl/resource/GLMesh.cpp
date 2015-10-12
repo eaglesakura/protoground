@@ -1,4 +1,4 @@
-#include "GLMesh.h"
+﻿#include "GLMesh.h"
 #include <es/graphics/gl/engine/GLDevice.h>
 #include <es/memory/Buffer.hpp>
 #include "es/internal/protoground-internal.hpp"
@@ -18,7 +18,7 @@ GLMesh::~GLMesh() {
     this->dispose();
 }
 
-static uint getMapFlags(const IMesh::LockOption &opt) {
+static unsigned getMapFlags(const IMesh::LockOption &opt) {
 #if defined(__ANDROID__)
     const uint table[] = {
             GL_MAP_READ_BIT, /* LockType_ReadOnly */
@@ -27,7 +27,7 @@ static uint getMapFlags(const IMesh::LockOption &opt) {
             GL_MAP_WRITE_BIT | GL_MAP_READ_BIT, /* LockType_ReadWrite */
     };
 #else
-    const uint table[] = {
+    const unsigned table[] = {
             GL_MAP_READ_BIT, /* LockType_ReadOnly */
             GL_MAP_WRITE_BIT, /* LockType_WriteOnly */
             GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_RANGE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT, /* LockType_WriteOverwrite */
@@ -71,7 +71,7 @@ void GLMesh::unlock(std::shared_ptr<IDevice> device, const void *ptr) {
 }
 
 void GLMesh::alloc(std::shared_ptr<IDevice> device, const IMesh::AllocOption &option) {
-    uint allocBytes = option.num * option.onceBytes;
+	unsigned allocBytes = option.num * option.onceBytes;
 
     GLenum allocTarget = 0;
     GLuint allocHandle = 0;
@@ -237,11 +237,11 @@ void GLMesh::renderingArray(const GLenum mode, const GLsizei offsetVertices, con
     assert_gl();
 }
 
-uint GLMesh::getVertexCount() const {
+unsigned GLMesh::getVertexCount() const {
     return vertices.num;
 }
 
-uint GLMesh::getIndexCount() const {
+unsigned GLMesh::getIndexCount() const {
     return indices.num;
 }
 

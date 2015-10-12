@@ -1,4 +1,4 @@
-#include "GLUniformBase.h"
+﻿#include "GLUniformBase.h"
 #include "es/graphics/gl/resource/GLShaderProgram.h"
 
 namespace es {

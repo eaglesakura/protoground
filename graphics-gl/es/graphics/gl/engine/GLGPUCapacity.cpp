@@ -1,4 +1,4 @@
-#include "GLGPUCapacity.h"
+﻿#include "GLGPUCapacity.h"
 #include "es/OpenGL.hpp"
 #include "es/internal/protoground-internal.hpp"
 #include <es/memory/BitFlags.hpp>

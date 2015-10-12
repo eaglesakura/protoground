@@ -1,4 +1,4 @@
-#include "GLPrimitiveRenderer.h"
+﻿#include "GLPrimitiveRenderer.h"
 #include <es/graphics/gl/engine/GLDevice.h>
 #include <es/asset/IAsset.hpp>
 
@@ -72,7 +72,7 @@ void GLPrimitiveRenderer::setCamera(const mat4 &lookProjection) {
 }
 
 
-void GLPrimitiveRenderer::renderingLines(std::shared_ptr<IDevice> device, const void *lineVertices, const uint numLines) {
+void GLPrimitiveRenderer::renderingLines(std::shared_ptr<IDevice> device, const void *lineVertices, const unsigned numLines) {
     GLDevice::query glDevice(device);
     shader->bind();
     mesh->bind();
