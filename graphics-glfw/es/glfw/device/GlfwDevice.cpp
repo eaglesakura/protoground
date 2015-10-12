@@ -29,14 +29,14 @@ GlfwDevice::~GlfwDevice() {
 }
 
 bool GlfwDevice::isWindowClose() const {
-    return glfwWindowShouldClose(window);
+    return (bool)glfwWindowShouldClose(window);
 }
 
 void GlfwDevice::swapBuffers() {
     glfwSwapBuffers(window);
 }
 
-std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const uint width, const uint height, const bool resizeable, const std::string &title, const std::shared_ptr<GlfwDevice> sharedContext) {
+std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const unsigned width, const unsigned height, const bool resizeable, const std::string &title, const std::shared_ptr<GlfwDevice> sharedContext) {
 
     std::shared_ptr<GlfwDevice> result;
     if (!sharedContext && !existDevices) {
@@ -69,7 +69,7 @@ std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const uint width, const u
     return result;
 }
 
-std::shared_ptr<GlfwDevice> GlfwDevice::createOffscreenInstance(const uint width, const uint height, const std::shared_ptr<GlfwDevice> sharedContext) {
+std::shared_ptr<GlfwDevice> GlfwDevice::createOffscreenInstance(const unsigned width, const unsigned height, const std::shared_ptr<GlfwDevice> sharedContext) {
     std::shared_ptr<GlfwDevice> result;
     if (!sharedContext && !existDevices) {
         if (!glfwInit()) {
@@ -125,7 +125,7 @@ i16vec2 GlfwDevice::getWindowSize() const {
 }
 
 bool GlfwDevice::isWindowVisible() const {
-    return glfwGetWindowAttrib(window, GLFW_VISIBLE);
+    return (bool)glfwGetWindowAttrib(window, GLFW_VISIBLE);
 }
 
 i16vec2 GlfwDevice::getFramebufferSize() const {

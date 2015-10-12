@@ -6,12 +6,14 @@ namespace es {
 
 namespace gl {
 
-void *pgdGlfwGetGlProcAddress(void *, char *name) {
+static_assert(sizeof(GLFWglproc) == sizeof(void*), "pointer size error!!");
+
+const void *pgdGlfwGetGlProcAddress(void *, char *name) {
     GLFWglproc address = ::glfwGetProcAddress(name);
     if (!address) {
         eslog("GL Proc fail(%s)", name);
     }
-    return (void *) address;
+    return reinterpret_cast<void *>(reinterpret_cast<uint64_t>(address));
 }
 
 }

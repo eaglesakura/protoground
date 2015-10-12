@@ -57,7 +57,7 @@ protected:
      * @param newWidth
      * @param newHeight
      */
-    virtual void onLoopSurfaceSizeChanged(const uint oldWidth, const uint oldHeight, const uint newWidth, const uint newHeight) = 0;
+    virtual void onLoopSurfaceSizeChanged(const unsigned oldWidth, const unsigned oldHeight, const unsigned newWidth, const unsigned newHeight) = 0;
 
     /**
      * 処理の一時停止を行う

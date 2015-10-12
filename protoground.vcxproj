@@ -254,6 +254,10 @@
     <ClInclude Include="core\es\util\MapUtil.hpp" />
     <ClInclude Include="core\es\util\StringUtil.h" />
     <ClInclude Include="core\es\util\Util.h" />
+    <ClInclude Include="graphics-glfw\es\GLFWKit.hpp" />
+    <ClInclude Include="graphics-glfw\es\glfw\controller\BaseGlfwLoopController.h" />
+    <ClInclude Include="graphics-glfw\es\glfw\device\GlfwDevice.h" />
+    <ClInclude Include="graphics-glfw\es\glfw\engine\GlfwEngine.h" />
     <ClInclude Include="graphics-gl\es\gl-compat.h" />
     <ClInclude Include="graphics-gl\es\graphics\gl\debug\GLPrimitiveRenderer.h" />
     <ClInclude Include="graphics-gl\es\graphics\gl\decoder\GLTextureDecodeCallback.h" />
@@ -342,6 +346,9 @@
     <ClCompile Include="core\es\system\task\TaskQueue.cpp" />
     <ClCompile Include="core\es\util\StringUtil.cpp" />
     <ClCompile Include="core\es\util\Util.cpp" />
+    <ClCompile Include="graphics-glfw\es\glfw\controller\BaseGlfwLoopController.cpp" />
+    <ClCompile Include="graphics-glfw\es\glfw\device\GlfwDevice.cpp" />
+    <ClCompile Include="graphics-glfw\es\glfw\engine\GlfwEngine.cpp" />
     <ClCompile Include="graphics-gl\es\gl-compat.c" />
     <ClCompile Include="graphics-gl\es\graphics\gl\android\AndroidGLSupport.cpp" />
     <ClCompile Include="graphics-gl\es\graphics\gl\debug\GLPrimitiveRenderer.cpp" />
