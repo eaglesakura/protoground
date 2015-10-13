@@ -114,6 +114,11 @@ public:
 protected:
 
     /**
+     * 指定したIDのタスクを処理する
+     */
+    virtual void handleTasks(const Hash64 id);
+
+    /**
      * onAppFrame()からコールされるメイン制御
      */
     virtual void onAppFrame(const uint64_t frame, const float deltaTimeSec) = 0;

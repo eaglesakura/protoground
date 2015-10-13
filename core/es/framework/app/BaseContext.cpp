@@ -43,7 +43,7 @@ void BaseContext::onAppFrame() {
         }
 
         // タスクキューを消化
-        queue.execute(mainThreadId);
+        handleTasks(mainThreadId);
 
         // アプリの処理を行う
         onAppFrame(frameRate.frameCount, frameRate.deltaTime);
@@ -137,6 +137,10 @@ std::shared_ptr<TouchDetector> BaseContext::getTouchDetector() const {
 
     assert(touchDetector);
     return touchDetector;
+}
+
+void BaseContext::handleTasks(const Hash64 id) {
+    queue.execute(id);
 }
 
 }
