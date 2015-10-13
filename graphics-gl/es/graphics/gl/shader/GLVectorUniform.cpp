@@ -85,9 +85,9 @@ bool GLFloatUniform::upload(const float x) {
     }
 
     if (vec[0] != x) {
-        glUniform1f(location, x);
-        assert_gl();
         vec[0] = x;
+        glUniform1fv(location, 1, vec);
+        assert_gl();
         return true;
     }
     return false;
@@ -103,10 +103,10 @@ bool GLVector2fUniform::upload(const float x, const float y) {
     }
 
     if (vec[0] != x || vec[1] != y) {
-        glUniform2f(location, x, y);
-        assert_gl();
         vec[0] = x;
         vec[1] = y;
+        glUniform2fv(location, 1, vec);
+        assert_gl();
         return true;
     }
     return false;
@@ -122,11 +122,11 @@ bool GLVector3fUniform::upload(const float x, const float y, const float z) {
     }
 
     if (vec[0] != x || vec[1] != y || vec[2] != z) {
-        glUniform3f(location, x, y, z);
-        assert_gl();
         vec[0] = x;
         vec[1] = y;
         vec[2] = z;
+        glUniform3fv(location, 1, vec);
+        assert_gl();
         return true;
     }
     return false;
@@ -142,12 +142,12 @@ bool GLVector4fUniofrm::upload(const float x, const float y, const float z, cons
     }
 
     if (vec[0] != x || vec[1] != y || vec[2] != z || vec[3] != w) {
-        glUniform4f(location, x, y, z, w);
-        assert_gl();
         vec[0] = x;
         vec[1] = y;
         vec[2] = z;
         vec[3] = w;
+        glUniform4fv(location, 1, vec);
+        assert_gl();
         return true;
     }
     return false;

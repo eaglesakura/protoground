@@ -3,6 +3,7 @@
 #include <es/asset/AssetManager.h>
 #include "es/graphics/gl/sprite/GLQuadPolygon.h"
 #include <es/graphics/gl/resource/GLShaderProgram.h>
+#include <es/internal/log/Log.h>
 #include "es/graphics/gl/resource/GLTexture.h"
 
 namespace es {
@@ -96,6 +97,7 @@ int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const IS
                 const float translateY = -sizeY / 2.0f + sy;
                 // ポリゴン位置の確定
                 uniform.poly_data.upload(translateX, translateY, sizeX, sizeY);
+
             }
             // ブレンド色を設定する
             uniform.color.upload(quadInstances->color);

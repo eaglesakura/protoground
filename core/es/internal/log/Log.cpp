@@ -2,6 +2,7 @@
 #include    "Log.h"
 
 #if defined(BUILD_Android)
+
 #include    "android/log.h"
 
 namespace {
@@ -10,10 +11,13 @@ namespace {
  * ログ出力を行う
  */
 void logAndroid(const es::internal::LogType_e type, const char *__file, const char *fmt, ...) {
+    assert(__file);
+    assert(fmt);
+
     va_list ap;
     va_start(ap, fmt);
 
-    static const int LOG_TYPES[] = { ANDROID_LOG_INFO, ANDROID_LOG_DEBUG, ANDROID_LOG_ERROR, };
+    static const int LOG_TYPES[] = {ANDROID_LOG_INFO, ANDROID_LOG_DEBUG, ANDROID_LOG_ERROR,};
     __android_log_vprint(LOG_TYPES[type], __file, fmt, ap);
 
     va_end(ap);
@@ -59,21 +63,21 @@ namespace es {
 namespace internal {
 
 const char *pathToFileName(const char *__file__) {
-#if (defined(BUILD_MacOSX) || defined(BUILD_Android) || defined(BUILD_MacOSX) )
     char separator = '/';
-    #if defined(BUILD_Android)
-    // cygwin check
-    if(__file__[1] == ':') {
+#if defined(BUILD_Android) || defined(BUILD_Windows)
+    // Windows Check
+    if (__file__[1] == ':' && __file__[2] == '\\') {
+        // C:\ 形式の場合、Windows形式のパスとして扱う
         // Windows形式だった場合、セパレータが異なる
         separator = '\\';
     }
-
-    #endif
-
-    return strrchr(__file__, separator) + 1;
-#else
-    return strrchr(__file__, '/') + 1;
 #endif
+    auto result = strrchr(__file__, separator);
+    if (result) {
+        return result + 1;
+    } else {
+        return __file__;
+    }
 }
 
 }

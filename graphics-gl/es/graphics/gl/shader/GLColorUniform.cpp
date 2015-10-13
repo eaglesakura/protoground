@@ -14,7 +14,10 @@ bool GLColorUniform::upload(const Color &c) {
     }
 
     if (color != c) {
-        glUniform4f(location, c.rf(), c.gf(), c.bf(), c.af());
+        GLfloat vec[] = {
+                c.rf(), c.gf(), c.bf(), c.af()
+        };
+        glUniform4fv(location, 1, vec);
         assert_gl();
         color = c;
         return true;
