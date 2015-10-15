@@ -27,6 +27,8 @@ THE SOFTWARE.
 #ifndef JOINTCONNECTOR_HPP_
 #define JOINTCONNECTOR_HPP_
 
+#pragma once
+
 #if defined(__ANDROID__)
 #define __JOINTCONNECTOR_USE_JNI__ 1
 #endif
