@@ -50,6 +50,10 @@ public:
 
     uint32_t maxLineWidth = 0;
 
+    uint32_t maxUniformBufferNum = 0;
+
+    uint32_t maxUniformBufferSize = 0;
+
     GLGPUCapacity::GLVersion_e glVersion = GLGPUCapacity::GLVersion_Unknown;
 
     inline int toGLCoreVersion(int coreMajor, int coreMinor) {
@@ -216,6 +220,10 @@ public:
         glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, (GLint *) &maxVertexAttrbs);
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, (GLint *) &maxTextureUnits);
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, (GLint *) &maxTextureSize);
+        if (pgdGlGetCompatVersion() >= PgdGraphicsOpenGlCompat_ES30) {
+            glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, (GLint *) &maxUniformBufferSize);
+            glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, (GLint *) &maxUniformBufferNum);
+        }
         {
             float value[] = {0, 0};
             glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, value);
@@ -250,6 +258,8 @@ public:
             eslog("GL_MAX_TEXTURE_SIZE = %d", maxTextureSize);
             eslog("GL_MAX_VERTEX_UNIFORM_VECTORS = %d", maxUniformVectorsVs);
             eslog("GL_MAX_FRAGMENT_UNIFORM_VECTORS = %d", maxUniformVectorsFs);
+            eslog("GL_MAX_UNIFORM_BLOCK_SIZE = %d", maxUniformBufferSize);
+            eslog("GL_MAX_UNIFORM_BUFFER_BINDINGS = %d", maxUniformBufferNum);
             eslog("MaxLineWidth = %d", maxLineWidth);
         }
         eslog("-----------------------------");
@@ -312,6 +322,14 @@ const bool GLGPUCapacity::isES() const {
 
 uint32_t GLGPUCapacity::getMaxLineWidth() const {
     return impl->maxLineWidth;
+}
+
+uint32_t GLGPUCapacity::getMaxUniformBufferNum() const {
+    return impl->maxUniformBufferNum;
+}
+
+uint32_t GLGPUCapacity::getMaxUniformBufferSize() const {
+    return impl->maxUniformBufferSize;
 }
 }
 }

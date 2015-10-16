@@ -89,6 +89,10 @@ public:
      */
     uint32_t getMaxUniformVectorsFs() const;
 
+    uint32_t getMaxUniformBufferNum() const;
+
+    uint32_t getMaxUniformBufferSize() const;
+
     /**
      * ライン描画の最大の太さを取得する
      */
