@@ -91,6 +91,10 @@ public:
                 GPUExtension_VertexArrayObject,
 
         /**
+         * floatテクスチャが利用できる
+         */
+                GPUExtension_Texture_Float,
+        /**
          * num flags
          */
                 GPUExtension_Num,

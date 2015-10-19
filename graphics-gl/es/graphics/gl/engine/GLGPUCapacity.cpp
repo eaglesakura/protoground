@@ -195,6 +195,8 @@ public:
                     {EXTENSION_NAME(GL_OES_depth24),                      GPUExtension_Renderbuffer_Depth24},
                     //  深度ステンシルパックが可能
                     {EXTENSION_NAME(GL_OES_depth32),                      GPUExtension_Renderbuffer_Depth32},
+                    //  Floatテクスチャ
+                    {EXTENSION_NAME(GL_OES_texture_float),                GPUExtension_Texture_Float},
                     //
             };
 
