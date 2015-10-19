@@ -88,16 +88,15 @@ void GLTexture::allocPixelMemory(const PixelFormat_e pixelFormat, const int mipl
     const GLenum format = Pixel::toGLPixelFormat(pixelFormat);
     const GLenum type = Pixel::toGLPixelDataType(pixelFormat);
     glTexImage2D(GL_TEXTURE_2D, miplevel, format, width, height, 0, format, type, NULL);
+    assert_gl();
     size.img_width = size.tex_width = width;
     size.img_height = size.tex_height = height;
     allocated = true;
 }
 
-
 void GLTexture::onAllocated() {
     allocated = true;
 }
-
 
 bool GLTexture::isAllocated() const {
     return allocated;
@@ -176,6 +175,5 @@ ITexture::Type_e GLTexture::getType() const {
             return Type_Unknown;
     }
 }
-
 }
 }

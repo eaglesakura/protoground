@@ -1,4 +1,5 @@
-#version 100 /* GLES 2.0 */
+#version 100
+/* GLES 2.0 */
 
 // UV setting
 varying mediump vec2 fTexCoord;

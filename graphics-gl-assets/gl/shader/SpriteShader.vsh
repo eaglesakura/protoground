@@ -1,4 +1,5 @@
-#version 100 /* GLES 2.0 */
+#version 100
+/* GLES 2.0 */
 
 /**
  * ( poly_x | poly_y )はそれぞれ0.0f〜1.0fの正規化座標で設定する。

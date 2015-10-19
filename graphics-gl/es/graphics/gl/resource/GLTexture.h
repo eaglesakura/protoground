@@ -72,7 +72,7 @@ public:
     GLenum getBindTarget() const;
 
     /**
-     * テクスチャ用メモリを確保する
+     * テクスチャ用メモリを確保する : 2D確保
      */
     void allocPixelMemory(const PixelFormat_e pixelFormat, const int miplevel, const int width, const int height);
 

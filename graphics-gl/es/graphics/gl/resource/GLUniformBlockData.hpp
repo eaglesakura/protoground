@@ -8,6 +8,12 @@
 namespace es {
 namespace gl {
 
+/**
+ * Uniform Blockを管理する
+ *
+ * Uniform Blockはバッファを利用してUniformの共有をサポートするが、
+ * Max Uniformの制限を受けるため、無制限なデータ利用はできないことに注意する。
+ */
 class GLUniformBlock : public IGraphicsResource {
 public:
     GLUniformBlock() {

@@ -245,15 +245,16 @@ void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e 
 const uint Pixel::getPixelBytes(const PixelFormat_e fmt) {
     constexpr const uint size[] = {
             //
-            2,// RGB565
-            2, // RGBA5551
-            3, // RGB888
-            4, // RGBA8888
-            4, // BGRA8888
-            2, // LuminanceF16
-            8, // RGBA_F16
-            1, // A8
-            1, // Luminance8
+            2, // 5bit + 6bit + 5bit RGB565
+            2, // 5bit + 5bit + 5bit + 1bit RGBA5551
+            3, // 1 * 3 RGB888
+            4, // 1 * 4 RGBA8888
+            4, // 1 * 4 BGRA8888
+            2, // 2 * 1 LuminanceF16
+            8, // 2 * 4 RGBA_F16
+            1, // 1 * 1 A8
+            1, // 1 * 1 Luminance8
+            16,// 4 * 4 RGBA_F32
     };
 
     return size[fmt];

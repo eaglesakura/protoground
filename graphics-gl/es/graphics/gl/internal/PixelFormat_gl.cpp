@@ -18,6 +18,7 @@ uint32_t Pixel::toGLPixelDataType(const PixelFormat_e format) {
             GL_UNSIGNED_SHORT, // Depth
             GL_UNSIGNED_BYTE, // Luminance8
             GL_UNSIGNED_BYTE, // R8
+            GL_FLOAT,       // RGBA F32
             //
     };
     return PIXEL_TYPES[format];
@@ -41,6 +42,7 @@ uint32_t  Pixel::toGLPixelFormat(const PixelFormat_e format) {
             GL_DEPTH_COMPONENT, // Depth
             GL_LUMINANCE, // L8
             GL_RED, // R8
+            GL_RGBA, // RGBA F32
             //
     };
     return PIXEL_FORMATS[format];

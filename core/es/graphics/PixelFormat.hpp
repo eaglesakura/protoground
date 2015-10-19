@@ -74,6 +74,12 @@ enum PixelFormat_e {
             PixelFormat_R8,
 
     /**
+     * 16byte
+     * GL_FLOAT
+     */
+            PixelFormat_RGBA_F32,
+
+    /**
      * RGBA各要素を含み、プラットフォームに最適化した状態でロードする
      * 各1byteは保証するが、RGBA並び順は保証しない。
      *
