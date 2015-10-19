@@ -8,21 +8,14 @@
 namespace es {
 namespace gl {
 
-/**
- * Uniform Blockを管理する
- *
- * UniformBlockはContext上に巨大なテーブルを持っており、glBindBufferBaseで任意のテーブルインデックスにバインドを行う。
- * Context上のテーブルとシェーダー上のテーブルの割当はglUniformBlockBindingで行う。
- */
-template<typename T>
-class GLUniformBlockData : public IGraphicsResource {
+class GLUniformBlock : public IGraphicsResource {
 public:
-    GLUniformBlockData() {
+    GLUniformBlock() {
         glGenBuffers(1, &handle);
         assert_gl();
     }
 
-    virtual ~GLUniformBlockData() {
+    virtual ~GLUniformBlock() {
         this->dispose();
     }
 
@@ -49,9 +42,20 @@ public:
     /**
      * データをVRAMへアップロードする
      */
-    void upload() const {
+    template<typename T>
+    void upload(const T *data) const {
         glBindBuffer(GL_UNIFORM_BUFFER, handle);
-        glBufferData(GL_UNIFORM_BUFFER, sizeof(T), (void *) &data, GL_DYNAMIC_DRAW);
+        glBufferData(GL_UNIFORM_BUFFER, sizeof(T), (void *) data, GL_DYNAMIC_DRAW);
+
+        assert_gl();
+    }
+
+    /**
+     * データをVRAMへアップロードする
+     */
+    void upload(const void *data, const uint32_t bytes) const {
+        glBindBuffer(GL_UNIFORM_BUFFER, handle);
+        glBufferData(GL_UNIFORM_BUFFER, bytes, data, GL_DYNAMIC_DRAW);
 
         assert_gl();
     }
@@ -66,12 +70,34 @@ public:
         handle = 0;
     }
 
+private:
+    GLuint handle = 0;
+};
+
+/**
+ * Uniform Blockを管理する
+ *
+ * UniformBlockはContext上に巨大なテーブルを持っており、glBindBufferBaseで任意のテーブルインデックスにバインドを行う。
+ * Context上のテーブルとシェーダー上のテーブルの割当はglUniformBlockBindingで行う。
+ */
+template<typename T>
+class GLUniformBlockData : public GLUniformBlock {
+public:
+    GLUniformBlockData() = default;
+
+    virtual ~GLUniformBlockData() = default;
+
+    /**
+     * データをVRAMへアップロードする
+     */
+    void upload() const {
+        GLUniformBlock::upload < T > (&data);
+    }
+
     /**
      * 直接編集可能なPODデータ
      */
     T data;
-private:
-    GLuint handle = 0;
 };
 
 }

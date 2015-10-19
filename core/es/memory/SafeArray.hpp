@@ -128,6 +128,13 @@ struct unsafe_array {
         assert(length >= sizeof(result_type)); // 変換に必要な最低容量を満たしていなければならない
         return *((result_type *) ptr);
     }
+
+    /**
+     * 容量をbyte単位で取得する
+     */
+    uint32_t bytes() const {
+        return length * sizeof(value_type);
+    }
 };
 
 /**
