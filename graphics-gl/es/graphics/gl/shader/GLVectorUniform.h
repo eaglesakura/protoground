@@ -131,6 +131,11 @@ public:
      * 33行列を転送する
      */
     bool upload(const mat3 &m, const GLboolean transpose = GL_FALSE);
+
+    /**
+     * 法線計算用の行列を転送する
+     */
+    bool uploadNormal(const mat4 &m, const bool inverse, const bool transpose);
 };
 
 /**

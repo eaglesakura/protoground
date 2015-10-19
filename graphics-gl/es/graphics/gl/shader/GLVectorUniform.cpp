@@ -167,5 +167,12 @@ bool GLMatrix4Uniform::upload(const mat4 &m, const GLboolean transpose) {
     return internal::uploadMatrixF(location, vec, (const float *) (&m), 4, 1, transpose);
 }
 
+bool GLMatrix3Uniform::uploadNormal(const mat4 &m, const bool inverse, const bool transpose) {
+    mat3 m33(m);
+    if(inverse) {
+        m33 = glm::inverse(m33);
+    }
+    return upload(m33, transpose);
+}
 }
 }
