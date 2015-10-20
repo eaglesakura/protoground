@@ -127,6 +127,7 @@ inline void multMat43Vec3(float *__restrict dstVec3, const float *__restrict src
 }
 
 
+#if 0
 /**
  * srcVec3とsrcMatrix4x4を乗算してdstに格納する
  * 法線計算用のため、計算内容が他と異なる点に注意。
@@ -141,6 +142,7 @@ inline void multMat44Vec4Normal(float *__restrict dstVec3, const float *__restri
                 (srcMatrix4x4[2 * 4 + i] * srcVec3[2]);
     }
 }
+#endif
 
 /**
  * srcVec3とsrcMatrix4x4を乗算してdstに格納する
@@ -148,12 +150,14 @@ inline void multMat44Vec4Normal(float *__restrict dstVec3, const float *__restri
  *
  * 将来的な速度向上を見込むため、メモリは16byte境界である必要がある。
  */
-inline void multMat43Vec4Normal(float *__restrict dstVec3, const float *__restrict srcVec3, const float *__restrict srcMatrix4x4) {
+inline void multMat43Vec4Normal(float *__restrict dstVec3, const float *__restrict srcVec3, const float *__restrict srcMatrix4x3) {
     for (int i = 0; i < 3; ++i) {
-        dstVec3[i] =
-                (srcMatrix4x4[i * 4 + 0] * srcVec3[0]) +
-                (srcMatrix4x4[i * 4 + 1] * srcVec3[1]) +
-                (srcMatrix4x4[i * 4 + 2] * srcVec3[2]);
+        *dstVec3 = (srcVec3[0] * srcMatrix4x3[0]) +
+                   (srcVec3[1] * srcMatrix4x3[1]) +
+                   (srcVec3[2] * srcMatrix4x3[2]);
+
+        ++dstVec3;
+        srcMatrix4x3 += 4;
     }
 }
 
