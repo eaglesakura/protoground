@@ -18,7 +18,7 @@ GLFrameBuffer::GLFrameBuffer(unsigned width, unsigned height) {
 }
 
 GLFrameBuffer::~GLFrameBuffer() {
-
+    this->dispose();
 }
 
 void GLFrameBuffer::dispose() {
