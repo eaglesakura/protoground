@@ -13,17 +13,24 @@ namespace util {
  *
  * バッファの大きさはstrlen(fmt) + 256を固定とするので、更に大きなバッファが必要な場合はバッファサイズ指定版を利用する必要がある。
  */
-std::string format(const char *fmt, ...);
+string format(const char *fmt, ...);
 
 /**
  * 文字列をフォーマットする
  */
-std::string format(const uint workingBufferBytes, const char *fmt, ...);
+string format(const uint workingBufferBytes, const char *fmt, ...);
 
 /**
  * 文字列を指定された分割文字に従って分割する
  */
 int split(const string &origin, const string &delim, std::vector<string> *result);
+
+/**
+ * originの文字列の中からbeforeを探し、afterに入れ替える。
+ *
+ * @return 入れ替えた文字のindex位置
+ */
+string replace(const string &origin, const string &before, const string &after);
 
 /**
  * Int変換を行う

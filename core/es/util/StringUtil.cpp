@@ -9,7 +9,7 @@ namespace es {
 
 namespace util {
 
-std::string format(const char *fmt, ...) {
+string format(const char *fmt, ...) {
     ByteBuffer buffer = Buffer::createZeroBuffer(strlen(fmt) + 256);
 
     va_list ap;
@@ -19,7 +19,7 @@ std::string format(const char *fmt, ...) {
     return std::string((char *) buffer.get());
 }
 
-std::string format(const uint workingBufferBytes, const char *fmt, ...) {
+string format(const uint workingBufferBytes, const char *fmt, ...) {
     ByteBuffer buffer = Buffer::createZeroBuffer(strlen(fmt) + workingBufferBytes);
 
     va_list ap;
@@ -68,6 +68,17 @@ double asDouble(const string &value) {
 
 }
 
+string replace(const string &origin, const string &before, const string &after) {
+    unsigned int index = origin.find(before);
+    if (index == string::npos) {
+        return origin;
+    }
+
+    string result = origin;
+    result.replace(index, before.length(), after.c_str());
+
+    return result;
+}
 }
 
 }
