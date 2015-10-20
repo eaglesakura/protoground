@@ -117,14 +117,13 @@ void GLTextureState::unbindTextures(const uint num, const GLuint *textures) {
 }
 
 void GLTextureState::unbindTextures() {
-    const uint active = gl_util::unitToTextureIndex(active);
     int index = 0;
     for (context &ctx : contexts) {
         activeTexture(index);
         bindTexture(GL_TEXTURE_2D, 0);
         ++index;
     }
-    activeTexture(active);
+    activeTexture(0);
 }
 
 void GLTextureState::unbindTexture(const GLuint texture) {

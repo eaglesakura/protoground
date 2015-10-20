@@ -76,8 +76,12 @@ int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const IS
                 assert(texture);
 
                 uniform.texture.upload(device.get(), texture);
+
+                float uv_width = quadInstances->srcCoord.right - quadInstances->srcCoord.left;
+                float uv_height = quadInstances->srcCoord.bottom - quadInstances->srcCoord.top;
+
                 uniform.poly_uv.upload(quadInstances->srcCoord.left, quadInstances->srcCoord.top,
-                                       quadInstances->srcCoord.width(), quadInstances->srcCoord.height());
+                                       uv_width, uv_height);
 
                 if (state->mode == RenderingMode_Text) {
                     uniform.fillMode.upload(2);

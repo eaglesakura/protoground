@@ -171,14 +171,14 @@ void SpriteRenderer::rendering(const SpriteRenderer::Mode_e mode, const ITexture
     // coord計算
     if (texture) {
         RectI16 area;
-        i16vec2 size((int16_t) texture->getWidth(), (int16_t) texture->getHeight());
+        vec2 size(texture->getWidth(), texture->getHeight());
         texture->getImageArea(&area);
 
         RectF &srcCoord = instance.srcCoord;
-        srcCoord.left = ((float) area.left + srcX) / (float) size.x;
-        srcCoord.top = ((float) area.top + srcY) / (float) size.y;
-        srcCoord.right = srcCoord.left + (srcW / (float) size.x);
-        srcCoord.bottom = srcCoord.top + (srcH / (float) size.y);
+        srcCoord.left = ((float) area.left + srcX) / size.x;
+        srcCoord.top = ((float) area.top + srcY) / size.y;
+        srcCoord.right = srcCoord.left + (srcW / size.x);
+        srcCoord.bottom = srcCoord.top + (srcH / size.y);
     }
 
     // デバイス座標に変換

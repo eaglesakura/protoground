@@ -85,4 +85,16 @@ void SceneCamera::setRenderingRange(const float near, const float far) {
     this->near = near;
     this->far = far;
 }
+
+SceneCamera::ProjectionState SceneCamera::makeProjectionState() const {
+    ProjectionState result;
+    result.near = near;
+    result.far = far;
+    result.fovY = lens->getFovY();
+    return result;
+}
+
+mat4 SceneCamera::ProjectionState::toMatrix(const float width, const float height) const {
+    return glm::perspectiveFovRH(glm::radians(fovY), width, height, near, far);
+}
 }

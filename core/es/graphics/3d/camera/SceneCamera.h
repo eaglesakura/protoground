@@ -16,6 +16,19 @@ class SceneCamera : public Object {
 public:
     SceneCamera();
 
+    struct ProjectionState {
+        float near;
+        float far;
+        float fovY;
+
+        mat4 toMatrix(const float width, const float height) const;
+    };
+
+    /**
+     * Projection行列の情報をdumpする
+     */
+    ProjectionState makeProjectionState() const;
+
     mat4 calcLookMatrix() const;
 
     mat4 calcProjectionMatrix(const std::shared_ptr<IRenderingSurface> surface) const;
