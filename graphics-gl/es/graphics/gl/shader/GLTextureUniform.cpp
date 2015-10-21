@@ -6,12 +6,12 @@ namespace es {
 namespace gl {
 
 bool GLTextureUniform::upload(es::gl::GLDevice *device, es::gl::GLTexture *texture) {
-    assert(texture);
     assert(device);
 
     if (!valid()) {
         return false;
     }
+    assert(texture);
 
     uint texUnitIndex = texture->bind(device->getTextureState());
 
