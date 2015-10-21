@@ -27,8 +27,8 @@ uniform lowp float	colorOnly;
 #define poly_uv_h      poly_uv.w
 
 //
-attribute mediump vec4 vTexCoord;
-attribute mediump vec4 vPosition;
+attribute mediump vec2 vTexCoord;
+attribute mediump vec2 vPosition;
 
 varying mediump vec2 fTexCoord;
 
@@ -64,7 +64,7 @@ void main() {
            temp[1][1] = poly_height;
            mat = mat * temp;
        }
-       gl_Position = mat * vPosition;
+       gl_Position = mat * vec4(vPosition, 0.0, 1.0);
    }
    
    // テクスチャ操作
@@ -78,6 +78,6 @@ void main() {
            mat[3][0] = poly_uv_u;
            mat[3][1] = poly_uv_v;
        }
-       fTexCoord.xy = (mat * vTexCoord).xy;
+       fTexCoord.xy = (mat * vec4(vTexCoord, 0.0, 1.0)).xy;
    }
 }

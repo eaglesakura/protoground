@@ -38,6 +38,12 @@ static uint getMapFlags(const IMesh::LockOption &opt) {
 }
 
 void *GLMesh::lock(std::shared_ptr<IDevice> device, const IMesh::LockOption &option) {
+    GLDevice *pDevice = gl::GLDevice::query::from(device.get());
+    if (pDevice->getCapacity().isSupport(IGPUCapacity::GPUExtension_VertexArrayObject)) {
+        // 既存のArrayBufferから切り離す
+        glBindVertexArray(0);
+    }
+
     if (option.target == Target_Vertices) {
         if (vertices.locked) {
             return nullptr;
@@ -128,6 +134,9 @@ void GLMesh::alloc(std::shared_ptr<IDevice> device, const IMesh::AllocOption &op
     assert_gl();
     glBufferData(allocTarget, allocBytes, nullptr, allocUsage);
     assert_gl();
+
+    glBindBuffer(allocTarget, 0);
+    assert_gl();
 }
 
 void GLMesh::addAttribute(const GLMesh::Attribute &attr) {
@@ -148,6 +157,9 @@ void GLMesh::addAttribute(const GLMesh::Attribute &attr) {
 
         glVertexAttribPointer(attr.location, attr.size, attr.type, attr.normalize, attr.strideBytes, Buffer::offsetBytes(nullptr, attr.offsetHeader));
         assert_gl();
+
+
+        glBindVertexArray(0);
     } else {
         glEnableVertexAttribArray(attr.location);
         attributes.push_back(attr);
