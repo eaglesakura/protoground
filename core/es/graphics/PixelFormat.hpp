@@ -80,6 +80,17 @@ enum PixelFormat_e {
             PixelFormat_RGBA_F32,
 
     /**
+     * 6byte
+     * GL_HALF_FLOAT
+     */
+            PixelFormat_RGB_F16,
+    /**
+     * 12byte
+     * GL_FLOAT
+     */
+            PixelFormat_RGB_F32,
+
+    /**
      * RGBA各要素を含み、プラットフォームに最適化した状態でロードする
      * 各1byteは保証するが、RGBA並び順は保証しない。
      *
@@ -152,6 +163,11 @@ public:
      * GL_RGBA等に変換される
      */
     static uint32_t toGLPixelFormat(const PixelFormat_e format);
+
+    /**
+     * GLES 3.0以降で使用されるPixelFormatへ変換する
+     */
+    static uint32_t toGLInternalPixelFormat(const PixelFormat_e format);
 
     /**
      * GLESで使用されるデータタイプへ変換する

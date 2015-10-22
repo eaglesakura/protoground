@@ -25,6 +25,7 @@ void GLFrameBuffer::dispose() {
     if (handle) {
         glDeleteFramebuffers(1, &handle);
         handle = 0;
+        assert_gl();
     }
 
     colors.clear();
@@ -60,6 +61,7 @@ void GLFrameBuffer::bind() {
 void GLFrameBuffer::unbind() {
     glBindFramebuffer(GL_FRAMEBUFFER, oldHandle);
     oldHandle = 0;
+    assert_gl();
 }
 
 std::shared_ptr<GLTexture> GLFrameBuffer::createColorBuffer(GLDevice *device, const PixelFormat_e format) {
@@ -68,7 +70,8 @@ std::shared_ptr<GLTexture> GLFrameBuffer::createColorBuffer(GLDevice *device, co
     tex->bind(device->getTextureState());
     tex->allocPixelMemory(format, 0, size.x, size.y);
     tex->setFilter(GL_NEAREST, GL_NEAREST);
-    tex->setWrapMode(GL_REPEAT, GL_REPEAT);
+    tex->setWrapMode(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+    tex->unbind(device->getTextureState());
 
     // アタッチメントを登録する
     glFramebufferTexture2D(GL_FRAMEBUFFER,
@@ -76,6 +79,7 @@ std::shared_ptr<GLTexture> GLFrameBuffer::createColorBuffer(GLDevice *device, co
                            GL_TEXTURE_2D,
                            tex->getTextureHandle(),
                            0);
+    assert_gl();
 
     // バッファを保持する
     colors.push_back(tex);
@@ -89,12 +93,12 @@ void GLFrameBuffer::createDepthStencilBuffer(GLDevice *device, unsigned depthBit
     if (depthBits >= 32 && caps.isSupport(IGPUCapacity::GPUExtension_Renderbuffer_Depth32)) {
         internalformat = GL_DEPTH_COMPONENT32_OES;
         eslog("alloc depth req(%d) -> D(32bit)", depthBits);
+    } else if (depthBits == 24 && stencilBits == 8 && caps.isSupport(IGPUCapacity::GPUExtension_Renderbuffer_PackedDepth24Stencil8)) {
+        internalformat = GL_DEPTH24_STENCIL8_OES;
+        eslog("alloc depth req(%d) -> D(24bit) S(8bit)", depthBits);
     } else if (depthBits >= 24 && caps.isSupport(IGPUCapacity::GPUExtension_Renderbuffer_Depth24)) {
         internalformat = GL_DEPTH_COMPONENT24_OES;
         eslog("alloc depth req(%d) -> D(24bit)", depthBits);
-    } else if (depthBits >= 24 && caps.isSupport(IGPUCapacity::GPUExtension_Renderbuffer_PackedDepth24Stencil8)) {
-        internalformat = GL_DEPTH24_STENCIL8_OES;
-        eslog("alloc depth req(%d) -> D(16bit) S(8bit)", depthBits);
     } else {
         internalformat = GL_DEPTH_COMPONENT16;
         eslog("alloc depth req(%d) -> D(16bit)", depthBits);
@@ -121,6 +125,7 @@ void GLFrameBuffer::createDepthStencilBuffer(GLDevice *device, unsigned depthBit
         // 深度だけを割り当てる
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth->handle);
     }
+    assert_gl();
 }
 
 
