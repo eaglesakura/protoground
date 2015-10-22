@@ -170,5 +170,9 @@ void GLFrameBuffer::checkFramebufferStatus() const {
     assert(check == GL_FRAMEBUFFER_COMPLETE);
 #endif
 }
+
+uint32_t GLFrameBuffer::getTextureCount() const {
+    return colors.size();
+}
 }
 }

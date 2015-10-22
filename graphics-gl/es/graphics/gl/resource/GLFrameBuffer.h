@@ -31,6 +31,11 @@ public:
      */
     std::shared_ptr<GLTexture> createColorBuffer(GLDevice *device, const PixelFormat_e format);
 
+    /**
+     * カラーテクスチャ数を取得する
+     */
+    uint32_t getTextureCount() const;
+
     const std::shared_ptr<GLTexture> &getTexture(const unsigned index) const;
 
     /**
