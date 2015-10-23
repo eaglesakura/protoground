@@ -27,7 +27,11 @@ public:
 
     void setPos(const vec3 &pos);
 
-    const quat &getRotate() const;
+    const quat &getRotateQuat() const;
+
+    const vec3 &getRotateEuler() const;
+
+    mat4 getRotateMatrix() const;
 
     /**
      * 向いている方向に対してlength分だけ移動させる
@@ -44,6 +48,9 @@ public:
      */
     void setRotateY(const float degree);
 
+    /**
+     * 回転量を直接指定する
+     */
     void setRotate(const quat &rotate);
 
     /**
@@ -57,6 +64,22 @@ public:
     virtual bool getCenter(float *vec3) const;
 
     virtual ~SimpleSceneActor() = default;
+
+    enum RotateType_e {
+        /**
+         * Y軸のみで回転を行う
+         */
+                RotateType_Y,
+
+        /**
+         * クォータニオンで回転を行う
+         */
+                RotateType_Quat,
+    };
+
+    RotateType_e getRotateType() const;
+
+    void setRotateType(const RotateType_e &rotateType);
 
 protected:
     /**
@@ -72,7 +95,12 @@ protected:
     /**
      * 回転
      */
-    quat rotate;
+    float rotate[4];
+
+    /**
+     * Yのみで回転
+     */
+    RotateType_e rotateType = RotateType_Y;
 };
 
 
