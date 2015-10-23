@@ -6,7 +6,7 @@ namespace es {
 
 
 TouchDetector::TouchDetector() {
-    
+
 }
 
 void TouchDetector::addListener(const selection_ptr<TouchListener> &listener) {
@@ -16,7 +16,7 @@ void TouchDetector::addListener(const selection_ptr<TouchListener> &listener) {
 void TouchDetector::removeListener(const selection_ptr<TouchListener> &listener) {
     auto itr = listeners.begin();
     const auto end = listeners.end();
-    
+
     while (itr != end) {
         if ((*itr) == listener) {
             listeners.erase(itr);
@@ -35,7 +35,7 @@ std::shared_ptr<TouchPoint> TouchDetector::getTouchPointFromIndex(uint32_t index
     if (index < (int) points.size()) {
         return points[index];
     }
-    
+
     return sp<TouchPoint>();
 }
 
@@ -66,7 +66,7 @@ bool TouchDetector::isMultiDrag() const {
 
 vec2 TouchDetector::getMultiTapCenter() const {
     assert(isMultiTap());
-    
+
     const vec2 &beginA = points[0]->getBeginPos();
     const vec2 &beginB = points[1]->getBeginPos();
     return (beginA + beginB) / 2.0f;
@@ -74,7 +74,7 @@ vec2 TouchDetector::getMultiTapCenter() const {
 
 float TouchDetector::getMultiTapPointDistance() const {
     assert(isMultiTap());
-    
+
     const vec2 &currentA = points[0]->getCurrentPos();
     const vec2 &currentB = points[1]->getCurrentPos();
     const auto diff = (currentA - currentB);
@@ -91,8 +91,8 @@ void TouchDetector::onUpdateFrame(const float deltaTimeSec) {
         const auto end = points.end();
         while (itr != end) {
             bool handle = false;
-            auto pt = (*itr);
-            
+            sp<TouchPoint> pt = (*itr);
+
             if ((!pt->isDraging()) /* ドラッグされていない */ &&
                 pt->isLongTap(longTapMs) /* 規定時間以上押下している */) {
                 for (auto &listener : listeners) {
@@ -101,7 +101,7 @@ void TouchDetector::onUpdateFrame(const float deltaTimeSec) {
                     }
                 }
             }
-            
+
             if (handle) {
                 // ハンドリングされたら削除対象として認識
                 clearItems.push_back((*itr)->getId());
@@ -110,9 +110,17 @@ void TouchDetector::onUpdateFrame(const float deltaTimeSec) {
         }
     }
 
-    // ドロップフレームの掃除
+    // シングルタップかつ複数回タップの判定
     for (auto &drop : dropPoints) {
-        if (((uint32_t) drop.releaseTime.end().milliSecond()) > continuationClickMs) {
+        uint32_t releaseTimeMs = (uint32_t) drop.releaseTime.end().milliSecond();
+        if (releaseTimeMs > continuationClickMs) {
+            // シングルタップならハンドリングを行わせる
+            if (points.size() == 0 && dropPoints.size() == 1) {
+                for (auto &listener : listeners) {
+                    listener->onContinuationClick(this, *drop.point, drop.numTaps);
+                }
+            }
+
             clearItems.push_back(drop.point->getId());
         }
     }
@@ -126,26 +134,40 @@ void TouchDetector::onUpdateFrame(const float deltaTimeSec) {
 }
 
 void TouchDetector::onTouchEvent(const TouchEvent &event) {
-    
+
     const uint64_t id = event.id; // タッチポイントのID
     const uint32_t type = event.action; // イベントタイプ
     const float dragDistance = 30;
     sp<TouchPoint> _point = getTouchPointFromId(id); // 対象となるIDを取得する
-    
+
+    bool hasDropPoint = false;
+    DropData *pDropData = nullptr;
+
     if (!_point) {
+        // ダブルタップの検索を行う
+        for (auto &drop : dropPoints) {
+            if (drop.point->getId() != id) {
+                continue;
+            }
+
+            // ドロップデータを見つけたら
+            pDropData = &drop;
+        }
+    }
+
+    if (!_point && !pDropData) {
         // ポイントが見つからなかった
-        
         if (getTouchPoints() >= 2 || type != TouchEvent::Action_Down) {
             // 既に規定以上のポイントがタップされているから無視
             return;
         }
-        
+
         // 最初のポイントが既に動いてる？
         _point.reset(new TouchPoint(id, points.size(), event.position, dragDistance));
-        
+
         // ポイントを追加する
         points.push_back(_point);
-        
+
         if (isSingleTap()) {
             // シングルタップ開始
             for (auto &listener : listeners) {
@@ -155,18 +177,24 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
             // ピンチの開始
             const vec2 center = getMultiTapCenter();
             pinchDistance = getMultiTapPointDistance();
-            
+
             for (auto &listener : listeners) {
                 listener->onPinchBegin(this, center);
             }
         }
     } else {
         // イベントを更新する
-        _point->onTouchEvent(event);
-        
+        if (_point) {
+            _point->onTouchEvent(event);
+        }
+
         if (TouchEvent::Action_Down == type) {
-            
+
         } else if (TouchEvent::Action_Move == type) {
+            if (!_point) {
+                return;
+            }
+
             if (isSingleTap()) {
                 if (_point->isDrag()) {
                     // ドラッグされた
@@ -181,15 +209,15 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
                     for (auto &listener : listeners) {
                         listener->onPinchScaling(this, now_distance / pinchDistance, center);
                     }
-                    
+
                     pinchDistance = now_distance;
                 }
             }
-            
+
         } else if (TouchEvent::Action_Up == type) {
-            if (isSingleTap()) {
+            if (isSingleTap() || !_point) {
                 // シングルタップ
-                if (_point->isDraging()) {
+                if (_point && _point->isDraging()) {
                     for (auto &listener : listeners) {
                         listener->onDragEnd(this, (*_point));
                     }
@@ -197,28 +225,13 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
                     // 強制的にハンドリング完了
                     onHandlePoint(_point->getId());
                 } else {
-
                     // ダブルタップのチェックを行う
-                    for (auto &drop : dropPoints) {
-                        if (drop.point->getId() != _point->getId()) {
-                            continue;
-                        }
-
-                        ++drop.numTaps;
-
-                        bool handle = false;
-                        for (auto &listener : listeners) {
-                            if (listener->onContinuationClick(this, *_point, drop.numTaps)) {
-                                handle = true;
-                            }
-                        }
-
-                        if (handle) {
-                            onHandlePoint(_point->getId());
-                            return;
-                        }
+                    if (pDropData) {
+                        // ドロップデータを見つけたら、タップ回数を増やして毎フレームチェックに回す
+                        pDropData->releaseTime.start();
+                        ++pDropData->numTaps;
+                        return;
                     }
-
 
                     // ダブルタップチェックを見つけられなかったら、シングル扱いを行う
                     {
@@ -230,7 +243,9 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
                         }
 
                         // 一旦データを削除
-                        onHandlePoint(_point->getId());
+                        if (_point) {
+                            onHandlePoint(_point->getId());
+                        }
 
                         if (!handle) {
                             // ハンドリングが行われなかったので、ダブルタップのチェックに回す
@@ -261,7 +276,7 @@ void TouchDetector::onHandlePoint(const uint64_t id) {
     {
         auto itr = points.begin();
         const auto end = points.end();
-        
+
         while (itr != end) {
             if ((*itr)->getId() == id) {
                 points.erase(itr);
@@ -271,12 +286,12 @@ void TouchDetector::onHandlePoint(const uint64_t id) {
             }
         }
     }
-    
+
     // キャッシュポイントを排除する
     {
         auto itr = dropPoints.begin();
         const auto end = dropPoints.end();
-        
+
         while (itr != end) {
             if (itr->point->getId() == id) {
                 dropPoints.erase(itr);
@@ -284,7 +299,7 @@ void TouchDetector::onHandlePoint(const uint64_t id) {
             } else {
                 ++itr;
             }
-            
+
         }
     }
 }
