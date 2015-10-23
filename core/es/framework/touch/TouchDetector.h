@@ -92,9 +92,9 @@ private:
     uint16_t longTapMs = 400;
 
     /**
-     * 連続タップ回数を確定させる秒数
+     * 連続タップ回数を確定させるミリ秒
      */
-    uint16_t continuationClickMs = 400;
+    uint16_t continuationClickMs = 300;
 
     /**
      * 1点タッチをしている
