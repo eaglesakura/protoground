@@ -44,9 +44,16 @@ public:
     void turnY(const float degree);
 
     /**
+     * 指定回転角に向けて回転させる
+     */
+    void turnToTargetY(const float degreeY, const float offset);
+
+    /**
      * Y回転を指定する
      */
     void setRotateY(const float degree);
+
+    float getRotateY() const;
 
     /**
      * 回転量を直接指定する

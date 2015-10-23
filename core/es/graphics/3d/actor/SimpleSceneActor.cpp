@@ -108,4 +108,12 @@ void SimpleSceneActor::setRotateType(const SimpleSceneActor::RotateType_e &rotat
     rotate[3] = 1.0;
 }
 
+void SimpleSceneActor::turnToTargetY(const float degreeY, const float offset) {
+    setRotateY(util::turnAngleDegree(getRotateY(), degreeY, offset));
+}
+
+float SimpleSceneActor::getRotateY() const {
+    return rotate[1];
+}
+
 }
