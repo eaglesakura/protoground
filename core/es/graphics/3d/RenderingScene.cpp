@@ -159,6 +159,8 @@ void RenderingScene::addActor(const std::shared_ptr<SceneActor> &actor, bool che
     sp<ActorCache> cache(new ActorCache(actor));
     actors.push_back(cache);
     hashActors.insert(std::pair<long_hash, sp<ActorCache> >(actor->getHash(), cache));
+
+    actor->onRegister(this, actor);
 }
 
 void RenderingScene::removeActor(const std::shared_ptr<SceneActor> &actor) {
@@ -170,6 +172,7 @@ void RenderingScene::removeActor(const std::shared_ptr<SceneActor> &actor) {
     const auto end = actors.end();
     while (itr != end) {
         if ((*itr)->actor == actor) {
+            (*itr)->actor->onUnregister();
             actors.erase(itr);
             return;
         }

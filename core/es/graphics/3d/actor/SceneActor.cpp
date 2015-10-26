@@ -58,16 +58,18 @@ void SceneActor::message(RenderingScene *scene, const Object *sender, const Bund
     }
 }
 
-void SceneActor::addListener(const selection_ptr<ActorListener> listener) {
+void SceneActor::addListener(selection_ptr<ActorListener> listener) {
     listeners.push_back(listener);
+    listener->onRegister(this, listener.lock());
 }
 
-void SceneActor::removeListener(const selection_ptr<ActorListener> listener) {
+void SceneActor::removeListener(selection_ptr<ActorListener> listener) {
     // 一致したリスナを削除する
     auto itr = listeners.begin();
     auto end = listeners.end();
     while (itr != end) {
         if ((*itr) == listener) {
+            (*itr)->onUnregister();
             itr = listeners.erase(itr);
             end = listeners.end();
         } else {
@@ -76,22 +78,38 @@ void SceneActor::removeListener(const selection_ptr<ActorListener> listener) {
     }
 }
 
-void SceneActor::addRenderer(const selection_ptr<ActorRenderer> renderer) {
+void SceneActor::addRenderer(selection_ptr<ActorRenderer> renderer) {
     renderers.push_back(renderer);
+    renderer->onRegister(this, renderer.lock());
 }
 
-void SceneActor::removeRenderer(const selection_ptr<ActorRenderer> renderer) {
+void SceneActor::removeRenderer(selection_ptr<ActorRenderer> renderer) {
     // 一致したリスナを削除する
     auto itr = renderers.begin();
     auto end = renderers.end();
     while (itr != end) {
         if ((*itr) == renderer) {
+            (*itr)->onUnregister();
             itr = renderers.erase(itr);
             end = renderers.end();
         } else {
             ++itr;
         }
     }
+}
+
+void SceneActor::onRegister(RenderingScene *scene, std::weak_ptr<SceneActor> self) {
+    this->renderingSceneRef = scene;
+    this->self = self;
+}
+
+void SceneActor::onUnregister() {
+    this->renderingSceneRef = nullptr;
+    this->self.reset();
+}
+
+RenderingScene *SceneActor::getRenderingSceneRef() const {
+    return renderingSceneRef;
 }
 
 }

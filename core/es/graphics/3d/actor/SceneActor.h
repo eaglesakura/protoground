@@ -24,6 +24,24 @@ public:
 
     SceneActor(const long_hash &hash);
 
+    /**
+     * シーンに登録された
+     */
+    virtual void onRegister(RenderingScene *scene, std::weak_ptr<SceneActor> self);
+
+    /**
+     * シーンから排除された
+     */
+    virtual void onUnregister();
+
+
+    /**
+     * シーン情報の参照を取得する。
+     *
+     * この参照は通常のポインタであるため、所有権に注意する。
+     */
+    RenderingScene *getRenderingSceneRef() const;
+
     class ActorListener;
 
     class ActorRenderer;
@@ -115,31 +133,35 @@ public:
      * リスナを追加する
      * 重複チェックは行わない。
      */
-    void addListener(const selection_ptr<ActorListener> listener);
+    void addListener(selection_ptr<ActorListener> listener);
 
     /**
      * リスナを削除する
      * 複数登録されている場合は全て削除される
      */
-    void removeListener(const selection_ptr<ActorListener> listener);
+    void removeListener(selection_ptr<ActorListener> listener);
 
     /**
      * レンダラを登録する
      * 重複チェックは行わない。
      */
-    void addRenderer(const selection_ptr<ActorRenderer> renderer);
+    void addRenderer(selection_ptr<ActorRenderer> renderer);
 
     /**
      * レンダラを削除する
      * 複数登録されている場合は全て削除される
      */
-    void removeRenderer(const selection_ptr<ActorRenderer> renderer);
+    void removeRenderer(selection_ptr<ActorRenderer> renderer);
 
     /**
      * Actorに到達したメッセージのハンドリングを行う
      */
     class ActorListener : public virtual Object {
     public:
+        virtual void onRegister(SceneActor *act, std::weak_ptr<ActorListener> self) { };
+
+        virtual void onUnregister() { };
+
         /**
          * アップデートを行う
          */
@@ -162,6 +184,10 @@ public:
      */
     class ActorRenderer : public virtual Object {
     public:
+        virtual void onRegister(SceneActor *act, std::weak_ptr<ActorRenderer> self) { };
+
+        virtual void onUnregister() { };
+
         /**
          * レンダリングパケットを生成させる。
          *
@@ -200,6 +226,14 @@ protected:
      */
     uint attributeFlags = 0;
 
+    /**
+     * シーンをキャストして取得する
+     */
+    template<typename T>
+    T *getSceneQuery() {
+        return T::query::from(renderingSceneRef);
+    }
+
 private:
     /**
      * 検索用ハッシュ
@@ -216,6 +250,12 @@ private:
      */
     std::list<selp<ActorRenderer> > renderers;
 
+    /**
+     * 接続されているシーン
+     */
+    RenderingScene *renderingSceneRef = nullptr;
+
+    wp<SceneActor> self;
 };
 
 }
