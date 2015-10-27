@@ -45,8 +45,10 @@ public:
 
     /**
      * 指定回転角に向けて回転させる
+     *
+     * @return 回転を行ったらtrue、すでにtargetを向いていればfalseを返却する
      */
-    void turnToTargetY(const float degreeY, const float offset);
+    bool turnToTargetY(const float degreeY, const float offset);
 
     /**
      * Y回転を指定する
