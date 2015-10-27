@@ -175,6 +175,14 @@ public:
 
     virtual ~RenderingScene() = default;
 
+    static Bundle makeSurfaceChangeMessage(const uint32_t width, const uint32_t height);
+
+protected:
+    /**
+     * メッセージのハンドリングを行う
+     */
+    virtual void onSendMessage(const Object *sender, const Bundle &msg) { }
+
 private:
     /**
      * Actorの管理情報

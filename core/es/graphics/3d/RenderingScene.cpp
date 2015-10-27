@@ -327,6 +327,8 @@ void RenderingScene::sendMessage(const Object *sender, const long_hash &target, 
     if (itr != hashActors.end()) {
         itr->second->actor->message(this, sender, msg);
     }
+
+    onSendMessage(sender, msg);
 }
 
 void RenderingScene::sendMessage(const Object *sender, const uint32_t groupMask, const Bundle &msg) {
@@ -335,6 +337,8 @@ void RenderingScene::sendMessage(const Object *sender, const uint32_t groupMask,
             act->actor->message(this, sender, msg);
         }
     }
+
+    onSendMessage(sender, msg);
 }
 
 void RenderingScene::addListener(const selection_ptr<SceneListener> &listener) {
@@ -354,5 +358,13 @@ void RenderingScene::removeListener(const selection_ptr<SceneListener> &listener
 
 uint64_t RenderingScene::getUpdateId() const {
     return updateId;
+}
+
+Bundle RenderingScene::makeSurfaceChangeMessage(const uint32_t width, const uint32_t height) {
+    Bundle msg;
+    msg.putInt32(MESSAGE_UNIQUE_ID, MessageUniqueId_Lyfecycle_surfaceChanged);
+    msg.putInt32(SURFACE_SIZE_WIDTH, width);
+    msg.putInt32(SURFACE_SIZE_HEIGHT, height);
+    return msg;
 }
 }
