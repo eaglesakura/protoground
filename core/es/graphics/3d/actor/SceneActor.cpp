@@ -69,7 +69,7 @@ void SceneActor::removeListener(selection_ptr<ActorListener> listener) {
     auto end = listeners.end();
     while (itr != end) {
         if ((*itr) == listener) {
-            (*itr)->onUnregister();
+            (*itr)->onUnregister(this, (*itr).lock());
             itr = listeners.erase(itr);
             end = listeners.end();
         } else {
@@ -89,7 +89,7 @@ void SceneActor::removeRenderer(selection_ptr<ActorRenderer> renderer) {
     auto end = renderers.end();
     while (itr != end) {
         if ((*itr) == renderer) {
-            (*itr)->onUnregister();
+            (*itr)->onUnregister(this, (*itr).lock());
             itr = renderers.erase(itr);
             end = renderers.end();
         } else {

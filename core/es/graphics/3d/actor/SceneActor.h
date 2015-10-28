@@ -160,7 +160,7 @@ public:
     public:
         virtual void onRegister(SceneActor *act, std::weak_ptr<ActorListener> self) { };
 
-        virtual void onUnregister() { };
+        virtual void onUnregister(SceneActor *act, std::weak_ptr<ActorListener> self) { };
 
         /**
          * アップデートを行う
@@ -186,7 +186,7 @@ public:
     public:
         virtual void onRegister(SceneActor *act, std::weak_ptr<ActorRenderer> self) { };
 
-        virtual void onUnregister() { };
+        virtual void onUnregister(SceneActor *act, std::weak_ptr<ActorRenderer> self) { };
 
         /**
          * レンダリングパケットを生成させる。
