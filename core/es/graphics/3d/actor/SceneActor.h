@@ -230,7 +230,7 @@ protected:
      * シーンをキャストして取得する
      */
     template<typename T>
-    T *getSceneQuery() {
+    T *getSceneQuery() const {
         return T::query::from(renderingSceneRef);
     }
 
