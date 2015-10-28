@@ -117,4 +117,9 @@ float SimpleSceneActor::getRotateY() const {
     return rotate[1];
 }
 
+void SimpleSceneActor::addPos(const float x, const float y, const float z) {
+    pos.x += x;
+    pos.y += y;
+    pos.z += z;
+}
 }

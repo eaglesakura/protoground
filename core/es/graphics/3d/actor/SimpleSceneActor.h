@@ -25,6 +25,8 @@ public:
 
     void setPos(const float x, const float y, const float z);
 
+    void addPos(const float x, const float y, const float z);
+
     void setPos(const vec3 &pos);
 
     const quat &getRotateQuat() const;
