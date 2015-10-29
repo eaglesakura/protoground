@@ -39,7 +39,7 @@ OpenGLEngine::OpenGLEngine() {
     // デバイスを新規生成
     if (!pgdGlGetCompatVersion()) {
         // 関数のロードを行う
-#if defined(BUILD_MacOSX)
+#if defined(BUILD_MacOSX) || defined(BUILD_Windows)
         pgdGlCompatInitialize(pgdGlfwGetGlProcAddress, nullptr);
 #elif defined(BUILD_Android)
         pgdGlCompatInitialize(pglEglGetGlProcAddress, nullptr);

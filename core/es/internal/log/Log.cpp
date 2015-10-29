@@ -59,21 +59,16 @@ namespace es {
 namespace internal {
 
 const char *pathToFileName(const char *__file__) {
-#if (defined(BUILD_MacOSX) || defined(BUILD_Android) || defined(BUILD_MacOSX) )
     char separator = '/';
-    #if defined(BUILD_Android)
+#if defined(BUILD_Android) || defined(BUILD_Windows)
     // cygwin check
-    if(__file__[1] == ':') {
+    if (__file__[1] == ':') {
         // Windows形式だった場合、セパレータが異なる
         separator = '\\';
     }
-
-    #endif
+#endif
 
     return strrchr(__file__, separator) + 1;
-#else
-    return strrchr(__file__, '/') + 1;
-#endif
 }
 
 }

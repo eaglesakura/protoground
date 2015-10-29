@@ -82,7 +82,7 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
  /**
  * ファイル書き込みを行うオブジェクトのメモリサイズを指定する
  */
-#define PGD_FILE_ALIGN_OBJECT_BEGIN
+#define PGD_FILE_ALIGN_OBJECT_BEGIN             __declspec(align(8))
 
  /**
  * ファイル書き込みを行うオブジェクトのメモリサイズを指定する

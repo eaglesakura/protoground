@@ -2,7 +2,7 @@
 
 #include "es/system/process/IProcessContext.h"
 
-#if defined(BUILD_MacOSX)
+#if defined(BUILD_MacOSX) || defined(BUILD_Windows)
 
 namespace es {
 

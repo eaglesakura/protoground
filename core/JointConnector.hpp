@@ -657,7 +657,7 @@ typedef bool boolean_wrapper;
 /**
  * Java char型
  */
-typedef u_int16_t char_wrapper;
+typedef uint16_t char_wrapper;
 
 }
 
