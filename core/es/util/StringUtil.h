@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 #include    <vector>
@@ -18,7 +18,7 @@ string format(const char *fmt, ...);
 /**
  * 文字列をフォーマットする
  */
-string format(const uint workingBufferBytes, const char *fmt, ...);
+string format(const unsigned workingBufferBytes, const char *fmt, ...);
 
 /**
  * 文字列を指定された分割文字に従って分割する

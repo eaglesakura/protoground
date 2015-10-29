@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/asset/IAsset.hpp>
@@ -79,19 +79,19 @@ public:
         /**
          * チャンク数を取得する
          */
-        virtual uint getChunkNum() = 0;
+        virtual unsigned getChunkNum() = 0;
 
         /**
          * チャンクヘッダを書き込む
          *
          * ChunkHeader::offsetは自動的に計算される
          */
-        virtual void writeChunkHeader(const uint chunkIndex, ChunkHeader *header) = 0;
+        virtual void writeChunkHeader(const unsigned chunkIndex, ChunkHeader *header) = 0;
 
         /**
          * データ本体を書き込む
          */
-        virtual bool writeChunkData(const uint chunkIndex, ChunkHeader *header, std::shared_ptr<IWriter> writer) = 0;
+        virtual bool writeChunkData(const unsigned chunkIndex, ChunkHeader *header, std::shared_ptr<IWriter> writer) = 0;
 
         virtual ~WriteCallback() = default;
     };
@@ -144,7 +144,7 @@ public:
          * @param size データサイズ
          * @param data データ本体
          */
-        virtual void onChunkParse(const FileHeader *header, const ChunkHeader *chunkHeader, const uint offset, const uint size, const void *data) = 0;
+        virtual void onChunkParse(const FileHeader *header, const ChunkHeader *chunkHeader, const unsigned offset, const unsigned size, const void *data) = 0;
 
         /**
          * エラーが発生した

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <map>
@@ -15,7 +15,6 @@ inline void swap(T *a, T *b) {
     *a = *b;
     *b = temp;
 }
-
 
 }
 }

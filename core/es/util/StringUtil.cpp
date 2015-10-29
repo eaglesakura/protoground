@@ -1,6 +1,10 @@
-#include    "StringUtil.h"
+﻿#include    "StringUtil.h"
 #include <sstream>
 #include <es/memory/Buffer.hpp>
+
+// for Windows
+#include <cstdarg>
+#include <iosfwd>
 
 // for Android
 #include <iterator>
@@ -19,7 +23,7 @@ string format(const char *fmt, ...) {
     return std::string((char *) buffer.get());
 }
 
-string format(const uint workingBufferBytes, const char *fmt, ...) {
+string format(const unsigned workingBufferBytes, const char *fmt, ...) {
     ByteBuffer buffer = Buffer::createZeroBuffer(strlen(fmt) + workingBufferBytes);
 
     va_list ap;
@@ -35,7 +39,7 @@ int split(const std::string &origin, const std::string &delim, std::vector<std::
 
     std::istringstream iss(origin);
     copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>(), std::back_inserter(*result));
-    return result->size() - oldSize;
+    return (int)(result->size() - oldSize);
 }
 
 const char *getFileExt(const char *path) {

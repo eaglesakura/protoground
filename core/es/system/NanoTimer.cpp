@@ -1,9 +1,9 @@
-#include "NanoTimer.h"
+﻿#include "NanoTimer.h"
 #include "es/system/Thread.hpp"
 
 namespace es {
 
-void NanoTimer::sleepMs(const uint ms) {
+void NanoTimer::sleepMs(const unsigned ms) {
     std::this_thread::sleep_for(
             std::chrono::milliseconds(ms)
     );

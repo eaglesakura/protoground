@@ -1,4 +1,4 @@
-#include "AnimationPose.h"
+﻿#include "AnimationPose.h"
 #include "es/internal/protoground-internal.hpp"
 
 namespace es {

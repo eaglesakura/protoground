@@ -1,4 +1,4 @@
-#include "BoneController.h"
+﻿#include "BoneController.h"
 #include "es/graphics/model/pose/AnimationPose.h"
 #include "btBulletCollisionCommon.h"
 #include "es/internal/protoground-internal.hpp"
@@ -158,8 +158,8 @@ void BoneController::updateWorldMatrixIKLocal() {
 
     currentPos.w = targetPos.w = 1.0f;
 
-    uint index = 0;
-    const uint numBones = model->bone.bones.size();
+    unsigned index = 0;
+    const unsigned numBones = model->bone.bones.size();
     for (int i = 0; i < numBones; ++i) {
         const auto &selfBone = model->bone.bones[i];
         const auto &selfBoneCache = boneCaches[i];
@@ -287,7 +287,7 @@ void BoneController::updateBoneMatrixTable() {
 
     // 実際に適用すべき行列を生成する
     {
-        const int numTable = globalTable.size();
+        const int numTable = (int)globalTable.size();
         for (int i = 0; i < numTable; ++i) {
             boneTable->palette[i] = globalTable[i].cache[BoneMatrix::CalcPass_World] * boneCaches[i].invert;
         }
@@ -298,7 +298,7 @@ void BoneController::updateBoneMatrixTable() {
 /**
  * ワールド行列を再計算する
  */
-mat4 BoneController::calcWorldMatrix(const uint boneIndex) const {
+mat4 BoneController::calcWorldMatrix(const unsigned boneIndex) const {
     const auto &bone = model->bone.bones[boneIndex];
     if (bone.parentBoneIndex < 0) {
         return world * globalTable[boneIndex].cache[BoneMatrix::CalcPass_Local];

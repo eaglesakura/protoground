@@ -1,4 +1,4 @@
-#include    "RawImage.h"
+﻿#include    "RawImage.h"
 #include    "es/internal/protoground-internal.hpp"
 
 namespace es {
@@ -14,7 +14,7 @@ RawImage::~RawImage() {
 /**
  * フォーマットを指定してピクセルバッファを生成する
  */
-void RawImage::alloc(const PixelFormat_e format, const uint width, const uint height) {
+void RawImage::alloc(const PixelFormat_e format, const unsigned width, const unsigned height) {
     this->format = format;
     this->width = width;
     this->height = height;
@@ -34,7 +34,7 @@ void RawImage::alloc(const PixelFormat_e format, const uint width, const uint he
 /**
  * ピクセルバッファの格納先を外部から指定する
  */
-void RawImage::setBuffer(const void *buffer, const uint length) {
+void RawImage::setBuffer(const void *buffer, const unsigned length) {
     pBuffer.ptr = (uint8_t *) buffer;
     pBuffer.length = length;
     pixels.clear();
@@ -43,7 +43,7 @@ void RawImage::setBuffer(const void *buffer, const uint length) {
 /**
  * y0行とy1行のピクセルを入れ替える
  */
-void RawImage::swapLineY(const uint y0, const uint y1) {
+void RawImage::swapLineY(const unsigned y0, const unsigned y1) {
 
 }
 

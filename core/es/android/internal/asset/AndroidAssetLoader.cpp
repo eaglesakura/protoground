@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 
 #include    "AndroidAssetLoader.h"
 #include    "AndroidMappedAsset.hpp"
@@ -25,7 +25,7 @@ std::shared_ptr<IAsset> AndroidAssetLoader::load(const std::string &path, const 
     return std::shared_ptr<IAsset>(new AndroidMappedAsset(assets, pAsset));
 }
 
-std::shared_ptr<IWriter> AndroidAssetLoader::write(const std::string &path, const uint flags, const Bundle &hint) {
+std::shared_ptr<IWriter> AndroidAssetLoader::write(const std::string &path, const unsigned flags, const Bundle &hint) {
     // not support
     return std::shared_ptr<IWriter>();
 }

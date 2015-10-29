@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 
@@ -77,7 +77,7 @@ private:
     /**
      * ループ回数
      */
-    uint loopCount = 0;
+    unsigned loopCount = 0;
 
     /**
      * ループ回数

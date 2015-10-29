@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/system/Object.hpp>
@@ -11,10 +11,11 @@
 #define __gl_h_
 #endif
 
+#define __gl_h_ 1
 #include <GLFW/glfw3.h>
 #include "es/math/protoground-glm.hpp"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace es {
 
@@ -82,7 +83,7 @@ public:
      * インスタンスを生成する
      */
     static std::shared_ptr<GlfwDevice> createInstance(
-            const uint width, const uint height,
+            const unsigned width, const unsigned height,
             const bool resizeable,
             const std::string &title,
             const std::shared_ptr<GlfwDevice> sharedContext = std::shared_ptr<GlfwDevice>()
@@ -92,7 +93,7 @@ public:
      * オフスクリーン用のデバイスを生成する
      */
     static std::shared_ptr<GlfwDevice> createOffscreenInstance(
-            const uint width, const uint height,
+            const unsigned width, const unsigned height,
             const std::shared_ptr<GlfwDevice> sharedContext = std::shared_ptr<GlfwDevice>()
     );
 

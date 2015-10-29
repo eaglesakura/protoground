@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 
@@ -17,6 +17,6 @@
 #define ES_GRAPHICS_OPENGL  1
 #endif
 
-#if defined(BUILD_Windows_Cygwin)
+#if defined(BUILD_Windows)
 #define ES_GRAPHICS_OPENGL  1
 #endif

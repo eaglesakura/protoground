@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/graphics/gl/shader/internal/GLUniformBase.h"
 #include "es/math/protoground-glm.hpp"
@@ -9,7 +9,7 @@ namespace gl {
 
 namespace internal {
 
-template<typename vector_type, uint vector_length>
+template<typename vector_type, unsigned vector_length>
 class GLVectorUniform : public GLUniformBase {
 protected:
     GLVectorUniform();

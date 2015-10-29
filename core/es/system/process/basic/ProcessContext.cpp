@@ -1,8 +1,8 @@
-#include <thread>
+﻿#include <thread>
 #include "ProcessContext.h"
 #include "es/internal/protoground-internal.hpp"
 
-#if defined(BUILD_MacOSX)
+#if defined(BUILD_MacOSX) || defined(BUILD_Windows)
 
 #include "es/system/string/internal/Cpp11StringConverter.h"
 

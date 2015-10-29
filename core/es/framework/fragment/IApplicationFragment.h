@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 
@@ -35,7 +35,7 @@ public:
     /**
      * サーフェイスサイズが変更された
      */
-    virtual void onSurfaceResized(const uint width, const uint height) {
+    virtual void onSurfaceResized(const unsigned width, const unsigned height) {
     }
 
     /**

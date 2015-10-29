@@ -1,4 +1,4 @@
-#include <es/system/process/IProcessContext.h>
+﻿#include <es/system/process/IProcessContext.h>
 #include <es/graphics/gl/sprite/GLImmediateSpriteRenderer.h>
 #include <es/graphics/gl/decoder/GLTextureDecodeCallback.h>
 #include "GLResourceFactory.h"

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "IApplicationFragment.h"
 #include    "es/system/Thread.hpp"
@@ -70,7 +70,7 @@ public:
     /**
      * フラグメント復旧を行う
      */
-    virtual void onSurfaceResized(const uint width, const uint height) {
+    virtual void onSurfaceResized(const unsigned width, const unsigned height) {
         auto itr = fragments.begin(), end = fragments.end();
 
         while (itr != end) {
@@ -191,24 +191,23 @@ protected:
     }
 
 private:
-    typedef typename std::vector<selection_ptr<IApplicationFragment> > fragment_container;
 
     mutable mutex transactionLock;
 
     /**
      * 管理中のフラグメント
      */
-    fragment_container fragments;
+	std::vector<selection_ptr<IApplicationFragment> > fragments;
 
     /**
      * フラグメントの追加リクエスト
      */
-    fragment_container requestAddFragment;
+	std::vector<selection_ptr<IApplicationFragment> > requestAddFragment;
 
     /**
      * フラグメントの削除リクエスト
      */
-    fragment_container requestRemoveFragment;
+	std::vector<selection_ptr<IApplicationFragment> > requestRemoveFragment;
 
     IApplication *application;
 };

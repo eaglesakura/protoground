@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 
 #pragma once
 
@@ -29,7 +29,7 @@ public:
     /**
      * 永続データの書き込みを行う
      */
-    virtual std::shared_ptr<IWriter> write(const std::string &path, const uint flags, const Bundle &hint = Bundle()) override;
+    virtual std::shared_ptr<IWriter> write(const std::string &path, const unsigned flags, const Bundle &hint = Bundle()) override;
 
     virtual ~AndroidAssetLoader() = default;
 

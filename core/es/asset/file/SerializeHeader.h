@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/memory/SafeArray.hpp>
 #include "es/protoground.hpp"

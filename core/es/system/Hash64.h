@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <thread>
@@ -83,11 +83,6 @@ private:
 };
 
 static_assert(sizeof(Hash64) == (64 / 8), "Hash64 != 64bit");
-
-/**
- * 通常利用する場合はビット数を意識させない
- */
-typedef Hash64 hash;
 
 /**
  * boostへ提供するハッシュ関数

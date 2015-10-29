@@ -1,4 +1,4 @@
-#include <es/asset/file/SerializeHeader.h>
+﻿#include <es/asset/file/SerializeHeader.h>
 #include "SymbolTable.h"
 
 namespace es {
@@ -19,7 +19,7 @@ uint64_t SymbolTable::add(const string &text) {
 }
 
 string SymbolTable::find(const uint64_t value) const {
-    auto str = symbols.find(hash::restore(value));
+    auto str = symbols.find(Hash64::restore(value));
     if (str.enable()) {
         return str.get();
     } else {
@@ -35,7 +35,7 @@ ByteBuffer SymbolTable::serialize() const {
     SymbolTable_Header header;
     header.num = strings.size();
 
-    uint bufferSize = sizeof(SymbolTable_Header);
+    unsigned bufferSize = sizeof(SymbolTable_Header);
     for (const auto &str : strings) {
         // 終端NULLを含めてバッファに書き込む
         bufferSize += (str.length() + 1);
@@ -58,7 +58,7 @@ ByteBuffer SymbolTable::serialize() const {
 
     // NULL込みで全データを書き込む
     for (const auto &str : strings) {
-        const uint size = str.length() + 1;
+        const unsigned size = str.length() + 1;
         memcpy(write, str.c_str(), size);
         write += size;
     }

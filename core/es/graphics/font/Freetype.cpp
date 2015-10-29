@@ -1,4 +1,4 @@
-#include "Freetype.h"
+﻿#include "Freetype.h"
 #include "es/graphics/font/internal/FontFaceImpl.hpp"
 #include "es/graphics/font/internal/FreetypeLibrary.hpp"
 

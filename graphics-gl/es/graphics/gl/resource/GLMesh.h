@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/graphics/resource/IMesh.hpp"
@@ -87,9 +87,9 @@ public:
 
     virtual void alloc(std::shared_ptr<IDevice> device, const AllocOption &option) override;
 
-    virtual uint getVertexCount() const override;
+    virtual unsigned getVertexCount() const override;
 
-    virtual uint getIndexCount() const override;
+    virtual unsigned getIndexCount() const override;
 
     virtual void dispose() override;
 
@@ -149,12 +149,12 @@ private:
         /**
          * データ数
          */
-        uint num = 0;
+		unsigned num = 0;
 
         /**
          * 1データのバイト数
          */
-        uint onceBytes = 0;
+		unsigned onceBytes = 0;
 
         /**
          * ロック済みポインタ

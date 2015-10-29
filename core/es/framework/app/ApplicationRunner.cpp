@@ -1,4 +1,4 @@
-#include "ApplicationRunner.h"
+﻿#include "ApplicationRunner.h"
 #include <es/system/process/IProcessContext.h>
 #include <es/system/string/HashStringTable.h>
 #include "es/framework/app/BaseContext.h"
@@ -117,7 +117,7 @@ void ApplicationRunner::handleTouchDisplay(const Bundle &bundle) {
     event.action = (TouchEvent::Action_e) action;
     event.id = touchId;
     auto context = this->context;
-    context->postTask(mainThreadId, [context, event](TaskQueue *, const hash &id) {
+    context->postTask(mainThreadId, [context, event](TaskQueue *, const Hash64 &id) {
         context->onDisplayTouch(event);
     });
 }

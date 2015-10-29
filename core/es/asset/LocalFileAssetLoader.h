@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "IAsset.hpp"
 #include "IAssetLoader.hpp"
@@ -25,7 +25,7 @@ public:
     /**
      *
      */
-    LocalFileAssetLoader(const std::string &_basePath = "", const uint flags = Flag_Read);
+    LocalFileAssetLoader(const std::string &_basePath = "", const unsigned flags = Flag_Read);
 
     virtual ~LocalFileAssetLoader() = default;
 
@@ -36,10 +36,10 @@ public:
     virtual std::shared_ptr<IAsset> load(const std::string &path, const Bundle &hint) override ;
 
 
-    virtual std::shared_ptr<IWriter> write(const std::string &path, const uint flags, const Bundle &hint) override;
+    virtual std::shared_ptr<IWriter> write(const std::string &path, const unsigned flags, const Bundle &hint) override;
 
 private:
-    uint flags = 0;
+    uint32_t flags = 0;
     std::string basePath;
 };
 

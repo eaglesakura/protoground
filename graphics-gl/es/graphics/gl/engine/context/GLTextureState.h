@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/gl/engine/GLGPUCapacity.h>
 #include "es/protoground.hpp"
@@ -9,10 +9,11 @@ namespace es {
 
 namespace gl_util {
 
+
 /**
  * テクスチャユニットの定数をテクスチャ番号に変換する
  */
-inline uint unitToTextureIndex(const GLenum textureUnit) {
+inline unsigned unitToTextureIndex(const GLenum textureUnit) {
     assert(textureUnit >= GL_TEXTURE0);
 
     return textureUnit - GL_TEXTURE0;
@@ -21,7 +22,7 @@ inline uint unitToTextureIndex(const GLenum textureUnit) {
 /**
  * テクスチャ番号をテクスチャユニット定数に変換する
  */
-inline GLenum indexToTextureUnit(const uint index) {
+inline GLenum indexToTextureUnit(const unsigned index) {
     return index + GL_TEXTURE0;
 }
 
@@ -44,12 +45,12 @@ public:
     /**
      * テクスチャユニットをActiveにする
      */
-    bool activeTexture(const uint index);
+    bool activeTexture(const unsigned index);
 
     /**
      * 現在アクティブになっているテクスチャの番号を取得する。
      */
-    uint getActiveTextureIndex() const;
+	unsigned getActiveTextureIndex() const;
 
     /**
      * 現在activeになっているテクスチャユニットに対してバインドを行う。
@@ -59,7 +60,7 @@ public:
     /**
      * まだバインドされているかをチェックする
      */
-    bool isBindedTexture(const uint index, const GLenum target, const GLuint texture);
+    bool isBindedTexture(const unsigned index, const GLenum target, const GLuint texture);
 
     /**
      * 指定したテクスチャがバインド済みになっているかを調べる
@@ -69,7 +70,7 @@ public:
     /**
      * バインドされているテクスチャを一括で解放する
      */
-    void unbindTextures(const uint num, const GLuint *textures);
+    void unbindTextures(const unsigned num, const GLuint *textures);
 
     /**
      * 全てのテクスチャを一括で外す
@@ -121,12 +122,12 @@ private:
     /**
      * アクティブ化されているテクスチャユニットを保持する
      */
-    uint active;
+	unsigned active;
 
     /**
      * 空きテクスチャユニットがない場合に上書き取得するテクスチャの番号
      */
-    uint overrideTextureUnitIndex = 0;
+	unsigned overrideTextureUnitIndex = 0;
 };
 
 }

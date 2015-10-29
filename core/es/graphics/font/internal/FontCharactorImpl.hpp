@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/font/FontCharactor.h>
 #include "es/graphics/font/internal/FreetypeLibrary.hpp"

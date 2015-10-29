@@ -1,4 +1,4 @@
-#include "CpuSkinningController.h"
+﻿#include "CpuSkinningController.h"
 #include "es/math/VectorMath.hpp"
 
 namespace es {
@@ -19,13 +19,13 @@ void CpuSkinningController::initialize(const std::shared_ptr<file::SkinMeshModel
 namespace {
 static void CpuSkinningController_skinningM34_withNormal(
         const Transform *__restrict pBoneTable,
-        const uint numVertices,
-        const uint8_t *__restrict srcPositions, const uint srcPositionsOffset,
-        const uint8_t *__restrict srcNormals, const uint srcNormalsOffset,
-        const uint8_t *__restrict srcBoneIndices, const uint srcBoneIndexOffset,
-        const uint8_t *__restrict srcBoneWeights, const uint srcBoneWeightOffset,
-        uint8_t *__restrict dstPositions, const uint dstPositionsOffset,
-        uint8_t *__restrict dstNormals, const uint dstNormalsOffset) {
+        const unsigned numVertices,
+        const uint8_t *__restrict srcPositions, const unsigned srcPositionsOffset,
+        const uint8_t *__restrict srcNormals, const unsigned srcNormalsOffset,
+        const uint8_t *__restrict srcBoneIndices, const unsigned srcBoneIndexOffset,
+        const uint8_t *__restrict srcBoneWeights, const unsigned srcBoneWeightOffset,
+        uint8_t *__restrict dstPositions, const unsigned dstPositionsOffset,
+        uint8_t *__restrict dstNormals, const unsigned dstNormalsOffset) {
 
     StackBuffer<
             sizeof(mat4)
@@ -69,8 +69,8 @@ void CpuSkinningController::compute(const uint32_t flags, const VertexAttribute:
 
     const auto boneTable = boneController->getBoneTable34();
 
-    const uint numVertices = model->mesh.meta.vertexNum;
-    const uint srcVertexBytes = model->mesh.meta.vertexComplex.vertexBytes;
+    const unsigned numVertices = model->mesh.meta.vertexNum;
+    const unsigned srcVertexBytes = model->mesh.meta.vertexComplex.vertexBytes;
     const void *srcPosition = VertexAttribute::getWriteHeader(model->mesh.vertices.get(), VertexAttribute::POSITION_float3, model->mesh.meta.vertexComplex);
     void *dstPosition = VertexAttribute::getWriteHeader(dstVertices, VertexAttribute::POSITION_float3, dstComplex);
     assert(srcPosition && dstPosition);

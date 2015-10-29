@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/graphics/PixelFormat.hpp"
 
@@ -109,7 +109,7 @@ public:
      *
      * 引数lineは使いまわされる可能性があるため、内部的にテクスチャコピー等を行うこと。
      */
-    virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const uint height) = 0;
+    virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const unsigned height) = 0;
 
     /**
      * 画像のデコードをキャンセルする場合はtrue

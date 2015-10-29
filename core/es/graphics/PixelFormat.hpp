@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 #include    "es/memory/Buffer.hpp"
@@ -112,18 +112,18 @@ public:
     /**
      * フォーマットごとの1ピクセルサイズを取得する
      */
-    static const uint getPixelBytes(const PixelFormat_e fmt);
+    static const unsigned getPixelBytes(const PixelFormat_e fmt);
 
     /**
      * 指定したピクセルフォーマットで規定のピクセル数分のバッファを作成する
      */
-    static ByteBuffer createPixelBuffer(const PixelFormat_e fmt, const uint pixels);
+    static ByteBuffer createPixelBuffer(const PixelFormat_e fmt, const unsigned pixels);
 
     /**
      * RGB888のポインタをdstへピクセル情報をコピーする。
      * 同じポインタの場合は、何も行わない。
      */
-    static void copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels);
+    static void copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels);
 
     /**
      * RGB888のデータを変換コピーする
@@ -133,13 +133,13 @@ public:
      * stride > widthである必要がある。
      * stride * heightのピクセル数が必要になる。
      */
-    static void copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const uint width, const uint height, const uint stride);
+    static void copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned width, const unsigned height, const unsigned stride);
 
     /**
      * RGB888のポインタをdstへピクセル情報をコピーする。
      * 同じポインタの場合は、何も行わない。
      */
-    static void copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels);
+    static void copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels);
 
     /**
      * RGBA8888のデータを変換コピーする
@@ -149,13 +149,13 @@ public:
      * stride > widthである必要がある。
      * stride * heightのピクセル数が必要になる。
      */
-    static void copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint width, const uint height, const uint stride);
+    static void copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned width, const unsigned height, const unsigned stride);
 
     /**
      * RGB888のポインタをdstへピクセル情報をコピーする。
      * 同じポインタの場合は、何も行わない。
      */
-    static void copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels);
+    static void copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels);
 
     /**
      * GLESで使用されるピクセルフォーマットへ変換する

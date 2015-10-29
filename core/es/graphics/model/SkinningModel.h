@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/model/file/SymbolTable.h>
 #include <es/graphics/model/VertexAttribute.h>
@@ -10,7 +10,7 @@
 namespace es {
 
 namespace file {
-class SkinMeshModelData;
+struct SkinMeshModelData;
 }
 
 class AnimationPose;

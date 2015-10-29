@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/graphics/model/file/ModelData.h"
@@ -113,7 +113,7 @@ private:
     /**
      * ワールド行列を更新する
      */
-    mat4 calcWorldMatrix(const uint boneIndex) const;
+    mat4 calcWorldMatrix(const unsigned boneIndex) const;
 
     /**
      * 計算のキャッシュを保持する。

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/graphics/image/IImageDecodeCallback.hpp"
@@ -52,7 +52,7 @@ public:
      *
      * 引数lineは使いまわされる可能性があるため、内部的にテクスチャコピー等を行うこと。
      */
-    virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const uint height) override;
+    virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const unsigned height) override;
 
     /**
      * 画像のデコードをキャンセルする場合はtrue

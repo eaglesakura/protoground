@@ -1,4 +1,4 @@
-#include "gl-compat.h"
+﻿#include "gl-compat.h"
 
 static PgdGraphicsOpenGlCompat_e pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_Unknown;
 

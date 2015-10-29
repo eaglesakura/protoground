@@ -1,8 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #include "es/system/string/IStringConverter.h"
 
-#if defined(BUILD_MacOSX)
+#if defined(BUILD_MacOSX) || defined(BUILD_Windows)
 
 #include <codecvt>
 #include <locale>

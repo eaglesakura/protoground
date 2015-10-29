@@ -1,4 +1,4 @@
-#include "TextLayoutManager.h"
+﻿#include "TextLayoutManager.h"
 #include "es/graphics/font/FontCharactor.h"
 
 namespace es {
@@ -78,7 +78,7 @@ std::shared_ptr<TextLayoutManager::TextItem> TextLayoutManager::add(const std::s
     return item;
 }
 
-void TextLayoutManager::addSpace(const uint xPixels) {
+void TextLayoutManager::addSpace(const unsigned xPixels) {
     nextBaselinePosition.x += xPixels;
 }
 
@@ -115,7 +115,7 @@ void TextLayoutManager::setFooderText(const std::vector<std::shared_ptr<FontChar
     }
 }
 
-void TextLayoutManager::setLayoutSize(const uint width, const uint height) {
+void TextLayoutManager::setLayoutSize(const unsigned width, const unsigned height) {
     size = i16vec2(width, height);
 }
 
@@ -123,11 +123,11 @@ const i16vec2 &TextLayoutManager::getLayoutSize() const {
     return size;
 }
 
-void TextLayoutManager::setMaxLines(const uint lines) {
+void TextLayoutManager::setMaxLines(const unsigned lines) {
     this->maxLines = (uint16_t) lines;
 }
 
-uint TextLayoutManager::getMaxLines() const {
+unsigned TextLayoutManager::getMaxLines() const {
     return maxLines;
 }
 
@@ -139,7 +139,7 @@ const RectI16 &TextLayoutManager::TextItem::getFontArea() const {
     return fontArea;
 }
 
-const uint TextLayoutManager::TextItem::getLine() const {
+const unsigned TextLayoutManager::TextItem::getLine() const {
     return line;
 }
 

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/resource/FontTextureAtlas.h>
 #include <es/graphics/font/TextLayoutManager.h>

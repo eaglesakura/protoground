@@ -1,4 +1,4 @@
-#include "GLTexture.h"
+﻿#include "GLTexture.h"
 #include "es/internal/protoground-internal.hpp"
 
 namespace es {
@@ -15,15 +15,15 @@ GLTexture::~GLTexture() {
     dispose();
 }
 
-uint GLTexture::getWidth() const {
+unsigned GLTexture::getWidth() const {
     return size.tex_width;
 }
 
-uint GLTexture::getHeight() const {
+unsigned GLTexture::getHeight() const {
     return size.tex_height;
 }
 
-void GLTexture::setImageSize(uint x, uint y) {
+void GLTexture::setImageSize(unsigned x, unsigned y) {
     assert(x <= getWidth());
     assert(y <= getHeight());
 
@@ -103,7 +103,7 @@ bool GLTexture::isAllocated() const {
     return allocated;
 }
 
-uint GLTexture::bind(std::shared_ptr<GLTextureState> state) {
+unsigned GLTexture::bind(std::shared_ptr<GLTextureState> state) {
     int index = state->getBindedTextureUnitIndex(target, handle);
     if (index >= 0) {
         // 既にバインド済みのため、Activeのみを切り替える
@@ -118,11 +118,11 @@ uint GLTexture::bind(std::shared_ptr<GLTextureState> state) {
         state->activeTexture(index);
         state->bindTexture(target, handle);
 
-        return (uint) index;
+        return (unsigned) index;
     }
 }
 
-void GLTexture::bind(const uint index, std::shared_ptr<GLTextureState> state) {
+void GLTexture::bind(const unsigned index, std::shared_ptr<GLTextureState> state) {
     if (state->isBindedTexture(index, target, handle)) {
         // 指定したIndexに既にバインドされていたら、activeだけを切り替えて何もしない
         state->activeTexture(index);

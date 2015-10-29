@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/asset/IWriter.hpp"
@@ -30,7 +30,7 @@ public:
         return fp != nullptr;
     }
 
-    virtual bool write(const void *buffer, const uint size) override {
+    virtual bool write(const void *buffer, const unsigned size) override {
         auto writeBlock = fwrite(buffer, size, 1, fp);
         return writeBlock == 1;
     }

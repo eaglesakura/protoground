@@ -1,4 +1,4 @@
-#include "IAsset.hpp"
+﻿#include "IAsset.hpp"
 #include "es/asset/internal/InMemoryAsset.hpp"
 #include <vector>
 
@@ -42,7 +42,7 @@ std::shared_ptr<IAsset> toOnMemory(std::shared_ptr<IAsset> asset) {
     return std::shared_ptr<IAsset>(new internal::InMemoryAsset(asset));
 }
 
-bool read(std::shared_ptr<IAsset> asset, void *ptr, const uint size) {
+bool read(std::shared_ptr<IAsset> asset, void *ptr, const unsigned size) {
     auto data = asset->read(size);
     if (data.length != size) {
         return false;

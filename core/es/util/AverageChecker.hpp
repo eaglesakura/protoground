@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by @eaglesakura on 15/05/20.
 //
 
@@ -16,14 +16,14 @@ namespace es {
  */
 template<typename T>
 class AverageChecker {
-    uint maxAverageCount = 0;
+    unsigned maxAverageCount = 0;
 
     /**
      * 指定回数データを捨てる
      *
      * 起動直後等、動作が不安定になりがちな場合に捨てさせる。
      */
-    uint dropCount = 0;
+    unsigned dropCount = 0;
 
     /**
      * 現在の合計値
@@ -33,7 +33,7 @@ class AverageChecker {
     /**
      * 合計回数
      */
-    uint sumCount = 0;
+    unsigned sumCount = 0;
 public:
     AverageChecker() { }
 
@@ -76,12 +76,12 @@ public:
     /**
      * 最大合計数を指定する
      */
-    void setMaxAverageCount(uint maxAverageCount) {
+    void setMaxAverageCount(unsigned maxAverageCount) {
         AverageChecker::maxAverageCount = maxAverageCount;
     }
 
 
-    void setDropCount(uint dropCount) {
+    void setDropCount(unsigned dropCount) {
         AverageChecker::dropCount = dropCount;
     }
 
@@ -93,7 +93,7 @@ public:
         return sumValue;
     }
 
-    uint getSumCount() const {
+    unsigned getSumCount() const {
         return sumCount;
     }
 };

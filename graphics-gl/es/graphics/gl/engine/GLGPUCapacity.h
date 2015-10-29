@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/memory/query_ptr.hpp>
 #include "es/protoground.hpp"

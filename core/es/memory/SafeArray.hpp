@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground.hpp"
 #include    <string.h>
 #include    <vector>
+#include	<algorithm>
 
 namespace es {
 

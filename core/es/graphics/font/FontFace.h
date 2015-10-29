@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <es/system/Object.hpp>
@@ -27,7 +27,7 @@ public:
      *
      * レンダリングされる文字はこのwidth/heightに収まるように設定される。
      */
-    virtual void setSize(const uint width, const uint height) = 0;
+    virtual void setSize(const unsigned width, const unsigned height) = 0;
 
     /**
      * 指定のバッファに文字をレンダリングし、外径情報を返す。

@@ -1,4 +1,4 @@
-#include <es/memory/Buffer.hpp>
+﻿#include <es/memory/Buffer.hpp>
 #include "TouchDetector.h"
 #include "TouchListener.hpp"
 
@@ -27,7 +27,7 @@ void TouchDetector::removeListener(const selection_ptr<TouchListener> &listener)
 }
 
 uint32_t TouchDetector::getTouchPoints() const {
-    return points.size();
+    return (uint32_t)points.size();
 }
 
 

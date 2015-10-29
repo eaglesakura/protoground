@@ -1,4 +1,4 @@
-#include "AsyncGraphicsRenderer.h"
+﻿#include "AsyncGraphicsRenderer.h"
 
 namespace es {
 

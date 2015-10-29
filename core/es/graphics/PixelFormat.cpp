@@ -1,23 +1,23 @@
-#include "es/graphics/PixelFormat.hpp"
+﻿#include "es/graphics/PixelFormat.hpp"
 #include "es/internal/protoground-internal.hpp"
 namespace es {
 
-void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels) {
+void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels) {
     if (src_rgb888 == dst) {
         return;
     }
 
     // 残ピクセル数
-    uint pixels = _pixels;
+    unsigned pixels = _pixels;
 
     switch (dstFormat) {
         case PixelFormat_RGB565: {
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                uint r = src_rgb888[0] & 0xff;
-                uint g = src_rgb888[1] & 0xff;
-                uint b = src_rgb888[2] & 0xff;
+                unsigned r = src_rgb888[0] & 0xff;
+                unsigned g = src_rgb888[1] & 0xff;
+                unsigned b = src_rgb888[2] & 0xff;
 
                 (*p) = ((r >> 3) << 11) | ((g >> 2) << 5) | ((b >> 3));
                 src_rgb888 += 3;
@@ -30,9 +30,9 @@ void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstF
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                uint r = src_rgb888[0] & 0xff;
-                uint g = src_rgb888[1] & 0xff;
-                uint b = src_rgb888[2] & 0xff;
+                unsigned r = src_rgb888[0] & 0xff;
+                unsigned g = src_rgb888[1] & 0xff;
+                unsigned b = src_rgb888[2] & 0xff;
                 (*p) = ((r >> 3) << 12) | ((g >> 3) << 6) | ((b >> 3) << 1) | 1;
                 src_rgb888 += 3;
                 ++p;
@@ -64,7 +64,7 @@ void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstF
     }
 }
 
-void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const uint width, const uint height, const uint stride) {
+void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned width, const unsigned height, const unsigned stride) {
     if (width == stride) {
         copyRGB888Pixels(src_rgb888, dstFormat, dst, width * height);
     } else {
@@ -72,7 +72,7 @@ void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstF
         int line = height;
         uint8_t *dstLineBuffer = dst;
         uint8_t *srcLineBUffer = (uint8_t *) src_rgb888;
-        const uint pixelSize = getPixelBytes(dstFormat);
+        const unsigned pixelSize = getPixelBytes(dstFormat);
         while (line > 0) {
             copyRGB888Pixels(srcLineBUffer, dstFormat, dstLineBuffer, width);
 
@@ -83,13 +83,13 @@ void Pixel::copyRGB888Pixels(const uint8_t *src_rgb888, const PixelFormat_e dstF
     }
 }
 
-void Pixel::copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels) {
+void Pixel::copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels) {
     if (src_bgra8888 == dst) {
         return;
     }
 
     // 残ピクセル数
-    uint pixels = _pixels;
+    unsigned pixels = _pixels;
 
     const int pixel_size = 4;
 
@@ -98,9 +98,9 @@ void Pixel::copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e 
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                const uint r = src_bgra8888[2] & 0xff;
-                const uint g = src_bgra8888[1] & 0xff;
-                const uint b = src_bgra8888[0] & 0xff;
+                const unsigned r = src_bgra8888[2] & 0xff;
+                const unsigned g = src_bgra8888[1] & 0xff;
+                const unsigned b = src_bgra8888[0] & 0xff;
 
                 (*p) = ((r >> 3) << 11) | ((g >> 2) << 5) | ((b >> 3));
                 src_bgra8888 += pixel_size;
@@ -113,10 +113,10 @@ void Pixel::copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e 
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                const uint r = src_bgra8888[2] & 0xff;
-                const uint g = src_bgra8888[1] & 0xff;
-                const uint b = src_bgra8888[0] & 0xff;
-                const uint a = (src_bgra8888[3] & 0xff) > 0 ? 1 : 0;
+                const unsigned r = src_bgra8888[2] & 0xff;
+                const unsigned g = src_bgra8888[1] & 0xff;
+                const unsigned b = src_bgra8888[0] & 0xff;
+                const unsigned a = (src_bgra8888[3] & 0xff) > 0 ? 1 : 0;
                 (*p) = ((r >> 3) << 11) | ((g >> 3) << 6) | ((b >> 3) << 1) | a;
                 src_bgra8888 += pixel_size;
                 ++p;
@@ -158,13 +158,13 @@ void Pixel::copyBGRA8888Pixels(const uint8_t *src_bgra8888, const PixelFormat_e 
     }
 }
 
-void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint _pixels) {
+void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned _pixels) {
     if (src_rgba8888 == dst) {
         return;
     }
 
     // 残ピクセル数
-    uint pixels = _pixels;
+    unsigned pixels = _pixels;
 
     const int pixel_size = 4;
 
@@ -173,9 +173,9 @@ void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e 
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                const uint r = src_rgba8888[0] & 0xff;
-                const uint g = src_rgba8888[1] & 0xff;
-                const uint b = src_rgba8888[2] & 0xff;
+                const unsigned r = src_rgba8888[0] & 0xff;
+                const unsigned g = src_rgba8888[1] & 0xff;
+                const unsigned b = src_rgba8888[2] & 0xff;
 
                 (*p) = ((r >> 3) << 11) | ((g >> 2) << 5) | ((b >> 3));
                 src_rgba8888 += pixel_size;
@@ -188,10 +188,10 @@ void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e 
             uint16_t *p = (uint16_t *) dst;
             while (pixels) {
 
-                const uint r = src_rgba8888[0] & 0xff;
-                const uint g = src_rgba8888[1] & 0xff;
-                const uint b = src_rgba8888[2] & 0xff;
-                const uint a = (src_rgba8888[3] & 0xff) > 0 ? 1 : 0;
+                const unsigned r = src_rgba8888[0] & 0xff;
+                const unsigned g = src_rgba8888[1] & 0xff;
+                const unsigned b = src_rgba8888[2] & 0xff;
+                const unsigned a = (src_rgba8888[3] & 0xff) > 0 ? 1 : 0;
                 (*p) = ((r >> 3) << 11) | ((g >> 3) << 6) | ((b >> 3) << 1) | a;
                 src_rgba8888 += pixel_size;
                 ++p;
@@ -224,7 +224,7 @@ void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e 
     }
 }
 
-void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const uint width, const uint height, const uint stride) {
+void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e dstFormat, uint8_t *dst, const unsigned width, const unsigned height, const unsigned stride) {
     if (width == stride) {
         copyRGB888Pixels(src_rgba8888, dstFormat, dst, width * height);
     } else {
@@ -242,8 +242,8 @@ void Pixel::copyRGBA8888Pixels(const uint8_t *src_rgba8888, const PixelFormat_e 
     }
 }
 
-const uint Pixel::getPixelBytes(const PixelFormat_e fmt) {
-    constexpr const uint size[] = {
+const unsigned Pixel::getPixelBytes(const PixelFormat_e fmt) {
+    constexpr const unsigned size[] = {
             //
             2, // 5bit + 6bit + 5bit RGB565
             2, // 5bit + 5bit + 5bit + 1bit RGBA5551
@@ -260,8 +260,8 @@ const uint Pixel::getPixelBytes(const PixelFormat_e fmt) {
     return size[fmt];
 }
 
-ByteBuffer Pixel::createPixelBuffer(const PixelFormat_e fmt, const uint pixels) {
-    uint bytes = getPixelBytes(fmt);
+ByteBuffer Pixel::createPixelBuffer(const PixelFormat_e fmt, const unsigned pixels) {
+    unsigned bytes = getPixelBytes(fmt);
     return Buffer::create(bytes * pixels);
 }
 

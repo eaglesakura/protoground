@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/math/Rect.hpp"
@@ -51,12 +51,12 @@ public:
     /**
      * テクスチャ幅を取得する
      */
-    virtual uint getWidth() const = 0;
+    virtual unsigned getWidth() const = 0;
 
     /**
      * テクスチャ高を取得する
      */
-    virtual uint getHeight() const = 0;
+    virtual unsigned getHeight() const = 0;
 
     /**
      * テクスチャの種類を取得する

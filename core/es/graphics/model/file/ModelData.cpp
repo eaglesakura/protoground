@@ -1,4 +1,4 @@
-#include <es/asset/file/ChunkFile.h>
+﻿#include <es/asset/file/ChunkFile.h>
 #include "ModelData.h"
 
 namespace es {
@@ -24,7 +24,7 @@ bool ModelData::serialize(std::shared_ptr<IWriter> writer,
         /**
          * チャンク数を取得する
          */
-        virtual uint getChunkNum() {
+        virtual unsigned getChunkNum() {
             return DATA_NUM;
         }
 
@@ -33,7 +33,7 @@ bool ModelData::serialize(std::shared_ptr<IWriter> writer,
          *
          * ChunkHeader::offsetは自動的に計算される
          */
-        virtual void writeChunkHeader(const uint chunkIndex, ChunkFile::ChunkHeader *header) {
+        virtual void writeChunkHeader(const unsigned chunkIndex, ChunkFile::ChunkHeader *header) {
 
             header->uid = uidTable[chunkIndex];
             header->bytes = buffers->length();
@@ -42,7 +42,7 @@ bool ModelData::serialize(std::shared_ptr<IWriter> writer,
         /**
          * データ本体を書き込む
          */
-        virtual bool writeChunkData(const uint chunkIndex, ChunkFile::ChunkHeader *header, std::shared_ptr<IWriter> writer) {
+        virtual bool writeChunkData(const unsigned chunkIndex, ChunkFile::ChunkHeader *header, std::shared_ptr<IWriter> writer) {
             if (buffers[chunkIndex].empty()) {
                 return true;
             }
@@ -50,7 +50,7 @@ bool ModelData::serialize(std::shared_ptr<IWriter> writer,
         }
     } callback;
 
-    uint index = 0;
+    unsigned index = 0;
     // シンボルテーブル
     {
         callback.buffers[index] = symbols->serialize();

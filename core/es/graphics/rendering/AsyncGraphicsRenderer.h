@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include <functional>
@@ -19,9 +19,9 @@ public:
     /**
      * クロージャにより、メインスレッドの状態でレンダリングを行えるようにする。
      *
-     * packet(const AsyncGraphicsRenderer *sender, std::shared_ptr<IDevice> device, const uint globalPass, const uint localPass)
+     * packet(const AsyncGraphicsRenderer *sender, std::shared_ptr<IDevice> device, const unsigned globalPass, const unsigned localPass)
      */
-    typedef std::function<void(const AsyncGraphicsRenderer *, std::shared_ptr<IDevice>, const uint, const uint)> packet;
+    typedef std::function<void(const AsyncGraphicsRenderer *, std::shared_ptr<IDevice>, const unsigned, const unsigned)> packet;
 
     /**
      * レンダリングパケットを登録する

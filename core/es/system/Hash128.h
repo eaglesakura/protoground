@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 
@@ -98,10 +98,5 @@ private:
 };
 
 static_assert(sizeof(Hash128) == (128 / 8), "Hash128 != 128bit");
-
-/**
- * 通常利用する場合はビット数を意識させない
- */
-typedef Hash128 long_hash;
 
 }

@@ -1,4 +1,4 @@
-#include <cmath>
+﻿#include <cmath>
 #include <es/memory/Buffer.hpp>
 #include "VertexAttribute.h"
 
@@ -23,7 +23,7 @@ static const uint32_t gVertexSizeTable[] = {
 
 namespace internal {
 
-VertexAttribute createAttribute(uint type) {
+VertexAttribute createAttribute(unsigned type) {
     assert(type <= VertexAttribute::Type_End);
 
     return VertexAttribute((VertexAttribute::Type_e) type, gVertexSizeTable[type]);

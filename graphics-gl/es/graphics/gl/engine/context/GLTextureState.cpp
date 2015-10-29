@@ -1,4 +1,4 @@
-#include "GLTextureState.h"
+﻿#include "GLTextureState.h"
 #include "es/memory/Buffer.hpp"
 
 namespace es {
@@ -40,7 +40,7 @@ void GLTextureState::syncPlatform() {
 }
 
 
-uint GLTextureState::getActiveTextureIndex() const {
+unsigned GLTextureState::getActiveTextureIndex() const {
     return gl_util::unitToTextureIndex(active);
 }
 
@@ -56,7 +56,7 @@ int GLTextureState::getBindedTextureUnitIndex(const GLenum target, const GLuint 
     return -1;
 }
 
-bool GLTextureState::isBindedTexture(const uint index, const GLenum target, const GLuint texture) {
+bool GLTextureState::isBindedTexture(const unsigned index, const GLenum target, const GLuint texture) {
     assert(index < contexts.size());
     return contexts[index].handle == texture && contexts[index].target == target;
 }
@@ -65,9 +65,9 @@ bool GLTextureState::isBindedTexture(const GLenum target, const GLuint texture) 
     return getBindedTextureUnitIndex(target, texture) >= 0;
 }
 
-bool GLTextureState::activeTexture(const uint index) {
+bool GLTextureState::activeTexture(const unsigned index) {
     assert(index < contexts.size());
-    const uint unit = gl_util::indexToTextureUnit(index);
+    const unsigned unit = gl_util::indexToTextureUnit(index);
     // 違うユニットがアクティブ化されていたら、アクティブにし直す
     if (unit != active) {
         active = unit;
@@ -79,7 +79,7 @@ bool GLTextureState::activeTexture(const uint index) {
 }
 
 bool GLTextureState::bindTexture(const GLenum target, const GLuint texture) {
-    const uint index = getActiveTextureIndex();
+    const unsigned index = getActiveTextureIndex();
     assert(index >= 0 && index < contexts.size());
 
     context &ctx = contexts[index];
@@ -96,8 +96,8 @@ bool GLTextureState::bindTexture(const GLenum target, const GLuint texture) {
     return false;
 }
 
-void GLTextureState::unbindTextures(const uint num, const GLuint *textures) {
-    const uint activeIndex = gl_util::unitToTextureIndex(this->active);
+void GLTextureState::unbindTextures(const unsigned num, const GLuint *textures) {
+    const unsigned activeIndex = gl_util::unitToTextureIndex(this->active);
 
     for (int n = 0; n < num; ++n) {
         const GLuint texture = textures[n];

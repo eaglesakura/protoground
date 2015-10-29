@@ -1,11 +1,11 @@
-#include "LocalFileAssetLoader.h"
+﻿#include "LocalFileAssetLoader.h"
 #include "es/asset/internal/InMemoryAsset.hpp"
 #include "es/asset/internal/LocalFileWriter.hpp"
 
 namespace es {
 
 
-LocalFileAssetLoader::LocalFileAssetLoader(const std::string &_basePath, const uint _flags) : basePath(_basePath), flags(_flags) {
+LocalFileAssetLoader::LocalFileAssetLoader(const std::string &_basePath, const unsigned _flags) : basePath(_basePath), flags(_flags) {
 }
 
 std::shared_ptr<IAsset> LocalFileAssetLoader::load(const std::string &path, const Bundle &hint) {
@@ -23,7 +23,7 @@ std::shared_ptr<IAsset> LocalFileAssetLoader::load(const std::string &path, cons
     return std::shared_ptr<IAsset>(new internal::InMemoryAsset(stream));
 }
 
-std::shared_ptr<IWriter> LocalFileAssetLoader::write(const std::string &path, const uint inFlag, const Bundle &hint) {
+std::shared_ptr<IWriter> LocalFileAssetLoader::write(const std::string &path, const unsigned inFlag, const Bundle &hint) {
     if (!(this->flags & Flag_Write)) {
         // 書き込みをサポートしていない
         return sp<IWriter>();

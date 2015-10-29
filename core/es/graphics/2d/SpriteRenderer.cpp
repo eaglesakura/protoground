@@ -1,4 +1,4 @@
-#include "SpriteRenderer.h"
+﻿#include "SpriteRenderer.h"
 #include "es/math/protoground-glm.hpp"
 #include <es/system/process/IProcessContext.h>
 #include <es/graphics/font/TextLayoutManager.h>

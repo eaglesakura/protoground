@@ -1,4 +1,4 @@
-#ifdef __ANDROID__
+﻿#ifdef __ANDROID__
 #pragma once
 
 #include "es/protoground.hpp"
@@ -41,7 +41,7 @@ public:
      *
      * リクエストされたsizeの容量を読み込むように努めるが、ファイル終端になった場合はsize以下の値を返却する
      */
-    virtual unsafe_array<uint8_t> read(const uint size) {
+    virtual unsafe_array<uint8_t> read(const unsigned size) {
         if (!available()) {
             // 容量が無ければ何もしない
             return unsafe_array<uint8_t>();
@@ -59,7 +59,7 @@ public:
     /**
      * 残容量を取得する
      */
-    virtual uint available() const {
+    virtual unsigned available() const {
         return buffer.length;
     }
 };

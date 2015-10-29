@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "SceneActor.h"
@@ -72,7 +72,7 @@ public:
 
     float getRotateYaw() const;
 
-    virtual bool getCenter(float *vec3) const;
+    virtual bool getCenter(float *xyz) const;
 
     virtual ~SimpleSceneActor() = default;
 

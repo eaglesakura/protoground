@@ -1,7 +1,8 @@
-#include "BaseContext.h"
+﻿#include "BaseContext.h"
 #include "es/graphics/engine/IGraphicsEngine.hpp"
 #include "es/framework/touch/TouchPoint.h"
 #include "es/framework/touch/TouchDetector.h"
+#include <algorithm>
 
 namespace es {
 

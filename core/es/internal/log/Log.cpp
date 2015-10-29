@@ -1,4 +1,4 @@
-#include    "es/protoground.hpp"
+﻿#include    "es/protoground.hpp"
 #include    "Log.h"
 
 #if defined(BUILD_Android)
@@ -68,7 +68,6 @@ const char *pathToFileName(const char *__file__) {
     // Windows Check
     if (__file__[1] == ':' && __file__[2] == '\\') {
         // C:\ 形式の場合、Windows形式のパスとして扱う
-        // Windows形式だった場合、セパレータが異なる
         separator = '\\';
     }
 #endif

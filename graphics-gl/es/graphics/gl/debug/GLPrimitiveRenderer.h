@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/math/protoground-glm.hpp"
@@ -36,7 +36,7 @@ public:
      *
      * 頂点はLineListで構築されている必要がある。
      */
-    void renderingLines(std::shared_ptr<IDevice> device, const void *lineVertices, const uint numLines);
+    void renderingLines(std::shared_ptr<IDevice> device, const void *lineVertices, const unsigned numLines);
 
 
     virtual ~GLPrimitiveRenderer() = default;
@@ -51,7 +51,7 @@ private:
      *
      * それを超えると分割される。
      */
-    uint renderingMaxLines = 4096;
+    unsigned renderingMaxLines = 4096;
 
     /**
      * 視点変換行列

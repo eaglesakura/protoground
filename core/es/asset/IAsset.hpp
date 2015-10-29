@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/protoground.hpp"
 #include "es/memory/Buffer.hpp"
@@ -11,12 +11,12 @@ public:
      *
      * リクエストされたsizeの容量を読み込むように努めるが、ファイル終端になった場合はsize以下の値を返却する
      */
-    virtual unsafe_array<uint8_t> read(const uint size) = 0;
+    virtual unsafe_array<uint8_t> read(const unsigned size) = 0;
 
     /**
      * 残容量を取得する
      */
-    virtual uint available() const = 0;
+    virtual unsigned available() const = 0;
 
     virtual ~IAsset() = default;
 };
@@ -41,7 +41,7 @@ std::shared_ptr<IAsset> toOnMemory(std::shared_ptr<IAsset> asset);
 /**
  * アセットからデータを読み込む
  */
-bool read(std::shared_ptr<IAsset> asset, void *ptr, const uint size);
+bool read(std::shared_ptr<IAsset> asset, void *ptr, const unsigned size);
 
 }
 

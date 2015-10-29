@@ -1,4 +1,4 @@
-#include <es/db/schema/SqliteEntity.h>
+﻿#include <es/db/schema/SqliteEntity.h>
 #include "Sqlite3Cursor.h"
 #include "internal/SqliteObjectWrapper.hpp"
 

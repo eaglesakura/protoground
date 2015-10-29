@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "es/system/string/HashString.h"
 #include <vector>
@@ -23,7 +23,7 @@ public:
      * 検索を行う
      * 検索に失敗した場合は無効なハッシュを返す。
      */
-    HashString find(const hash &hash) const;
+    HashString find(const Hash64 &hash) const;
 
     /**
      * 管理されている全ての文字列を取得する

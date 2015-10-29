@@ -1,6 +1,6 @@
-#include "Cpp11StringConverter.h"
+﻿#include "Cpp11StringConverter.h"
 
-#if defined(BUILD_MacOSX)
+#if defined(BUILD_MacOSX) || defined(BUILD_Windows)
 
 #include <codecvt>
 
@@ -17,10 +17,12 @@ Cpp11StringConverter::~Cpp11StringConverter() {
 
 wide_string Cpp11StringConverter::toWideString(const std::string &utf8) {
     return conversion.from_bytes(utf8);
+    //    return wide_string();
 }
 
 string Cpp11StringConverter::toUtf8String(const wide_string &wide) {
     return conversion.to_bytes(wide);
+    //    return string();
 }
 }
 }

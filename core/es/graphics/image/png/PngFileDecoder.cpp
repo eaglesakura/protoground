@@ -1,4 +1,4 @@
-#include "PngFileDecoder.h"
+﻿#include "PngFileDecoder.h"
 #include <png.h>
 #include "es/internal/protoground-internal.hpp"
 #include "es/graphics/image/IImageDecodeCallback.hpp"
@@ -23,7 +23,7 @@ struct ImageBufferReader {
     /**
      * バッファを読み出す
      */
-    bool loadBuffer(uint8_t *result, uint length) {
+    bool loadBuffer(uint8_t *result, unsigned length) {
         if (preLoad) {
             // 読み込み可能な長さ分だけ読み込む
             int read = std::min(preLoad.length, (int) length);
@@ -228,7 +228,7 @@ void PngFileDecoder::setReadedBuffer(const unsafe_array<uint8_t> &buffer) {
     this->readedBuffer = Buffer::clone(buffer);
 }
 
-void PngFileDecoder::setOnceReadHeight(const uint heightPixels) {
+void PngFileDecoder::setOnceReadHeight(const unsigned heightPixels) {
     this->onceReadLines = heightPixels;
 }
 

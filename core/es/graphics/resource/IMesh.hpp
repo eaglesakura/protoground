@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 
 #include "es/protoground.hpp"
@@ -39,12 +39,12 @@ public:
     /**
      * 頂点数を取得する
      */
-    virtual uint getVertexCount() const = 0;
+    virtual unsigned getVertexCount() const = 0;
 
     /**
      * インデックス数を取得する
      */
-    virtual uint getIndexCount() const = 0;
+    virtual unsigned getIndexCount() const = 0;
 
     enum Target_e {
         Target_Vertices,
@@ -55,13 +55,13 @@ public:
         /**
          * ロック対象のオフセット
          */
-        uint offsetBytes = 0;
+        unsigned offsetBytes = 0;
 
         /**
          * ロック対象のバイト数
          * 0の場合、全てのバッファをロックする
          */
-        uint bytes = 0;
+		unsigned bytes = 0;
 
         /**
          * ロック対象
@@ -102,12 +102,12 @@ public:
         /**
          * データ数
          */
-        uint num;
+		uint32_t num;
 
         /**
          * 1データのバイト数
          */
-        uint onceBytes;
+		uint32_t onceBytes;
 
         /**
          * 確保対象
@@ -125,7 +125,7 @@ public:
              */
                     Flag_Usage_Stream = 1 << 2,
         };
-        uint flags = 0;
+		uint32_t flags = 0;
 
 
         AllocOption() = default;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include    "es/protoground-types.hpp"
 #include    "es/debug/Testing.hpp"
@@ -10,7 +10,7 @@
 
 namespace es {
 
-typedef unsigned int uint;
+// typedef unsigned int unsigned;
 
 template<typename T>
 using sp = ::std::shared_ptr<T>;

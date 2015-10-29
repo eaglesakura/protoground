@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vector>
 #include "es/protoground.hpp"
@@ -9,7 +9,7 @@ namespace es {
 class VertexAttribute;
 
 namespace internal {
-VertexAttribute createAttribute(uint type);
+VertexAttribute createAttribute(unsigned type);
 };
 
 /**
@@ -107,7 +107,7 @@ public:
     /**
      * 容量を取得する
      */
-    uint getBytes() const { return bytes; }
+    unsigned getBytes() const { return bytes; }
 
     /**
      * フラグ情報を取得する
@@ -169,9 +169,9 @@ private:
     /**
      * 容量情報
      */
-    uint bytes;
+    unsigned bytes;
 
-    friend VertexAttribute internal::createAttribute(uint);
+    friend VertexAttribute internal::createAttribute(unsigned);
 
     VertexAttribute(Type_e type, uint32_t bytes);
 

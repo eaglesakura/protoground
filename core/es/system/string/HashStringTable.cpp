@@ -1,6 +1,7 @@
-#include "HashStringTable.h"
+﻿#include "HashStringTable.h"
 #include "es/system/string/internal/SharedString.hpp"
 #include <map>
+#include <set>
 #include <boost/unordered_map.hpp>
 #include <es/internal/log/Log.h>
 
@@ -8,7 +9,7 @@ namespace es {
 
 class HashStringTable::Impl {
 public:
-    uint num = 0;
+    unsigned num = 0;
 
     /**
      * 128bitマッピング
@@ -104,7 +105,7 @@ HashString HashStringTable::get(const string &value) {
     return HashString(impl->get(value));
 }
 
-HashString HashStringTable::find(const hash &hash) const {
+HashString HashStringTable::find(const Hash64 &hash) const {
     return HashString(impl->find(hash));
 }
 
