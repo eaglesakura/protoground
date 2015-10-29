@@ -4,7 +4,8 @@
 
 #if defined(BUILD_MacOSX) || defined(BUILD_Windows)
 
-#include "es/system/string/internal/Cpp11StringConverter.h"
+#include "es/system/string/internal/Cpp11StringConverter.hpp"
+#include "es/system/string/internal/WinStringConverter.hpp"
 
 namespace es {
 
@@ -13,7 +14,11 @@ static std::shared_ptr<ProcessContext> gInstance;
 }
 
 ProcessContext::ProcessContext() {
+#if defined(BUILD_Windows)
+    stringConverter.reset(new internal::WinStringConverter());
+#else
     stringConverter.reset(new internal::Cpp11StringConverter());
+#endif
 }
 
 ProcessContext::~ProcessContext() {
