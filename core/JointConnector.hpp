@@ -612,6 +612,27 @@ inline OutType wrapFromVM(JNIEnv *env, const jobject in) {
 
 }
 
+#else  /* __JOINTCONNECTOR_USE_JNI__ */
+
+namespace jc {
+namespace lang {
+
+class JointObject {
+public:
+    JointObject() {
+    }
+
+    ~JointObject() {
+    }
+private:
+};
+
+typedef JointObject object_wrapper;
+typedef std::string string_wrapper;
+
+}
+}
+
 #endif /* __JOINTCONNECTOR_USE_JNI__ */
 
 /**
