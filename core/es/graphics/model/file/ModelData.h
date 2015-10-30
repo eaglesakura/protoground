@@ -84,12 +84,12 @@ struct MaterialData {
         /**
          * 上位ビットからRGBAの順番で指定される
          */
-        PGD_FILE_ALIGN_OBJECT_BEGIN  struct {
+        struct {
             uint8_t r;
             uint8_t g;
             uint8_t b;
             uint8_t a;
-        } diffuse PGD_FILE_ALIGN_OBJECT_END;
+        } diffuse;
 
         uint16_t flags;
 
