@@ -197,6 +197,11 @@ public:
                     {EXTENSION_NAME(GL_OES_depth32),                      GPUExtension_Renderbuffer_Depth32},
                     //  Floatテクスチャ
                     {EXTENSION_NAME(GL_OES_texture_float),                GPUExtension_Texture_Float},
+                    //  Geforce GTX 750M
+                    {EXTENSION_NAME(GL_ARB_half_float_pixel),             GPUExtension_Texture_HalfFloat},
+                    {EXTENSION_NAME(GL_ARB_texture_float),                GPUExtension_Texture_Float},
+                    {EXTENSION_NAME(GL_ARB_depth_texture),                GPUExtension_Texture_Depth},
+                    {EXTENSION_NAME(GL_EXT_packed_depth_stencil),         GPUExtension_Renderbuffer_PackedDepth24Stencil8},
                     //
             };
 
