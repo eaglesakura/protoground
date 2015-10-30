@@ -82,6 +82,12 @@ public:
     void renderingRectLine(const float x, const float y, const float w, const float h, float lineWidth, const Color color) const;
 
     /**
+     * 指定した太さでラインの描画を行う。
+     * ただし、描画可能なラインの太さはデバイスに依存するので、1px以外は描画結果が意図しない可能性がある。
+     */
+    void renderingRectLine(const RectI16 &area, float lineWidth, const Color color) const;
+
+    /**
      * 画像を描画する
      */
     void renderingImage(const ITexture *texture, const float srcX, const float srcY, const float srcW, const float srcH, const float dstX, const float dstY, const float dstW, const float dstH, const float degree, const Color rgba) const;
@@ -122,6 +128,8 @@ private:
                    const Color rgba,
                    const float lineWidth = 0) const;
 
+public:
+    void renderingRectLine(const RectI16& area, float lineWidth, const Color color);
 };
 
 

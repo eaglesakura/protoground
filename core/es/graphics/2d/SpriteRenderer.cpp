@@ -136,6 +136,12 @@ void SpriteRenderer::renderingRectLine(const float x, const float y, const float
     rendering(Mode_Line, nullptr, 0, 0, 0, 0, x, y, w, h, 0, color, lineWidth);
 }
 
+
+void SpriteRenderer::renderingRectLine(const RectI16& area, float lineWidth, const Color color) {
+    rendering(Mode_Line, nullptr, 0, 0, 0, 0, area.left, area.top, area.width(), area.height(), 0, color, lineWidth);
+}
+
+
 void SpriteRenderer::begin() const {
     assert(callback);
     assert(display);
