@@ -3,6 +3,10 @@
 #include "ModelData.h"
 #include "es/internal/protoground-internal.hpp"
 
+#if defined(BUILD_Windows)
+#pragma warning(disable: 4018) // unsigned <> signed比較を許容する
+#endif
+
 namespace es {
 namespace file {
 

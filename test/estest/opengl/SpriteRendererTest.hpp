@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/graphics/gl/sprite/GLImmediateSpriteRenderer.h>
 #include "estest/protoground-test.hpp"
@@ -43,7 +43,7 @@ TEST(SpriteRendererTest, DeviceProjection) {
     public:
         int callbackNum = 0;
 
-        virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const uint numInstances, RenderingInstance *instanceArray) {
+        virtual int requestRendering(SpriteRenderer *sender, const RenderingState *state, const unsigned numInstances, RenderingInstance *instanceArray) {
             int result = gl::GLImmediateSpriteRenderer::requestRendering(sender, state, numInstances, instanceArray);
 
             ++callbackNum;

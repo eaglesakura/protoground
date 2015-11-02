@@ -58,7 +58,7 @@ ByteBuffer SymbolTable::serialize() const {
 
     // NULL込みで全データを書き込む
     for (const auto &str : strings) {
-        const unsigned size = str.length() + 1;
+        const unsigned size = (unsigned)str.length() + 1;
         memcpy(write, str.c_str(), size);
         write += size;
     }

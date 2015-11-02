@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "estest/protoground-test.hpp"
 #include "es/util/StringUtil.h"
@@ -12,7 +12,7 @@ namespace es {
 namespace test {
 
 TEST(FreetypeTest, UtilWideStringConvert) {
-    const char *jpn_c = "日本語あいうえお";
+    const char *jpn_c = u8"日本語あいうえお";
     ASSERT_NE(strlen(jpn_c), 8);
 
     wide_string wstr = IProcessContext::getInstance()->getStringConverter()->toWideString(std::string(jpn_c));
@@ -30,7 +30,7 @@ TEST(FreetypeTest, UtilWideStringConvert) {
 
 TEST(FreetypeTest, WstringCheck) {
     eslog("sizeof(wchar_t) = %d bytes", sizeof(wide_char));
-    const char *jpn_c = "日本語あいうえお";
+    const char *jpn_c = u8"日本語あいうえお";
     ASSERT_NE(strlen(jpn_c), 8);
 
     wide_string str = IProcessContext::getInstance()->getStringConverter()->toWideString(jpn_c);
@@ -43,12 +43,12 @@ TEST(FreetypeTest, LoadFont) {
     FT_Face face = nullptr;
 
     ASSERT_TRUE(FT_Init_FreeType(&library) == 0);
-    ASSERT_TRUE(library);
+    ASSERT_TRUE(library != nullptr);
 
     std::shared_ptr<IAsset> font = IProcessContext::getInstance()->getAssetManager()->load("font/font-jpn.ttf");
     unsafe_array<uint8_t> fontData = font->read(font->available());
     ASSERT_TRUE(FT_New_Memory_Face(library, fontData.ptr, fontData.length, 0, &face) == 0);
-    ASSERT_TRUE(face);
+    ASSERT_TRUE(face != nullptr);
 
     ASSERT_TRUE(FT_Set_Pixel_Sizes(face, 128, 128) == 0);
 

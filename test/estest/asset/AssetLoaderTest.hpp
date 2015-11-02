@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "estest/protoground-test.hpp"
 #include "es/asset/IWriter.hpp"
@@ -15,7 +15,7 @@ TEST(AssetLoaderTest, LoadTextFile) {
 
     std::shared_ptr<IAsset> asset = IProcessContext::getInstance()->getAssetManager()->load("gl/shader/SpriteShader.vsh");
     ASSERT_TRUE((bool) asset);
-    ASSERT_TRUE(asset->available());
+    ASSERT_TRUE(asset->available() > 0);
 //    eslog("TestShader\n%s", util::toString(asset).c_str());
 }
 

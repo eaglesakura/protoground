@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "estest/protoground-test.hpp"
 #include "es/graphics/image/png/PngFileDecoder.h"
@@ -26,8 +26,8 @@ std::shared_ptr<IImageDecodeCallback> newSimpleImageListener() {
          */
         virtual void onImageInfoDecoded(const ImageInfo *info) {
             ASSERT_NE(info, nullptr);
-            ASSERT_TRUE(info->srcWidth);
-            ASSERT_TRUE(info->srcHeight);
+            ASSERT_TRUE(info->srcWidth > 0);
+            ASSERT_TRUE(info->srcHeight > 0);
 
             this->info = *info;
             infoReceived = true;
@@ -38,9 +38,9 @@ std::shared_ptr<IImageDecodeCallback> newSimpleImageListener() {
          *
          * 引数lineは使いまわされる可能性があるため、内部的にテクスチャコピー等を行うこと。
          */
-        virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const uint height) {
+        virtual void onImageLineDecoded(const ImageInfo *info, const unsafe_array<uint8_t> pixels, const unsigned height) {
             ASSERT_TRUE(pixels.length > 0);
-            ASSERT_TRUE(height);
+            ASSERT_TRUE(height > 0);
             ASSERT_TRUE(infoReceived);
             readedLines += height;
             ASSERT_TRUE(readedLines <= (int) info->srcHeight);

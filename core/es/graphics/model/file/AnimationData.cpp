@@ -8,7 +8,7 @@ namespace file {
 
 bool AnimationData::someFrame(const AnimationData::BoneKeyFrame &a, const AnimationData::BoneKeyFrame &b) {
     return util::equals(a.pos, b.pos) &&
-           util::equals(a.rotate, b.rotate);
+        util::equals(a.rotate, b.rotate);
 }
 
 ByteBuffer AnimationData::serialize(AnimationData::Serialize *animation) {
@@ -63,7 +63,7 @@ bool AnimationData::deserialize(AnimationData::Serialize *result, unsafe_array<u
     const uint32_t linkBoneBytes = sizeof(SymbolTimeline) * result->meta.linkBoneNum;
     const uint32_t bufferSize = sizeof(Meta) + boneKeyBytes + linkBoneBytes;
 
-    if (buffer.length < bufferSize) {
+    if (buffer.length < (int) bufferSize) {
         return false;
     }
 

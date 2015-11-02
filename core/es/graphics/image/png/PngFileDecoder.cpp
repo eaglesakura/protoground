@@ -38,7 +38,7 @@ struct ImageBufferReader {
         // アセットから必要な長さを読み出す
         if (length) {
             unsafe_array<uint8_t> buffer = asset->read(length);
-            if (buffer.length < length) {
+            if (buffer.length < (int)length) {
                 // 容量が足りない！
                 memcpy(result, buffer.ptr, buffer.length);
                 readError = true;
@@ -58,7 +58,7 @@ struct ImageBufferReader {
 static void pngReadBuffer(png_structp png, png_bytep result, png_size_t readSize) {
 //    eslog("PNG read request(%d bytes)", readSize);
     internal::ImageBufferReader *reader = (internal::ImageBufferReader *) png_get_io_ptr(png);
-    if (!reader->loadBuffer((uint8_t *) result, readSize)) {
+    if (!reader->loadBuffer((uint8_t *) result, (unsigned)readSize)) {
         eslog("PNG BufferOver!!");
     }
 }

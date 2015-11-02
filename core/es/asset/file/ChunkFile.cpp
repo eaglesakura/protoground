@@ -4,7 +4,7 @@
 namespace es {
 
 ChunkFile::FileHeader ChunkFile::FileHeader::create() {
-    FileHeader header = {0};
+    FileHeader header = { 0 };
     header.magic = FileHeader::MAGIC;
     header.version = FileHeader::VERSION;
     header.headerSize = sizeof(FileHeader);
@@ -13,7 +13,7 @@ ChunkFile::FileHeader ChunkFile::FileHeader::create() {
 }
 
 ChunkFile::ChunkHeader ChunkFile::ChunkHeader::create() {
-    ChunkHeader header = {0};
+    ChunkHeader header = { 0 };
     return header;
 }
 
@@ -101,7 +101,7 @@ bool ChunkFile::parse(std::shared_ptr<IAsset> asset, ChunkFile::ReadCallback *ca
 
         while (readRequestSize > 0) {
             auto buffer = asset->read(onceReadBytes);
-            if (buffer.length < onceReadBytes) {
+            if (buffer.length < (int) onceReadBytes) {
                 // 読み込み失敗
                 callback->onError(ReadCallback::Error_ReadFailed);
                 return false;

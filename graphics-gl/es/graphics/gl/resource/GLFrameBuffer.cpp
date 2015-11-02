@@ -1,4 +1,4 @@
-#include "GLFrameBuffer.h"
+﻿#include "GLFrameBuffer.h"
 #include <es/internal/log/Log.h>
 #include "es/graphics/gl/engine/GLDevice.h"
 #include "es/graphics/gl/engine/GLGPUCapacity.h"
@@ -75,7 +75,7 @@ std::shared_ptr<GLTexture> GLFrameBuffer::createColorBuffer(GLDevice *device, co
 
     // アタッチメントを登録する
     glFramebufferTexture2D(GL_FRAMEBUFFER,
-                           GL_COLOR_ATTACHMENT0 + colors.size(),
+                           GL_COLOR_ATTACHMENT0 + (GLenum)colors.size(),
                            GL_TEXTURE_2D,
                            tex->getTextureHandle(),
                            0);
@@ -172,7 +172,7 @@ void GLFrameBuffer::checkFramebufferStatus() const {
 }
 
 uint32_t GLFrameBuffer::getTextureCount() const {
-    return colors.size();
+    return (uint32_t)colors.size();
 }
 }
 }

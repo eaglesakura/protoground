@@ -77,13 +77,13 @@ unsigned FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
         if (charactor && tempListener.result == IImageDecodeCallback::ImageDecodeResult_Success) {
             // レンダリングに成功したので、テクスチャに焼きこむ
             i16vec2 bitmapSize = charactor->getBitmapSize();
-            if ((current.x + bitmapSize.x + 1) > texture->getWidth()) {
+            if ((current.x + bitmapSize.x + 1) > (int) texture->getWidth()) {
                 // この行をはみ出す場合は改行する
                 current.y += (current.lineHeight + 1);
                 current.x = 0;
                 current.lineHeight = 0;
             }
-            if ((current.y + bitmapSize.y) > texture->getHeight()) {
+            if ((current.y + bitmapSize.y) > (int) texture->getHeight()) {
                 // テクスチャからはみ出る場合はテクスチャも生成する
                 textures.push_back(allocator->newTexture(device));
                 texture = textures[textures.size() - 1];
@@ -105,9 +105,9 @@ unsigned FontTextureAtlas::bake(IDevice *device, const wide_string &text) {
                               area->area.left, area->area.top,
                               area->area.width(), area->area.height(),
                               tempListener.pixels
-            );
+                              );
 
-            // 次のテクスチャ座標を設定
+                              // 次のテクスチャ座標を設定
             current.x += (area->area.width() + 1);
             current.lineHeight = std::max<int16_t>(area->area.height() + 1, current.lineHeight);
 

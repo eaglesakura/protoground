@@ -1,5 +1,12 @@
 ﻿#pragma once
 
+/* Visual Studio 型変換のWarningを無効化 */
+#if defined(_WIN32) || defined(_WIN64)
+#pragma warning(disable: 4244) // int-floatの暗黙的な型変換を認める
+#pragma warning(disable: 4373) // 古いコンパイラの警告を抑制する
+#pragma warning(disable: 4267) // size_tからのキャスト警告を抑制する
+#endif
+
 #include    "es/protoground-types.hpp"
 #include    "es/debug/Testing.hpp"
 #include    <string>

@@ -23,7 +23,7 @@ void GLTextureState::syncPlatform() {
 
     auto itr = contexts.rbegin();
     const auto end = contexts.rend();
-    int index = contexts.size() - 1;
+    int index = (int)contexts.size() - 1;
     // EGLContext側を解放する
     // テクスチャユニットの大きい方から反対方向に向かって解放して、最後のglActiveTexture分を節約できる
     while (itr != end) {
@@ -99,7 +99,7 @@ bool GLTextureState::bindTexture(const GLenum target, const GLuint texture) {
 void GLTextureState::unbindTextures(const unsigned num, const GLuint *textures) {
     const unsigned activeIndex = gl_util::unitToTextureIndex(this->active);
 
-    for (int n = 0; n < num; ++n) {
+    for (unsigned n = 0; n < num; ++n) {
         const GLuint texture = textures[n];
 
         int index = 0;

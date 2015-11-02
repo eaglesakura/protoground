@@ -27,7 +27,7 @@ void TouchDetector::removeListener(const selection_ptr<TouchListener> &listener)
 }
 
 uint32_t TouchDetector::getTouchPoints() const {
-    return (uint32_t)points.size();
+    return (uint32_t) points.size();
 }
 
 
@@ -163,7 +163,7 @@ void TouchDetector::onTouchEvent(const TouchEvent &event) {
         }
 
         // 最初のポイントが既に動いてる？
-        _point.reset(new TouchPoint(id, points.size(), event.position, dragDistance));
+        _point.reset(new TouchPoint(id, (uint32_t) points.size(), event.position, dragDistance));
 
         // ポイントを追加する
         points.push_back(_point);

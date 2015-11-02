@@ -21,7 +21,7 @@ bool SerializeHeader::deserialize(unsafe_array<uint8_t> *buffer, SerializeHeader
     if (result->formatVersion > FORMAT_VERSION) {
         return false;
     }
-    if (result->dataBytes > buffer->length) {
+    if ((int)result->dataBytes > buffer->length) {
         // データ長も足りない
         return false;
     }

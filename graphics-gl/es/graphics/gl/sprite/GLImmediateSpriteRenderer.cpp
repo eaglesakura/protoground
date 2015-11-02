@@ -68,7 +68,7 @@ int GLImmediateSpriteRenderer::requestRendering(SpriteRenderer *sender, const IS
     int numRendering = 0;
     if (state->mode == RenderingMode_QuadFill || state->mode == RenderingMode_QuadOutLine || state->mode == RenderingMode_Text) {
         RenderingQuadInstance *quadInstances = (RenderingQuadInstance *) instanceArray;
-        for (int i = 0; i < numInstances; ++i) {
+        for (unsigned i = 0; i < numInstances; ++i) {
 
             if (quadInstances->texture) {
                 // テクスチャにキャストできなければならない

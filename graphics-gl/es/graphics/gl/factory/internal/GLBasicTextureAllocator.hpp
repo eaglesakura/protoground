@@ -43,7 +43,7 @@ public:
                         result.get(),
                         BUFFER_SIZE * k, BUFFER_SIZE * i,
                         BUFFER_SIZE, BUFFER_SIZE,
-                        unsafe_array<uint8_t>(util::asPointer(cache), cache.size())
+                        unsafe_array<uint8_t>(util::asPointer(cache), (int)cache.size())
                 );
             }
         }

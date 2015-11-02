@@ -29,7 +29,7 @@ GlfwDevice::~GlfwDevice() {
 }
 
 bool GlfwDevice::isWindowClose() const {
-    return (bool)glfwWindowShouldClose(window);
+    return glfwWindowShouldClose(window) ? true : false;
 }
 
 void GlfwDevice::swapBuffers() {
@@ -125,7 +125,7 @@ i16vec2 GlfwDevice::getWindowSize() const {
 }
 
 bool GlfwDevice::isWindowVisible() const {
-    return (bool)glfwGetWindowAttrib(window, GLFW_VISIBLE);
+    return glfwGetWindowAttrib(window, GLFW_VISIBLE) ? true : false;
 }
 
 i16vec2 GlfwDevice::getFramebufferSize() const {

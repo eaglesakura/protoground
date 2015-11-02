@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "estest/protoground-test.hpp"
 #include "es/system/Hash64.h"
@@ -11,32 +11,32 @@ namespace test {
 
 TEST(HashTest, Check64) {
     {
-        hash h0 = hash::from(string("test value0"));
-        hash h1 = hash::from(string("test value1"));
+        Hash64 h0 = Hash64::from(string("test value0"));
+        Hash64 h1 = Hash64::from(string("test value1"));
 
         ASSERT_FALSE(h0 == h1);
     }
     {
-        long_hash h0 = long_hash::from(string("test value0"));
-        long_hash h1 = long_hash::from(string("test value1"));
-        long_hash h2 = long_hash::from(string("test value2"));
-
-        ASSERT_FALSE(h0 == h1);
-        ASSERT_FALSE(h1 == h2);
-        ASSERT_FALSE(h0 == h2);
-    }
-    {
-        long_hash h0 = long_hash::from(uint8_t(128));
-        long_hash h1 = long_hash::from(int16_t(128));
-        long_hash h2 = long_hash::from(int32_t(128));
+        Hash128 h0 = Hash128::from(string("test value0"));
+        Hash128 h1 = Hash128::from(string("test value1"));
+        Hash128 h2 = Hash128::from(string("test value2"));
 
         ASSERT_FALSE(h0 == h1);
         ASSERT_FALSE(h1 == h2);
         ASSERT_FALSE(h0 == h2);
     }
     {
-        long_hash h0 = long_hash::from(float(12.3f));
-        long_hash h1 = long_hash::from(double(12.3));
+        Hash128 h0 = Hash128::from(uint8_t(128));
+        Hash128 h1 = Hash128::from(int16_t(128));
+        Hash128 h2 = Hash128::from(int32_t(128));
+
+        ASSERT_FALSE(h0 == h1);
+        ASSERT_FALSE(h1 == h2);
+        ASSERT_FALSE(h0 == h2);
+    }
+    {
+        Hash128 h0 = Hash128::from(float(12.3f));
+        Hash128 h1 = Hash128::from(double(12.3));
 
         ASSERT_FALSE(h0 == h1);
     }
