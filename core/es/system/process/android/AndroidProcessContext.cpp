@@ -1,11 +1,13 @@
 ﻿#ifdef __ANDROID__
 
+#include <es/system/string/internal/CucharStringConverter.hpp>
 #include "es/internal/protoground-internal.hpp"
 #include "AndroidProcessContext.h"
 #include "es/asset/AssetManager.h"
 
 #include "es/android/internal/asset/AndroidAssetLoader.h"
 #include "es/system/string/internal/JavaStringConverterImpl.h"
+#include "es/system/string/internal/CucharStringConverter.hpp"
 
 using namespace jc;
 using namespace jc::lang;
@@ -94,7 +96,8 @@ void AndroidProcessContext::onBootProcess(JavaVM *vm) {
 
     gInstance.reset(new AndroidProcessContext());
     gInstance->impl.reset(new AndroidProcessContext::Impl(vm));
-    gInstance->stringConverter.reset(new internal::JavaStringConverterImpl());
+//    gInstance->stringConverter.reset(new internal::JavaStringConverterImpl());
+    gInstance->stringConverter.reset(new internal::CucharStringConverter());
 }
 
 std::shared_ptr<IProcessContext> IProcessContext::getInstance() {

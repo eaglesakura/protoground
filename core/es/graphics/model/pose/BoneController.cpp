@@ -140,8 +140,8 @@ void BoneController::updateWorldMatrixFKLocal(const AnimationPose *pose) {
 void BoneController::updateWorldMatrixIKLocal() {
 
     StackBuffer<
-            sizeof(mat4) * 2 +
-            sizeof(vec4) * (4 + 3)
+        sizeof(mat4) * 2 +
+        sizeof(vec4) * (4 + 3)
     > buffer;
 
     mat4 &tempLinkBoneInv = buffer.pop<mat4>();
@@ -160,7 +160,7 @@ void BoneController::updateWorldMatrixIKLocal() {
 
     unsigned index = 0;
     const unsigned numBones = model->bone.bones.size();
-    for (int i = 0; i < numBones; ++i) {
+    for (unsigned i = 0; i < numBones; ++i) {
         const auto &selfBone = model->bone.bones[i];
         const auto &selfBoneCache = boneCaches[i];
         const auto &selfWorld = globalTable[i];
@@ -173,7 +173,7 @@ void BoneController::updateWorldMatrixIKLocal() {
         assert(ikLinks.length);
 
         assert(selfBone.ikTargetBoneIndex >= 0);
-        assert(selfBone.ikTargetBoneIndex < numBones);
+        assert(selfBone.ikTargetBoneIndex < (int) numBones);
 
         const mat4 &currentBoneGlobal = calcWorldMatrix(i);
 
@@ -287,7 +287,7 @@ void BoneController::updateBoneMatrixTable() {
 
     // 実際に適用すべき行列を生成する
     {
-        const int numTable = (int)globalTable.size();
+        const int numTable = (int) globalTable.size();
         for (int i = 0; i < numTable; ++i) {
             boneTable->palette[i] = globalTable[i].cache[BoneMatrix::CalcPass_World] * boneCaches[i].invert;
         }
@@ -324,14 +324,14 @@ void BoneController::debugDraw(btIDebugDraw *drawer) const {
         if (bone.parentBoneIndex >= 0) {
             // 親座標をコピーする
             from = util::asVec3(
-                    boneTable->palette[bone.parentBoneIndex] *
-                    vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
-            );
+                boneTable->palette[bone.parentBoneIndex] *
+                vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
+                );
         } else {
             from = util::asVec3(
-                    world *
-                    vec4(0.0f, 0.0f, 0.0f, 1.0f)
-            );
+                world *
+                vec4(0.0f, 0.0f, 0.0f, 1.0f)
+                );
         }
 //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
         vec3 center = (to + from) / 2.0f;

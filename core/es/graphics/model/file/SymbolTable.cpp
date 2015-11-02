@@ -80,7 +80,7 @@ bool SymbolTable::deserialize(unsafe_array<uint8_t> buffer) {
         read += sizeof(SymbolTable_Header);
     }
 
-    for (int i = 0; i < header.num; ++i) {
+    for (unsigned i = 0; i < header.num; ++i) {
         std::string str((char *) read);
         this->add(str);
         while (*(read++)) {
