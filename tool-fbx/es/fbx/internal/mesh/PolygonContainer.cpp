@@ -1,4 +1,4 @@
-#include <es/util/StringUtil.h>
+﻿#include <es/util/StringUtil.h>
 #include <es/internal/log/Log.h>
 #include <es/graphics/Color.hpp>
 #include "PolygonContainer.h"

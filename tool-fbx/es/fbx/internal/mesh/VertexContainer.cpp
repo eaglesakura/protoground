@@ -1,4 +1,4 @@
-#include "VertexContainer.h"
+﻿#include "VertexContainer.h"
 #include <es/memory/SafeArray.hpp>
 #include <es/internal/log/Log.h>
 #include "ConvertedDeformer.hpp"

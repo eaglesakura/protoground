@@ -1,4 +1,4 @@
-#include "FbxMeshNode.h"
+﻿#include "FbxMeshNode.h"
 #include "VertexContainer.h"
 #include "PolygonContainer.h"
 #include <es/internal/log/Log.h>

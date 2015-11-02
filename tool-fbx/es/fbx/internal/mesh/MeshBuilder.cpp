@@ -1,4 +1,4 @@
-#include <es/util/StringUtil.h>
+﻿#include <es/util/StringUtil.h>
 #include <es/internal/log/Log.h>
 #include <es/graphics/model/file/ModelData.h>
 #include "MeshBuilder.h"
@@ -34,7 +34,7 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
     {
         for (const auto &weight : vertices->weights) {
             for (int i = 0; i < FbxBoneWeight::WEIGHT_NUM; ++i) {
-                const uint clusterLocalIndex = weight.indices[i];
+                const unsigned clusterLocalIndex = weight.indices[i];
                 const FbxCluster *localCluster = weight.clusters[i];
 
                 if (localCluster) {

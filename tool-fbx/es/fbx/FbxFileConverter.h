@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <es/fbx/internal/mesh/FbxNodeTree.h>
 #include "es/protoground-fbx.hpp"
