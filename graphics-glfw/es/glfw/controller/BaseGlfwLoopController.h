@@ -23,23 +23,23 @@ protected:
         /**
          * 起動中
          */
-                Booting,
+        Booting,
 
-        /**
-         * 描画中
-         */
-                Run,
+/**
+ * 描画中
+ */
+        Run,
 
-        /**
-         * 停止中
-         */
-                Pause,
+/**
+ * 停止中
+ */
+        Pause,
 
 
-        /**
-         * 廃棄を行う
-         */
-                Destroyed,
+/**
+ * 廃棄を行う
+ */
+        Destroyed,
     } loopState = Booting;
 
     BaseGlfwLoopController(std::shared_ptr<GlfwDevice> windowDevice);
@@ -84,7 +84,12 @@ protected:
      *
      * @param message ApplicationRunner用に構築されたメッセージ
      */
-    virtual void onMouseAction(const Bundle message) { }
+    virtual void onMouseAction(const Bundle message) {}
+
+    /**
+     * ファイルがD&Dされた
+     */
+    virtual void onFileDrop(const int numFiles, const char** filePathList) { }
 
     /**
      * レンダリング対象のデバイス
@@ -110,6 +115,8 @@ private:
     static void cursorCallback(GLFWwindow *window, double x, double y);
 
     static void mouseCallback(GLFWwindow *window, int button, int action, int mods);
+
+    static void dropCallback(GLFWwindow* window, int numFiles, const char** names);
 };
 
 }

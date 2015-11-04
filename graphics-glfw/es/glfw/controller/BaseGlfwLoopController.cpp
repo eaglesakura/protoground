@@ -10,10 +10,11 @@
 namespace es {
 
 BaseGlfwLoopController::BaseGlfwLoopController(std::shared_ptr<GlfwDevice> windowDevice) :
-        device(windowDevice) {
+    device(windowDevice) {
     glfwSetWindowUserPointer(windowDevice->getWindow(), this);
     glfwSetCursorPosCallback(windowDevice->getWindow(), BaseGlfwLoopController::cursorCallback);
     glfwSetMouseButtonCallback(windowDevice->getWindow(), BaseGlfwLoopController::mouseCallback);
+    glfwSetDropCallback(windowDevice->getWindow(), BaseGlfwLoopController::dropCallback);
 }
 
 int BaseGlfwLoopController::execute() {
@@ -60,7 +61,7 @@ int BaseGlfwLoopController::execute() {
                 eslog("onSurfaceChanged(%x) old(%dx%d) -> new(%dx%d)", this,
                       (int) oldSurfaceSize.x, (int) oldSurfaceSize.y,
                       (int) nowSurfaceSize.x, (int) nowSurfaceSize.y
-                );
+                      );
                 onLoopSurfaceSizeChanged(oldSurfaceSize.x, oldSurfaceSize.y, nowSurfaceSize.x, nowSurfaceSize.y);
                 oldSurfaceSize = nowSurfaceSize;
             }
@@ -132,4 +133,8 @@ void BaseGlfwLoopController::mouseCallback(GLFWwindow *window, int button, int a
     self->onMouseAction(button, action, self->mousePos.x, self->mousePos.y);
 }
 
+void BaseGlfwLoopController::dropCallback(GLFWwindow* window, int numFiles, const char** names) {
+    BaseGlfwLoopController *self = (BaseGlfwLoopController *) glfwGetWindowUserPointer(window);
+    self->onFileDrop(numFiles, names);
+}
 }
