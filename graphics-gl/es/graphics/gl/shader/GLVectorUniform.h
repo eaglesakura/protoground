@@ -132,8 +132,10 @@ public:
      */
     bool upload(const mat3 &m, const GLboolean transpose = GL_FALSE);
 
-    /**
+    /** 
      * 法線計算用の行列を転送する
+     * 回転行列のみの場合は false, false
+     * スケーリングが含まれている場合は true, true
      */
     bool uploadNormal(const mat4 &m, const bool inverse, const bool transpose);
 };
