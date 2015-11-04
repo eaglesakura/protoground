@@ -97,7 +97,7 @@ public:
      * データをVRAMへアップロードする
      */
     void upload() const {
-        GLUniformBlock::upload < T > (&data);
+        GLUniformBlock::upload <T>(&data);
     }
 
     /**
