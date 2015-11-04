@@ -15,7 +15,7 @@ struct AnimationData {
              * ボーンアニメーションに親からのオフセット情報も付与されている
              * FBXのモーション計算がそれに該当する。
              */
-                    Flag_BoneHasParentOffset = 0x1 << 0,
+            Flag_BoneHasParentOffset = 0x1 << 0,
         };
         /**
          * 全てのキー情報数
@@ -36,9 +36,6 @@ struct AnimationData {
          * アニメーションの計算フラグ
          */
         uint16_t flags;
-
-        uint8_t reserve0;
-        uint8_t reserve1;
     } PGD_FILE_ALIGN_OBJECT_END;
 
     /**
@@ -65,8 +62,6 @@ struct AnimationData {
          */
         uint16_t maxFrames;
 
-        uint8_t reserve0;
-        uint8_t reserve1;
     } PGD_FILE_ALIGN_OBJECT_END;
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct BoneKeyFrame {
@@ -84,9 +79,6 @@ struct AnimationData {
          * 打刻されている時刻
          */
         int16_t frame;
-
-        uint8_t reserve0;
-        uint8_t reserve1;
     } PGD_FILE_ALIGN_OBJECT_END;
 
     /**

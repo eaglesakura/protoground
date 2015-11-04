@@ -231,7 +231,6 @@ void FbxNodeTree::buildAnimation(file::AnimationData *result, file::SymbolTable 
             vec3 scale(1, 1, 1);
             file::AnimationData::BoneKeyFrame key;
             key.frame = currentFrame;
-            key.reserve0 = key.reserve1 = 0;
 
             util::getTransform(&key.pos, &key.rotate, nullptr, &scale, fbx.node->EvaluateLocalTransform(period * i));
             if (!added || !file::AnimationData::someFrame(before, key)) {

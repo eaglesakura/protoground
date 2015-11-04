@@ -16,7 +16,6 @@ ByteBuffer AnimationData::serialize(AnimationData::Serialize *animation) {
 
     animation->meta.boneKeyNum = animation->boneKeys.size();
     animation->meta.linkBoneNum = animation->linkBones.size();
-    animation->meta.reserve0 = animation->meta.reserve1 = 0;
 
     const uint32_t boneKeyBytes = sizeof(AnimationData::BoneKeyFrame) * animation->meta.boneKeyNum;
     const uint32_t linkBoneBytes = sizeof(AnimationData::SymbolTimeline) * animation->meta.linkBoneNum;

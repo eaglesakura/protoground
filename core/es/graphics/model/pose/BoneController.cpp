@@ -111,9 +111,9 @@ void BoneController::updateWorldMatrixFKLocal(const AnimationPose *pose) {
             const auto &cache = boneCaches[index];
             const auto &bind = pose->binds[index];
 
-//            eslog("Bind[%03d] quat(%.3f, %.3f, %.3f, %.3f)", index,
-//                  pose->binds[index].rotate.x, pose->binds[index].rotate.y, pose->binds[index].rotate.z, pose->binds[index].rotate.w
-//            );
+            //eslog("Bind[%03d] quat(%  .3f, %.3f, %.3f, %.3f)", index,
+            //      pose->binds[index].rotate.x, pose->binds[index].rotate.y, pose->binds[index].rotate.z, pose->binds[index].rotate.w
+            //);
 
             if (!(bind.flags & AnimationPose::Bind::Flag_Unuse)) {
                 // 計算対象ならアニメーション由来で計算する

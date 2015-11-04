@@ -29,10 +29,10 @@ void AnimationPose::bind(const std::shared_ptr<file::AnimationData> &anim) {
         dst.linkBoneTimelineIndex = findBoneTimelineIndex(src.symbol);
         if (dst.linkBoneTimelineIndex < 0) {
             // リンクが成立しなかった
-//            eslog("Skip Bone[%03d]", boneIndex - 1);
+            eslog("Skip Bone[%03d]", boneIndex - 1);
             dst.flags = Bind::Flag_Unuse;
         } else {
-//            eslog("Link Bone[%03d] -> Anim[%03d]", boneIndex - 1, dst.linkBoneTimelineIndex);
+            eslog("Link Bone[%03d] -> Anim[%03d]", boneIndex - 1, dst.linkBoneTimelineIndex);
             dst.flags = 0;
         }
     }
