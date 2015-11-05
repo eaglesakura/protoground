@@ -20,7 +20,7 @@ class BoneController;
  * ボーン数とアニメーション内のタイムライン数は通常一致しない（存在しないボーンに対するアニメーション、等）。
  * そのため、アニメーション処理前にSymbolを関連付ける必要がある。
  *
- * future: 複数アニメーションのブレンドに対応する
+ * TODO: 複数アニメーションのブレンドに対応する
  */
 class AnimationPose : public Object {
 public:

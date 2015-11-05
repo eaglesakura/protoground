@@ -310,13 +310,17 @@ mat4 BoneController::calcWorldMatrix(const unsigned boneIndex) const {
 void BoneController::debugDraw(btIDebugDraw *drawer) const {
     assert(drawer);
 
+    debugDraw(Color::fromRGBAf(1, 0, 0, 1), Color::fromRGBAf(0.25f, 0.25f, 0.25f, 1.0f), drawer);
+}
+
+void BoneController::debugDraw(const Color fromColor, const Color toColor, btIDebugDraw* drawer) const {
     for (int i = 0; i < boneCaches.size(); ++i) {
         const auto &bone = model->bone.bones[i];
         const auto &cache = boneCaches[i];
 
-        btVector3 color(1, 0, 0);
+        btVector3 color(fromColor.rf() * 0.75f, fromColor.gf() * 0.75f, fromColor.bf() * 0.75f);
         if (bone.ikLinkNum) {
-            color = btVector3(1, 1, 0);
+            color = btVector3(fromColor.rf(), fromColor.gf(), fromColor.bf());
         }
 
         vec3 to = util::asVec3(boneTable->palette[i] * vec4(bone.pos, 1.0f));
@@ -333,10 +337,72 @@ void BoneController::debugDraw(btIDebugDraw *drawer) const {
                 vec4(0.0f, 0.0f, 0.0f, 1.0f)
                 );
         }
-//        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
+        //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
         vec3 center = (to + from) / 2.0f;
         drawer->drawLine(btVector3(from.x, from.y, from.z), btVector3(center.x, center.y, center.z), color);
-        drawer->drawLine(btVector3(center.x, center.y, center.z), btVector3(to.x, to.y, to.z), btVector3(0.25f, 0.25f, 0.0f));
+        drawer->drawLine(btVector3(center.x, center.y, center.z), btVector3(to.x, to.y, to.z), btVector3(toColor.rf(), toColor.gf(), toColor.bf()));
+    }
+}
+
+void BoneController::debugDrawSelectBone(const Color fromColor, const Color toColor, const unsigned boneIndex, btIDebugDraw* drawer) const {
+    const auto &bone = model->bone.bones[boneIndex];
+    const auto &cache = boneCaches[boneIndex];
+
+    btVector3 color(fromColor.rf() * 0.75f, fromColor.gf() * 0.75f, fromColor.bf() * 0.75f);
+    if (bone.ikLinkNum) {
+        color = btVector3(fromColor.rf(), fromColor.gf(), fromColor.bf());
+    }
+
+    vec3 to = util::asVec3(boneTable->palette[boneIndex] * vec4(bone.pos, 1.0f));
+    vec3 from;
+    if (bone.parentBoneIndex >= 0) {
+        // 親座標をコピーする
+        from = util::asVec3(
+            boneTable->palette[bone.parentBoneIndex] *
+            vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
+            );
+    } else {
+        from = util::asVec3(
+            world *
+            vec4(0.0f, 0.0f, 0.0f, 1.0f)
+            );
+    }
+    //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
+    vec3 center = (to + from) / 2.0f;
+    drawer->drawLine(btVector3(from.x, from.y, from.z), btVector3(center.x, center.y, center.z), color);
+    drawer->drawLine(btVector3(center.x, center.y, center.z), btVector3(to.x, to.y, to.z), btVector3(toColor.rf(), toColor.gf(), toColor.bf()));
+}
+
+void BoneController::debugDrawHighlight(const Color mainColor, const Color otherColor, const unsigned boneIndex, btIDebugDraw* drawer) const {
+    for (int i = 0; i < boneCaches.size(); ++i) {
+        const auto &bone = model->bone.bones[i];
+        const auto &cache = boneCaches[i];
+
+
+        btVector3 color;
+
+        if (i == boneIndex) {
+            color = btVector3(mainColor.rf(), mainColor.gf(), mainColor.bf());
+        } else {
+            color = btVector3(otherColor.rf(), otherColor.gf(), otherColor.bf());
+        }
+
+        vec3 to = util::asVec3(boneTable->palette[i] * vec4(bone.pos, 1.0f));
+        vec3 from;
+        if (bone.parentBoneIndex >= 0) {
+            // 親座標をコピーする
+            from = util::asVec3(
+                boneTable->palette[bone.parentBoneIndex] *
+                vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
+                );
+        } else {
+            from = util::asVec3(
+                world *
+                vec4(0.0f, 0.0f, 0.0f, 1.0f)
+                );
+        }
+        //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
+        drawer->drawLine(btVector3(from.x, from.y, from.z), btVector3(to.x, to.y, to.z), color);
     }
 }
 

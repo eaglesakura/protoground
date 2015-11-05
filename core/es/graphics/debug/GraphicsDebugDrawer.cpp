@@ -1,4 +1,5 @@
 ﻿#include "GraphicsDebugDrawer.h"
+#include "es/graphics/model/pose/BoneController.h"
 
 namespace es {
 namespace debug {

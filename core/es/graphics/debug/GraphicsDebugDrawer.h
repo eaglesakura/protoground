@@ -67,15 +67,20 @@ public:
         Color color;
 
 
-        Vertex(const vec3 &pos, const Color &rgba) : pos(pos), color(rgba) { }
+        Vertex(const vec3 &pos, const Color &rgba) : pos(pos), color(rgba) {}
 
         Vertex(const btVector3 &pos, const btVector3 &rgb) {
             this->pos = vec3(pos.x(), pos.y(), pos.z());
             this->color = Color::fromRGBAf(rgb.x(), rgb.y(), rgb.z(), 1.0f);
         }
 
-        Vertex() { }
+        Vertex() {}
     };
+
+
+    VertexAttribute::Complex getVertexComplex() const {
+        return vertexComplex;
+    }
 
     unsafe_array<Vertex> getVertices() const;
 

@@ -84,9 +84,24 @@ public:
     ~BoneController() = default;
 
     /**
-     * ボーン情報をデバッグ描画する
-     */
+    * ボーン情報をデバッグ描画する
+    */
     void debugDraw(btIDebugDraw *drawer) const;
+
+    /**
+    * ボーン情報をデバッグ描画する
+    */
+    void debugDraw(const Color fromColor, const Color toColor, btIDebugDraw *drawer) const;
+
+    /**
+     * 特定ボーンのみをデバッグ描画する
+     */
+    void debugDrawSelectBone(const Color fromColor, const Color toColor, const unsigned boneIndex, btIDebugDraw *drawer) const;
+
+    /**
+    * 特定ボーンをハイライト描画する
+    */
+    void debugDrawHighlight(const Color mainColor, const Color otherColor, const unsigned boneIndex, btIDebugDraw *drawer) const;
 
 
 private:
@@ -144,16 +159,16 @@ private:
             /**
              * ローカル行列計算完了
              */
-                    CalcPass_Local,
+            CalcPass_Local,
 
-            /**
-             * ワールド行列を計算完了
-             */
-                    CalcPass_World,
-            /**
-             * 未計算
-             */
-                    CalcPass_None,
+    /**
+     * ワールド行列を計算完了
+     */
+            CalcPass_World,
+    /**
+     * 未計算
+     */
+            CalcPass_None,
 
         };
         CalcPass_e pass = CalcPass_None;
