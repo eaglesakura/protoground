@@ -16,7 +16,9 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
     // ポリゴンリスト内部のローカルなリストから、全体の番号へ変換する紐付け
     std::vector<uint16_t> materialIndexTable(polygons->materials.size());
     std::vector<uint16_t> clusterIndexTable(vertices->clusterCount);
-    memset(util::asPointer(clusterIndexTable), 0x00, sizeof(uint16_t) * vertices->clusterCount);
+    if (vertices->clusterCount > 0) {
+        memset(util::asPointer(clusterIndexTable), 0x00, sizeof(uint16_t) * vertices->clusterCount);
+    }
 
     eslog("    BuildMesh(%s)", self->getName().c_str());
     // 全てのマテリアルを登録する
@@ -29,19 +31,28 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
             ++index;
         }
     }
-    
+
     // 全てのボーンを登録する
     {
+        unsigned vIndex = 0;
         for (const auto &weight : vertices->weights) {
+
+            eslog("    - V[%d] pos(%d, %d, %d)",
+                  vIndex,
+                  (int) vertices->positions[vIndex].x, (int) vertices->positions[vIndex].y, (int) vertices->positions[vIndex].z
+                  );
+
             for (int i = 0; i < FbxBoneWeight::WEIGHT_NUM; ++i) {
                 const unsigned clusterLocalIndex = weight.indices[i];
                 const FbxCluster *localCluster = weight.clusters[i];
 
                 if (localCluster) {
                     clusterIndexTable[clusterLocalIndex] = findClusterIndexOrCreate(rootNode, localCluster);
-//                    eslog("    - Cluster v[%d] LocalIndex[%03d] -> GlobalIndex[%03d]", i, clusterLocalIndex, clusterIndexTable[clusterLocalIndex]);
+                    eslog("      - Cluster v[%d] weight[%.1f] LocalIndex[%03d] -> GlobalIndex[%03d]", i, weight.weights[i], clusterLocalIndex, clusterIndexTable[clusterLocalIndex]);
                 }
             }
+
+            ++vIndex;
         }
     }
 
@@ -56,21 +67,30 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
                 dst.coord = vertices->coords[poly.attributes[i]];
                 dst.color = vertices->colors[poly.attributes[i]];
 
-                const auto &srcWeight = vertices->weights[poly.position[i]];
-                int weightSumCheck = 255;
-                for (int k = 0; k < FbxBoneWeight::WEIGHT_NUM; ++k) {
-                    const int localIndex = srcWeight.indices[k];
-                    dst.indices[k] = clusterIndexTable[localIndex];
-                    dst.weights[k] = (uint8_t) (srcWeight.weights[k] * 255.0f);
+                if (!vertices->weights.empty()) {
+                    const auto &srcWeight = vertices->weights[poly.position[i]];
+                    int weightSumCheck = 255;
+                    for (int k = 0; k < FbxBoneWeight::WEIGHT_NUM; ++k) {
+                        const int localIndex = srcWeight.indices[k];
+                        dst.indices[k] = clusterIndexTable[localIndex];
+                        dst.weights[k] = (uint8_t) (srcWeight.weights[k] * 255.0f);
 
-                    weightSumCheck -= dst.weights[k];
-                }
-                assert(weightSumCheck >= 0);
+                        weightSumCheck -= dst.weights[k];
+                    }
+                    assert(weightSumCheck >= 0);
 
-                // weightが0.5+0.5の場合、127+127=254になって、ウェイト合計が255にならなくなる。
-                // 合計値が255になるように誤差調整
-                if (dst.weights[0] > 0) {
-                    dst.weights[0] += weightSumCheck;
+                    // weightが0.5+0.5の場合、127+127=254になって、ウェイト合計が255にならなくなる。
+                    // 合計値が255になるように誤差調整
+                    if (dst.weights[0] > 0) {
+                        dst.weights[0] += weightSumCheck;
+                    }
+                } else {
+                    dst.weights[0] = 255;
+                    dst.indices[0] = 0;
+                    for (int i = 1; i < FbxBoneWeight::WEIGHT_NUM; ++i) {
+                        dst.weights[i] = 0;
+                        dst.indices[i] = 0;
+                    }
                 }
             }
 
@@ -107,21 +127,21 @@ uint32_t MeshBuilder::findVertexIndexOrCreate(const MeshBuilder::Vertex &v) {
         vertices.insert(std::make_pair(hash, d));
         return d.number;
     } else {
-//        auto v2 = itr->second.vertex;
-//        if (!(v == v2)) {
-//            eslog("v1 pos(%f, %f, %f) norm(%f, %f, %f) uv(%f, %f)",
-//                  v.position.x, v.position.y, v.position.z,
-//                  v.normal.x, v.normal.y, v.normal.z,
-//                  v.coord.x, v.coord.y
-//            );
-//            eslog("v1 pos(%f, %f, %f) norm(%f, %f, %f) uv(%f, %f)",
-//                  v2.position.x, v2.position.y, v2.position.z,
-//                  v2.normal.x, v2.normal.y, v2.normal.z,
-//                  v2.coord.x, v2.coord.y
-//            );
-//
-//            assert(v == v2);
-//        }
+        auto v2 = itr->second.vertex;
+        if (!(v == v2)) {
+            eslog("v1 pos(%f, %f, %f) norm(%f, %f, %f) uv(%f, %f)",
+                  v.position.x, v.position.y, v.position.z,
+                  v.normal.x, v.normal.y, v.normal.z,
+                  v.coord.x, v.coord.y
+            );
+            eslog("v1 pos(%f, %f, %f) norm(%f, %f, %f) uv(%f, %f)",
+                  v2.position.x, v2.position.y, v2.position.z,
+                  v2.normal.x, v2.normal.y, v2.normal.z,
+                  v2.coord.x, v2.coord.y
+            );
+
+            assert(v == v2);
+        }
         // 既に頂点が見つかっているので番号を返す
         return itr->second.number;
     }
@@ -150,7 +170,7 @@ uint16_t MeshBuilder::findMaterialIndexOrCreate(const PolygonContainer::Material
 }
 
 static int64_t toFixedFloat(const float f) {
-    return (int64_t) (((double) f) * (float) (0xFFFFFF));
+    return (int64_t) (((double) f) * ((double) 0xFFFFFF));
 }
 
 string MeshBuilder::Vertex::hashString() const {
@@ -159,10 +179,10 @@ string MeshBuilder::Vertex::hashString() const {
                         toFixedFloat(position.x), toFixedFloat(position.y), toFixedFloat(position.z),
                         toFixedFloat(normal.x), toFixedFloat(normal.z), toFixedFloat(normal.z),
                         toFixedFloat(coord.x), toFixedFloat(coord.y),
-                        (int) color.tag.r, (int) color.tag.g, (int) color.tag.b, (int) color.tag.a,
-                        (int) indices[0], (int) indices[1], (int) indices[2], (int) indices[3],
-                        (int) weights[0], (int) weights[1], (int) weights[2], (int) weights[3]
-    );
+                        color.tag.r, color.tag.g, color.tag.b, color.tag.a,
+                        indices[0], indices[1], indices[2], indices[3],
+                        weights[0], weights[1], weights[2], weights[3]
+                        );
 }
 
 Hash128 MeshBuilder::Vertex::hash() const {
@@ -177,6 +197,7 @@ bool MeshBuilder::Vertex::operator==(const MeshBuilder::Vertex &v) const {
 uint16_t MeshBuilder::findClusterIndexOrCreate(const std::shared_ptr<FbxNodeTree> rootNode, const FbxCluster *cluster) {
     auto *link = cluster->GetLink();
     auto node = rootNode->findNodeFromFbxId(link->GetUniqueID());
+    assert(rootNode->getNodeId() == 0);
     assert(node);
     assert(node->getFbxUniqueId() == link->GetUniqueID());
     assert(node->getFbxNodeRef() == link);
@@ -355,7 +376,7 @@ void MeshBuilder::computeMesh(es::file::SkinMeshModelData *result, file::SymbolT
     eslog("AABB min(%.3f, %.3f, %.3f) max(%.3f, %.3f, %.3f)",
           result->mesh.meta.aabb.minPos.x, result->mesh.meta.aabb.minPos.y, result->mesh.meta.aabb.minPos.z,
           result->mesh.meta.aabb.maxPos.x, result->mesh.meta.aabb.maxPos.y, result->mesh.meta.aabb.maxPos.z
-    );
+          );
 }
 
 void MeshBuilder::computeBones(const std::shared_ptr<FbxNodeTree> rootNode, es::file::SkinMeshModelData *result, file::SymbolTable *table) const {

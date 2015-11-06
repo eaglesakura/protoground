@@ -58,11 +58,11 @@ bool FbxFileConverter::initialize(file::SymbolTable *resultSymbolTable, std::sha
     }
 
     assert(fbxScene->GetRootNode());
-//    // 三角ポリゴン変換
-//    {
-//        FbxGeometryConverter cvt(fbxManager.get());
-//        cvt.Triangulate(fbxScene.get(), true);
-//    }
+    // 三角ポリゴン変換
+    {
+        FbxGeometryConverter cvt(fbxManager.get());
+        cvt.Triangulate(fbxScene.get(), true);
+    }
 
     // ノードを生成
     nodeTree = FbxNodeTree::createNodeTree(fbxImportManager, fbxScene);

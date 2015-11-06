@@ -205,10 +205,10 @@ void FbxNodeTree::buildAnimation(file::AnimationData *result, file::SymbolTable 
         int startFrame = (int) (start.Get() / period.Get());
         int endFrame = (int) (end.Get() / period.Get());
 
-        if (minFrameIndex > 0) {
+        if (minFrameIndex >= 0) {
             startFrame = minFrameIndex;
         }
-        if (maxFrameIndex > 0) {
+        if (maxFrameIndex >= 0) {
             endFrame = maxFrameIndex;
         }
 

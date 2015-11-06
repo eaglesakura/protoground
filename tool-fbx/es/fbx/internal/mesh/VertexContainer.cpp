@@ -144,31 +144,44 @@ void VertexContainer::createWeights(FbxMesh *mesh) {
 
     for (int i = 0; i < deformerCount; ++i) {
         FbxSkin *skin = (FbxSkin *) mesh->GetDeformer(i, FbxDeformer::eSkin);
-
         clusterCount = skin->GetClusterCount();
-        eslog("    - Mesh clusters(%d)", clusterCount);
+        eslog("    - Mesh clusters(%d) type[%d] indices(%d)",
+              clusterCount,
+              skin->GetSkinningType(),
+              skin->GetControlPointIndicesCount());
 
         //! クラスタ（ボーン）を取得する
         for (int boneIndex = 0; boneIndex < clusterCount; ++boneIndex) {
             FbxCluster *cluster = skin->GetCluster(boneIndex);
-            const char *culsterName = cluster->GetName();
-
-            eslog("    - Cluster[%02d] id[%llu] link[%llu] name(%s)", boneIndex, cluster->GetUniqueID(), cluster->GetLink()->GetUniqueID(), culsterName);
+            const char *culsterName = cluster->GetLink()->GetName();
 
             ConvertedDeformer deformer(cluster);
+            eslog("    - Cluster[%02d] id[%llu] link[%llu] name(%s) geoms(%d) indices(%d) weights(%d)",
+                  boneIndex, cluster->GetUniqueID(), cluster->GetLink()->GetUniqueID(),
+                  culsterName,
+                  skin->GetGeometry()->GetControlPointsCount(),
+                  deformer.indices.size(), deformer.weights.size()
+                  );
+
+            // すべてのインデックス情報をログに吐き出す
+            for (int i = 0; i < deformer.indices.size(); ++i) {
+                eslog("      - index(%d) weight(%.3f)", deformer.indices[i], deformer.weights[i]);
+            }
+
             const int indices_size = deformer.indices.size();
 
-            // ウェイト情報を登録する
-            for (int vertexIndex = 0; vertexIndex < indices_size; ++vertexIndex) {
-                weights[deformer.indices[vertexIndex]].registerWegight(cluster, boneIndex, deformer.weights[vertexIndex]);
+            // すべてのウェイトを頂点に加える
+            for (int k = 0; k < indices_size; ++k) {
+                const float weight = deformer.weights[k];
+                const unsigned index = deformer.indices[k];
+                weights[index].registerWegight(cluster, boneIndex, weight);
             }
         }
     }
 
-// 頂点ウェイトを正規化する
+    // 頂点ウェイトを正規化する
     for (auto &weight : weights) {
         weight.normalize();
-//        jclogf("    vertex[%d] weight(%d = %.3f, %d = %.3f, %d = %.3f, %d = %.3f)", i, (*result)[i].indices[0], (*result)[i].weights[0], (*result)[i].indices[1], (*result)[i].weights[1], (*result)[i].indices[2], (*result)[i].weights[2], (*result)[i].indices[3], (*result)[i].weights[3]);
     }
 }
 

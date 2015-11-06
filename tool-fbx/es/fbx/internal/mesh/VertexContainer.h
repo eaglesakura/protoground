@@ -52,7 +52,7 @@ public:
      * 生成された頂点リストが正しいことを検証する
      */
     bool valid() {
-        return positions.size() == weights.size()
+        return (weights.empty() ? true :  positions.size() == weights.size())
                && normals.size() == coords.size()
                && normals.size() == colors.size();
     }
