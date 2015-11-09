@@ -390,6 +390,12 @@ struct PhysicsData {
  * MMS/FBXサブセットに相当するデータを構築する
  */
 struct SkinMeshModelData {
+    /**
+    * ファイル拡張子
+    * Protoground SKin Model
+    */
+    static constexpr char* FILE_EXT = ".pskm";
+
     MeshData::Serialize mesh;
     MaterialData::Serialize material;
     BoneData::Serialize bone;

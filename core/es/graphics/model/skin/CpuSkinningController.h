@@ -21,6 +21,15 @@ public:
 
     virtual void compute(const uint32_t flags, const VertexAttribute::Complex &dstComplex, void *dstVertices) const override;
 
+
+    std::shared_ptr<file::SkinMeshModelData> getModel() const {
+        return model;
+    }
+
+    std::shared_ptr<BoneController> getBoneController() const {
+        return boneController;
+    }
+
     virtual ~CpuSkinningController() = default;
 
 private:

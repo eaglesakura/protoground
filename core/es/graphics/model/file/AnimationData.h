@@ -9,6 +9,14 @@ namespace es {
 namespace file {
 
 struct AnimationData {
+
+    /**
+    * ファイル拡張子
+    * Protoground SKin Animation
+    */
+    static constexpr char* FILE_EXT = ".pska";
+
+
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
         enum {
             /**
