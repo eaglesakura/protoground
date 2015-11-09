@@ -73,7 +73,7 @@ double asDouble(const string &value) {
 }
 
 string replace(const string &origin, const string &before, const string &after) {
-    unsigned int index = (unsigned)origin.find(before);
+    uint64_t index = (uint64_t)origin.find(before);
     if (index == string::npos) {
         return origin;
     }

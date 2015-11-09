@@ -7,11 +7,10 @@
 #include <atomic>
 
 // MacではGL3が優先されるため、旧バージョンのGLをガードする
-#if !defined(__gl_h_) && defined(BUILD_MacOSX)
+#if !defined(__gl_h_) && (defined(BUILD_MacOSX) || defined(BUILD_Windows))
 #define __gl_h_
 #endif
 
-#define __gl_h_ 1
 #include <GLFW/glfw3.h>
 #include "es/math/protoground-glm.hpp"
 
