@@ -332,10 +332,7 @@ void BoneController::debugDraw(const Color fromColor, const Color toColor, btIDe
                 vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
                 );
         } else {
-            from = util::asVec3(
-                world *
-                vec4(0.0f, 0.0f, 0.0f, 1.0f)
-                );
+            continue;
         }
         //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
         vec3 center = (to + from) / 2.0f;
@@ -362,10 +359,7 @@ void BoneController::debugDrawSelectBone(const Color fromColor, const Color toCo
             vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
             );
     } else {
-        from = util::asVec3(
-            world *
-            vec4(0.0f, 0.0f, 0.0f, 1.0f)
-            );
+        return;
     }
     //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
     vec3 center = (to + from) / 2.0f;
@@ -381,7 +375,8 @@ void BoneController::debugDrawHighlight(const Color mainColor, const Color other
 
         btVector3 color;
 
-        if (i == boneIndex) {
+        if (bone.parentBoneIndex == boneIndex) {
+            // 親から自身への連結を染める
             color = btVector3(mainColor.rf(), mainColor.gf(), mainColor.bf());
         } else {
             color = btVector3(otherColor.rf(), otherColor.gf(), otherColor.bf());
@@ -396,10 +391,7 @@ void BoneController::debugDrawHighlight(const Color mainColor, const Color other
                 vec4(model->bone.bones[bone.parentBoneIndex].pos, 1.0f)
                 );
         } else {
-            from = util::asVec3(
-                world *
-                vec4(0.0f, 0.0f, 0.0f, 1.0f)
-                );
+            continue;
         }
         //        eslog("Bone pos(%.3f, %.3f, %.3f)", from.x, from.y, from.z);
         drawer->drawLine(btVector3(from.x, from.y, from.z), btVector3(to.x, to.y, to.z), color);

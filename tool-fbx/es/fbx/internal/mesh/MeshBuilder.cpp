@@ -37,10 +37,10 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
         unsigned vIndex = 0;
         for (const auto &weight : vertices->weights) {
 
-            eslog("    - V[%d] pos(%d, %d, %d)",
-                  vIndex,
-                  (int) vertices->positions[vIndex].x, (int) vertices->positions[vIndex].y, (int) vertices->positions[vIndex].z
-                  );
+//            eslog("    - V[%d] pos(%d, %d, %d)",
+//                  vIndex,
+//                  (int) vertices->positions[vIndex].x, (int) vertices->positions[vIndex].y, (int) vertices->positions[vIndex].z
+//                  );
 
             for (int i = 0; i < FbxBoneWeight::WEIGHT_NUM; ++i) {
                 const unsigned clusterLocalIndex = weight.indices[i];
@@ -48,7 +48,11 @@ void MeshBuilder::add(const std::shared_ptr<FbxNodeTree> rootNode, const FbxNode
 
                 if (localCluster) {
                     clusterIndexTable[clusterLocalIndex] = findClusterIndexOrCreate(rootNode, localCluster);
-                    eslog("      - Cluster v[%d] weight[%.1f] LocalIndex[%03d] -> GlobalIndex[%03d]", i, weight.weights[i], clusterLocalIndex, clusterIndexTable[clusterLocalIndex]);
+//                    eslog("      - Cluster v[%d] weight[%.1f] LocalIndex[%03d] -> GlobalIndex[%03d](%s)",
+//                          i, weight.weights[i],
+//                          clusterLocalIndex, clusterIndexTable[clusterLocalIndex],
+//                          localCluster->GetLink()->GetName()
+//                          );
                 }
             }
 
@@ -133,12 +137,12 @@ uint32_t MeshBuilder::findVertexIndexOrCreate(const MeshBuilder::Vertex &v) {
                   v.position.x, v.position.y, v.position.z,
                   v.normal.x, v.normal.y, v.normal.z,
                   v.coord.x, v.coord.y
-            );
+                  );
             eslog("v1 pos(%f, %f, %f) norm(%f, %f, %f) uv(%f, %f)",
                   v2.position.x, v2.position.y, v2.position.z,
                   v2.normal.x, v2.normal.y, v2.normal.z,
                   v2.coord.x, v2.coord.y
-            );
+                  );
 
             assert(v == v2);
         }

@@ -79,6 +79,8 @@ public:
 
     static std::shared_ptr<FbxNodeTree> createNodeTree(std::shared_ptr<FbxImporter> importer, std::shared_ptr<FbxScene> scene);
 
+    // クラスタを利用して初期姿勢を再制御する
+    virtual void registerDefaultTake(const FbxCluster *cluster);
 protected:
     FbxNodeTree();
 
@@ -88,16 +90,17 @@ protected:
      * ノードを初期化する
      */
     virtual bool initialize(
-            std::shared_ptr<FbxImporter> importer, std::shared_ptr<FbxScene> scene,
-            wp<FbxNodeTree> parent, wp<FbxNodeTree> self,
-            sp<FbxNode> fbxNode,
-            NodeInitializer *initializer
-    );
+        std::shared_ptr<FbxImporter> importer, std::shared_ptr<FbxScene> scene,
+        wp<FbxNodeTree> parent, wp<FbxNodeTree> self,
+        sp<FbxNode> fbxNode,
+        NodeInitializer *initializer
+        );
 
-    /**
-     * 初期情報を設定する
-     */
+        /**
+         * 初期情報を設定する
+         */
     virtual void registerDefaultTake();
+
 
     wp<FbxNodeTree> self;
     wp<FbxNodeTree> parent;

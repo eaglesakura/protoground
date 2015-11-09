@@ -109,6 +109,22 @@ void FbxNodeTree::registerDefaultTake() {
     );
 }
 
+void FbxNodeTree::registerDefaultTake(const FbxCluster* cluster) {
+    assert(cluster && cluster->GetLink() == getFbxNodeRef());
+
+    FbxAMatrix m;
+    cluster->GetTransformLinkMatrix(m);
+    vec3 tempScale;
+    // 行列から初期姿勢を再設定する
+    util::getTransform(&transform.position, &transform.rotate, &transform.rotateXYZ, &tempScale, m);
+    eslog("    Update Transform type[%d] pos(%.3f, %.3f, %.3f) rot(%.3f, %.3f, %.3f, %.3f) scale(%.3f)",
+          getNodeType(),
+          transform.position.x, transform.position.y, transform.position.z,
+          transform.rotate.x, transform.rotate.y, transform.rotate.z, transform.rotate.w,
+          transform.scale
+          );
+}
+
 void FbxNodeTree::buildMesh(MeshBuilder *builder) const {
     for (auto child : children) {
         child->buildMesh(builder);

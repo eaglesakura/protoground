@@ -1,7 +1,6 @@
 ﻿#include "VertexContainer.h"
 #include <es/memory/SafeArray.hpp>
 #include <es/internal/log/Log.h>
-#include "ConvertedDeformer.hpp"
 
 namespace es {
 namespace fbx {
@@ -150,30 +149,31 @@ void VertexContainer::createWeights(FbxMesh *mesh) {
               skin->GetSkinningType(),
               skin->GetControlPointIndicesCount());
 
-        //! クラスタ（ボーン）を取得する
+  //! クラスタ（ボーン）を取得する
         for (int boneIndex = 0; boneIndex < clusterCount; ++boneIndex) {
             FbxCluster *cluster = skin->GetCluster(boneIndex);
             const char *culsterName = cluster->GetLink()->GetName();
 
-            ConvertedDeformer deformer(cluster);
-            eslog("    - Cluster[%02d] id[%llu] link[%llu] name(%s) geoms(%d) indices(%d) weights(%d)",
+            const unsigned pointsNum = cluster->GetControlPointIndicesCount();
+            const int* indicesRef = cluster->GetControlPointIndices();
+            const double* weightsRef = cluster->GetControlPointWeights();
+
+            eslog("    - Cluster[%02d] id[%llu] link[%llu] name(%s) geoms(%d)",
                   boneIndex, cluster->GetUniqueID(), cluster->GetLink()->GetUniqueID(),
                   culsterName,
-                  skin->GetGeometry()->GetControlPointsCount(),
-                  deformer.indices.size(), deformer.weights.size()
+                  pointsNum
                   );
 
-            // すべてのインデックス情報をログに吐き出す
-            for (int i = 0; i < deformer.indices.size(); ++i) {
-                eslog("      - index(%d) weight(%.3f)", deformer.indices[i], deformer.weights[i]);
-            }
+//            // すべてのインデックス情報をログに吐き出す
+//            for (int i = 0; i < pointsNum; ++i) {
+//                eslog("      - index(%d) weight(%.3f)", indicesRef[i], weightsRef[i]);
+//            }
 
-            const int indices_size = deformer.indices.size();
 
             // すべてのウェイトを頂点に加える
-            for (int k = 0; k < indices_size; ++k) {
-                const float weight = deformer.weights[k];
-                const unsigned index = deformer.indices[k];
+            for (unsigned k = 0; k < pointsNum; ++k) {
+                const float weight = weightsRef[k];
+                const unsigned index = indicesRef[k];
                 weights[index].registerWegight(cluster, boneIndex, weight);
             }
         }
