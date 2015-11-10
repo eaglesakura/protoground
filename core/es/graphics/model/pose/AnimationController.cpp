@@ -12,11 +12,16 @@ void AnimationController::setDataFrameRate(float dataFrameRate) {
     AnimationController::dataFrameRate = dataFrameRate;
 }
 
-void AnimationController::setLoopRange(float start, float end) {
-    assert(end > start);
+void AnimationController::setRange(float start, float end) {
+    assert(end >= start);
 
     this->startFrame = start;
     this->endFrame = end;
+    this->currentFrame = start;
+}
+
+void AnimationController::setRange(const file::AnimationData::Slice& slice) {
+    setRange(slice.startFrame, slice.startFrame + slice.numFrame);
 }
 
 void AnimationController::reset(std::shared_ptr<file::AnimationData> animation, AnimationController::TermType_e term) {
@@ -56,6 +61,13 @@ float AnimationController::getCurrentFrame() const {
 
 bool AnimationController::normalizeFrame() {
     bool result = false;
+    // 開始と終了が同じフレームなら、フレームを固定する
+    if (startFrame == endFrame) {
+        currentFrame = startFrame;
+        ++currentFrame;
+        return true;
+    }
+
     // 終端到達してたら、終端処理を行う
     if (currentFrame < startFrame || currentFrame > endFrame) {
         result = true;

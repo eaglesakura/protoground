@@ -1,12 +1,10 @@
 ﻿#pragma once
 
 #include "es/protoground.hpp"
+#include "es/graphics/model/file/AnimationData.h"
 
 namespace es {
 
-namespace file {
-struct AnimationData;
-}
 
 class AnimationController : public virtual Object {
 public:
@@ -24,7 +22,12 @@ public:
     /**
      * ループの範囲を指定する
      */
-    void setLoopRange(float start, float end);
+    void setRange(float start, float end);
+
+    /**
+     * データ範囲を指定する
+     */
+    void setRange(const file::AnimationData::Slice &slice);
 
     /**
      * フレームをリセットする
