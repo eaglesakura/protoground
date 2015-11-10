@@ -16,13 +16,13 @@ struct AnimationData {
      * ファイル拡張子
      * Protoground SKin Animation
      */
-    static constexpr char* FILE_EXT = ".pska";
+    static constexpr char const *FILE_EXT = ".pska";
 
     /**
      * ファイル拡張子
      * Protoground Animation Slice Json
      */
-    static constexpr char* SLICE_JSON_FILE_EXT = ".pasj";
+    static constexpr char const *SLICE_JSON_FILE_EXT = ".pasj";
 
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
@@ -31,7 +31,7 @@ struct AnimationData {
              * ボーンアニメーションに親からのオフセット情報も付与されている
              * FBXのモーション計算がそれに該当する。
              */
-            Flag_BoneHasParentOffset = 0x1 << 0,
+                    Flag_BoneHasParentOffset = 0x1 << 0,
         };
         /**
          * 全てのキー情報数
@@ -116,7 +116,7 @@ struct AnimationData {
 
         enum {
             // 終端で停止させる
-            Flag_EndFill = 0x01 << 0,
+                    Flag_EndFill = 0x01 << 0,
         };
         uint32_t flags;
     } PGD_FILE_ALIGN_OBJECT_END;

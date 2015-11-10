@@ -43,29 +43,6 @@ void AnimationData::parseAnimationSliceJson(const string &json, SymbolTable *sym
         }
     }
 
-//    picojson::value root;
-//    string error = picojson::parse(root, json);
-//    if (!error.empty()) {
-//        eslog("json parse error(%s)", error.c_str());
-//    }
-//
-//    auto &rootObj = root.get<picojson::object>();
-//    auto &slice = rootObj["slice"].get<picojson::array>();
-//    if (slice.empty()) {
-//        // データがない
-//        return;
-//    }
-//
-//    for (auto &item : slice) {
-//        auto &motion = item.get<picojson::object>();
-//
-//        auto name = motion["name"].get<string>();
-//        auto startFrame = motion["startFrame"].get<double>();
-//        auto numFrame = motion["numFrame"].get<double>();
-//
-//        eslog("name(%s) startFrame(%d) numFrame(%d)", name.c_str(), (int) startFrame, (int) numFrame);
-//    }
-
 }
 
 ByteBuffer AnimationData::serialize(AnimationData::Serialize *animation) {
