@@ -16,13 +16,13 @@ struct AnimationData {
      * ファイル拡張子
      * Protoground SKin Animation
      */
-    static constexpr char const *FILE_EXT = ".pska";
+    static constexpr auto *FILE_EXT = ".pska";
 
     /**
      * ファイル拡張子
      * Protoground Animation Slice Json
      */
-    static constexpr char const *SLICE_JSON_FILE_EXT = ".pasj";
+    static constexpr auto *SLICE_JSON_FILE_EXT = ".pasj";
 
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {

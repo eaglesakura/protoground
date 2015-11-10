@@ -394,7 +394,7 @@ struct SkinMeshModelData {
     * ファイル拡張子
     * Protoground SKin Model
     */
-    static constexpr char* FILE_EXT = ".pskm";
+    static constexpr auto *FILE_EXT = ".pskm";
 
     MeshData::Serialize mesh;
     MaterialData::Serialize material;

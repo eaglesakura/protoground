@@ -14,7 +14,7 @@ public:
      * ファイル拡張子
      * Protoground SYmbol Table
      */
-    static constexpr char* FILE_EXT = ".psyt";
+    static constexpr auto *FILE_EXT = ".psyt";
 
     /**
      * テキストをシンボルIDに変換する
