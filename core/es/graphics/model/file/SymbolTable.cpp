@@ -18,6 +18,15 @@ uint64_t SymbolTable::add(const string &text) {
     return symbols.get(text).shortHash().value();
 }
 
+void SymbolTable::add(const SymbolTable& table) {
+    std::vector<string> all;
+    table.symbols.getAllStrings(&all);
+
+    for (const auto &str : all) {
+        add(str);
+    }
+}
+
 string SymbolTable::find(const uint64_t value) const {
     auto str = symbols.find(Hash64::restore(value));
     if (str.enable()) {
@@ -58,7 +67,7 @@ ByteBuffer SymbolTable::serialize() const {
 
     // NULL込みで全データを書き込む
     for (const auto &str : strings) {
-        const unsigned size = (unsigned)str.length() + 1;
+        const unsigned size = (unsigned) str.length() + 1;
         memcpy(write, str.c_str(), size);
         write += size;
     }

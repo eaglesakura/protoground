@@ -8,13 +8,21 @@
 namespace es {
 namespace file {
 
+class SymbolTable;
+
 struct AnimationData {
 
     /**
-    * ファイル拡張子
-    * Protoground SKin Animation
-    */
+     * ファイル拡張子
+     * Protoground SKin Animation
+     */
     static constexpr char* FILE_EXT = ".pska";
+
+    /**
+     * ファイル拡張子
+     * Protoground Animation Slice Json
+     */
+    static constexpr char* SLICE_JSON_FILE_EXT = ".pasj";
 
 
     PGD_FILE_ALIGN_OBJECT_BEGIN struct Meta {
@@ -35,10 +43,14 @@ struct AnimationData {
          */
         uint16_t linkBoneNum;
 
+        // 格納されているアニメーションスライス数
+        uint16_t sliceNum;
+
         /**
          * 最後に打刻されているキーフレーム番号
          */
         uint16_t endFrame;
+
 
         /**
          * アニメーションの計算フラグ
@@ -89,6 +101,26 @@ struct AnimationData {
         int16_t frame;
     } PGD_FILE_ALIGN_OBJECT_END;
 
+
+    // アニメーション分割データ
+    PGD_FILE_ALIGN_OBJECT_BEGIN struct Slice {
+        // アニメーション名
+        uint64_t symbol;
+
+        // 開始フレーム
+        uint16_t startFrame;
+
+        // フレーム数
+        // 0の場合はstartFrameで固定される
+        uint16_t numFrame;
+
+        enum {
+            // 終端で停止させる
+            Flag_EndFill = 0x01 << 0,
+        };
+        uint32_t flags;
+    } PGD_FILE_ALIGN_OBJECT_END;
+
     /**
      * 2つのキーが示すアニメーションが同じである場合trueを返却する
      */
@@ -109,9 +141,17 @@ struct AnimationData {
          * 全てのボーン情報
          */
         std::vector<SymbolTimeline> linkBones;
+
+        // アニメーション分割情報
+        std::vector<Slice> slices;
     };
 
     Serialize animation;
+
+    /**
+     * JSON
+     */
+    static void parseAnimationSliceJson(const string &json, SymbolTable *symbols, std::vector<Slice> *result);
 
     static ByteBuffer serialize(Serialize *animation);
 

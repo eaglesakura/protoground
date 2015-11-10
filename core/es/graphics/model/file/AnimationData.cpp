@@ -1,6 +1,8 @@
 ﻿#include <es/asset/file/SerializeHeader.h>
 #include <es/internal/log/Log.h>
 #include "AnimationData.h"
+#include "es/asset/file/JsonData.hpp"
+#include "es/graphics/model/file/SymbolTable.h"
 
 namespace es {
 namespace file {
@@ -11,15 +13,72 @@ bool AnimationData::someFrame(const AnimationData::BoneKeyFrame &a, const Animat
         util::equals(a.rotate, b.rotate);
 }
 
+void AnimationData::parseAnimationSliceJson(const string &json, SymbolTable *symbols, std::vector<Slice>* result) {
+    file::SymbolTable tempTable;
+    if (!symbols) {
+        symbols = &tempTable;
+    }
+
+    sp<Json> data = Json::parse(json);
+
+    auto slice = data->getChild("slice");
+    assert(slice->getType() == Json::JsonType_Array);
+
+    for (unsigned i = 0; i < slice->getChildCount(); ++i) {
+        auto item = slice->getChild(i);
+
+        AnimationData::Slice slice = { 0 };
+
+        string name;
+
+        if (item->get("name", &name) &&
+            item->getAs("startFrame", &slice.startFrame) &&
+            item->getAs("numFrame", &slice.numFrame)) {
+
+            slice.symbol = symbols->add(name);
+
+            eslog(" Animation Slice[%d] name(%s) startFrame(%d) numFrame(%d)", i, name.c_str(), slice.startFrame, slice.numFrame);
+
+            result->push_back(slice);
+        }
+    }
+
+//    picojson::value root;
+//    string error = picojson::parse(root, json);
+//    if (!error.empty()) {
+//        eslog("json parse error(%s)", error.c_str());
+//    }
+//
+//    auto &rootObj = root.get<picojson::object>();
+//    auto &slice = rootObj["slice"].get<picojson::array>();
+//    if (slice.empty()) {
+//        // データがない
+//        return;
+//    }
+//
+//    for (auto &item : slice) {
+//        auto &motion = item.get<picojson::object>();
+//
+//        auto name = motion["name"].get<string>();
+//        auto startFrame = motion["startFrame"].get<double>();
+//        auto numFrame = motion["numFrame"].get<double>();
+//
+//        eslog("name(%s) startFrame(%d) numFrame(%d)", name.c_str(), (int) startFrame, (int) numFrame);
+//    }
+
+}
+
 ByteBuffer AnimationData::serialize(AnimationData::Serialize *animation) {
     assert(animation);
 
     animation->meta.boneKeyNum = animation->boneKeys.size();
     animation->meta.linkBoneNum = animation->linkBones.size();
+    animation->meta.sliceNum = animation->slices.size();
 
     const uint32_t boneKeyBytes = sizeof(AnimationData::BoneKeyFrame) * animation->meta.boneKeyNum;
     const uint32_t linkBoneBytes = sizeof(AnimationData::SymbolTimeline) * animation->meta.linkBoneNum;
-    const uint32_t bufferSize = sizeof(Meta) + boneKeyBytes + linkBoneBytes;
+    const uint32_t sliceBytes = sizeof(AnimationData::Slice) * animation->meta.sliceNum;
+    const uint32_t bufferSize = sizeof(Meta) + boneKeyBytes + linkBoneBytes + sliceBytes;
 
     SerializeHeader header(SerializeHeader::DATA_UID_GRAPHICS_ANIMATION, bufferSize);
 
@@ -41,6 +100,10 @@ ByteBuffer AnimationData::serialize(AnimationData::Serialize *animation) {
         memcpy(write, util::asPointer(animation->linkBones), linkBoneBytes);
         write += linkBoneBytes;
     }
+    if (!animation->slices.empty()) {
+        memcpy(write, util::asPointer(animation->slices), sliceBytes);
+        write += sliceBytes;
+    }
 
     return result;
 }
@@ -60,6 +123,7 @@ bool AnimationData::deserialize(AnimationData::Serialize *result, unsafe_array<u
 
     const uint32_t boneKeyBytes = sizeof(BoneKeyFrame) * result->meta.boneKeyNum;
     const uint32_t linkBoneBytes = sizeof(SymbolTimeline) * result->meta.linkBoneNum;
+    const uint32_t sliceBytes = sizeof(Slice) * result->meta.sliceNum;
     const uint32_t bufferSize = sizeof(Meta) + boneKeyBytes + linkBoneBytes;
 
     if (buffer.length < (int) bufferSize) {
@@ -77,6 +141,12 @@ bool AnimationData::deserialize(AnimationData::Serialize *result, unsafe_array<u
         util::valloc(&result->linkBones, result->meta.linkBoneNum, false);
         memcpy(util::asPointer(result->linkBones), read, linkBoneBytes);
         read += linkBoneBytes;
+    }
+
+    if (sliceBytes) {
+        util::valloc(&result->slices, result->meta.sliceNum, false);
+        memcpy(util::asPointer(result->slices), read, sliceBytes);
+        read += sliceBytes;
     }
 
     return true;

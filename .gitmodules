@@ -4,3 +4,6 @@
 [submodule "modules/glm"]
 	path = modules/glm
 	url = git@github.com:g-truc/glm.git
+[submodule "modules/picojson"]
+	path = modules/picojson
+	url = git@github.com:kazuho/picojson.git

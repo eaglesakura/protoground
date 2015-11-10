@@ -22,6 +22,11 @@ public:
     uint64_t add(const string &text);
 
     /**
+     * シンボルテーブルの内容を一括でマージする
+     */
+    void add(const SymbolTable &table);
+
+    /**
      * シンボルテーブルから逆引きする
      * 見つからない場合、空の文字列を返す。
      */
@@ -48,7 +53,7 @@ private:
      */
     HashStringTable symbols;
 };
-    
+
 }
 
 
