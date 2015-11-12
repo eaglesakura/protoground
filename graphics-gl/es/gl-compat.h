@@ -95,11 +95,11 @@ typedef void *(*pgdGetGlProcAddress_ptr)(void *pUserData, char *procName);
 extern void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getProcAddress, void *pUserData);
 
 typedef enum ePgdGraphicsOpenGlCompat_e {
-    PgdGraphicsOpenGlCompat_Unknown,
-    PgdGraphicsOpenGlCompat_ES20,
-    PgdGraphicsOpenGlCompat_ES30,
-    PgdGraphicsOpenGlCompat_ES31,
-    PgdGraphicsOpenGlCompat_ES31_AEP,
+    PgdGraphicsOpenGlCompat_Unknown = 0,
+    PgdGraphicsOpenGlCompat_ES20 = 200,
+    PgdGraphicsOpenGlCompat_ES30 = 300,
+    PgdGraphicsOpenGlCompat_ES31 = 310,
+    PgdGraphicsOpenGlCompat_ES31_AEP = 311,
 } PgdGraphicsOpenGlCompat_e;
 
 /**

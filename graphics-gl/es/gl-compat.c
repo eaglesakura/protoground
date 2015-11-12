@@ -14,9 +14,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
         return;
     }
 
-    int loadRequestNum = 0;
-    int loadSuccessNum = 0;
-#define     PGD_LAOD_OPENGL_PROC(ret, name) name = (getGlProcAddress)(userData, #name);  if(name){ ++loadSuccessNum; } ++loadRequestNum
+#define     PGD_LAOD_OPENGL_PROC(ret, name) name = (getGlProcAddress)(userData, #name);
 
 /******************************************************************************/
 /*                         OpenGL ES 2.0 compat                               */
@@ -305,9 +303,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
 
     PGD_LAOD_OPENGL_PROC(void, glViewport);
 
-    if (loadRequestNum == loadSuccessNum) {
-        pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_ES20;
-    }
+    pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_ES20;
 
 /******************************************************************************/
 /*                         OpenGL ES 3.0 compat                               */
@@ -526,7 +522,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
     loadSuccessNum += 2;
 #endif
 
-    if (loadSuccessNum >= loadRequestNum) {
+    if (glBindTransformFeedback) {
         pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_ES30;
     }
 
@@ -666,7 +662,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
 
     PGD_LAOD_OPENGL_PROC(void, glVertexBindingDivisor);
 
-    if (loadSuccessNum >= loadRequestNum) {
+    if (glDispatchCompute) {
         pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_ES31;
     }
 
