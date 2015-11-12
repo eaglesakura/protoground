@@ -6,8 +6,16 @@
 #include "es/asset/AssetManager.h"
 
 #include "es/android/internal/asset/AndroidAssetLoader.h"
-#include "es/system/string/internal/JavaStringConverterImpl.h"
+
+#if __ANDROID_API__ < 20
+// not support(locale.so)
+#include "es/system/string/internal/JavaStringConverterImpl.hpp"
+#define PGD_LOCALE_NOTSUPPORT 1
+#else
+
 #include "es/system/string/internal/CucharStringConverter.hpp"
+
+#endif
 
 using namespace jc;
 using namespace jc::lang;
@@ -96,8 +104,11 @@ void AndroidProcessContext::onBootProcess(JavaVM *vm) {
 
     gInstance.reset(new AndroidProcessContext());
     gInstance->impl.reset(new AndroidProcessContext::Impl(vm));
-//    gInstance->stringConverter.reset(new internal::JavaStringConverterImpl());
+#if defined(PGD_LOCALE_NOTSUPPORT)
+    gInstance->stringConverter.reset(new internal::JavaStringConverterImpl());
+#else
     gInstance->stringConverter.reset(new internal::CucharStringConverter());
+#endif
 }
 
 std::shared_ptr<IProcessContext> IProcessContext::getInstance() {

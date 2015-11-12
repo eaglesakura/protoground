@@ -2,7 +2,7 @@
 
 #include "es/system/string/IStringConverter.h"
 
-#if defined(BUILD_Windows) || defined(BUILD_Android) /* Check Support Platform */
+#if defined(BUILD_Windows) || (defined(BUILD_Android) && __ANDROID_API__ >= 20) /* Check Support Platform */
 
 #include "es/memory/SafeArray.hpp"
 #include "es/util/Util.h"
