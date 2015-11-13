@@ -28,6 +28,24 @@ public:
                 PlatformType_OSX,
     };
 
+    enum CpuArchitecture_e {
+        CpuArchitecture_ARMv7a,
+        CpuArchitecture_ARMv7a_HardFloat,
+        CpuArchitecture_ARMv7a_NEON,
+        CpuArchitecture_ARMv7a_NEON_HardFloat,
+        CpuArchitecture_ARMEABI,
+        CpuArchitecture_x86,
+        CpuArchitecture_x86_64,
+        CpuArchitecture_Mips,
+        CpuArchitecture_Mips64,
+        CpuArchitecture_ARM64v8a,
+        CpuArchitecture_Unknown,
+    };
+
+    virtual CpuArchitecture_e getCpuArchitecture() const;
+
+    virtual const string getCpuArchitectureName() const;
+
     /**
      * 新たなThreadを生成させる
      */
