@@ -106,7 +106,7 @@ void FbxNodeTree::registerDefaultTake() {
           transform.position.x, transform.position.y, transform.position.z,
           transform.rotate.x, transform.rotate.y, transform.rotate.z, transform.rotate.w,
           transform.scale
-    );
+          );
 }
 
 void FbxNodeTree::registerDefaultTake(const FbxCluster* cluster) {
@@ -135,7 +135,7 @@ std::shared_ptr<FbxNodeTree> FbxNodeTree::findNodeFromFbxId(const uint64_t fbxUn
     if (fbx.uid == fbxUniqueId) {
         return self.lock();
     } else {
-        for (const auto &child :children) {
+        for (const auto &child : children) {
             auto node = child->findNodeFromFbxId(fbxUniqueId);
             // 子のどこからか見つかったらそれを返す
             if (node) {
@@ -151,7 +151,7 @@ std::shared_ptr<FbxNodeTree> FbxNodeTree::findNodeFromId(const uint16_t nodeId) 
     if (getNodeId() == nodeId) {
         return self.lock();
     } else {
-        for (const auto &child :children) {
+        for (const auto &child : children) {
             auto node = child->findNodeFromId(nodeId);
             // 子のどこからか見つかったらそれを返す
             if (node) {
@@ -242,12 +242,11 @@ void FbxNodeTree::buildAnimation(file::AnimationData *result, file::SymbolTable 
         int added = 0;
         // 全てのキーを打刻する
         file::AnimationData::BoneKeyFrame before;
-        // 最終フレームも含まれるため、ループカウンタはendFrameを打刻しなければならない。
+        // 最終フレームも含まれるため、ループカウンタはendFrameを打刻しなければならない
         for (int i = startFrame; i <= endFrame; ++i) {
             vec3 scale(1, 1, 1);
             file::AnimationData::BoneKeyFrame key;
             key.frame = currentFrame;
-
             util::getTransform(&key.pos, &key.rotate, nullptr, &scale, fbx.node->EvaluateLocalTransform(period * i));
             if (!added || !file::AnimationData::someFrame(before, key)) {
                 // 未登録か、前のフレームと同じ状態である場合登録する

@@ -31,26 +31,26 @@ struct AnimationData {
              * ボーンアニメーションに親からのオフセット情報も付与されている
              * FBXのモーション計算がそれに該当する。
              */
-                    Flag_BoneHasParentOffset = 0x1 << 0,
+            Flag_BoneHasParentOffset = 0x1 << 0,
         };
+
+        /**
+        * 最後に打刻されているキーフレーム番号
+        */
+        uint32_t endFrame;
+
         /**
          * 全てのキー情報数
          */
-        uint16_t boneKeyNum;
-
-        /**
-         * 格納されているボーン数
-         */
-        uint16_t linkBoneNum;
+        uint32_t boneKeyNum;
 
         // 格納されているアニメーションスライス数
         uint16_t sliceNum;
 
         /**
-         * 最後に打刻されているキーフレーム番号
+         * 格納されているボーン数
          */
-        uint16_t endFrame;
-
+        uint16_t linkBoneNum;
 
         /**
          * アニメーションの計算フラグ
@@ -70,7 +70,7 @@ struct AnimationData {
         /**
          * キーフレーム一覧のオフセット位置
          */
-        uint16_t offset;
+        uint32_t offset;
 
         /**
          * キーフレーム数
@@ -116,7 +116,7 @@ struct AnimationData {
 
         enum {
             // 終端で停止させる
-                    Flag_EndFill = 0x01 << 0,
+            Flag_EndFill = 0x01 << 0,
         };
         uint32_t flags;
     } PGD_FILE_ALIGN_OBJECT_END;
