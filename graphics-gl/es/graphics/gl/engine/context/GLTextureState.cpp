@@ -86,10 +86,11 @@ bool GLTextureState::bindTexture(const GLenum target, const GLuint texture) {
 
     // 違うテクスチャがユニットに設定されていたら、バインドし直す
     if (ctx.handle != texture || ctx.target != target) {
-        ctx.handle = texture;
-        ctx.target = target;
         glBindTexture(target, texture);
         assert_gl();
+
+        ctx.handle = texture;
+        ctx.target = target;
         return true;
     }
 

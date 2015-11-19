@@ -54,6 +54,8 @@ public:
 
     uint32_t maxUniformBufferSize = 0;
 
+    uint32_t maxColorAttachments = 0;
+
     GLGPUCapacity::GLVersion_e glVersion = GLGPUCapacity::GLVersion_Unknown;
 
     inline int toGLCoreVersion(int coreMajor, int coreMinor) {
@@ -230,6 +232,7 @@ public:
         if (pgdGlGetCompatVersion() >= PgdGraphicsOpenGlCompat_ES30) {
             glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, (GLint *) &maxUniformBufferSize);
             glGetIntegerv(GL_MAX_UNIFORM_BUFFER_BINDINGS, (GLint *) &maxUniformBufferNum);
+            glGetIntegerv(GL_MAX_COLOR_ATTACHMENTS, (GLint*) &maxColorAttachments);
         }
         {
             float value[] = {0, 0};
@@ -267,6 +270,7 @@ public:
             eslog("GL_MAX_FRAGMENT_UNIFORM_VECTORS = %d", maxUniformVectorsFs);
             eslog("GL_MAX_UNIFORM_BLOCK_SIZE = %d", maxUniformBufferSize);
             eslog("GL_MAX_UNIFORM_BUFFER_BINDINGS = %d", maxUniformBufferNum);
+            eslog("GL_MAX_COLOR_ATTACHMENTS = %d", maxColorAttachments);
             eslog("MaxLineWidth = %d", maxLineWidth);
         }
         eslog("-----------------------------");

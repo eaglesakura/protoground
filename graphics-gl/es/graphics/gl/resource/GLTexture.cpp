@@ -53,10 +53,12 @@ void GLTexture::setWrapMode(const GLenum s, const GLenum t) {
 void GLTexture::setFilter(const GLenum min, const GLenum mag) {
     if (min != context.minFilter) {
         glTexParameteri(target, GL_TEXTURE_MIN_FILTER, min);
+        assert_gl();
         context.minFilter = min;
     }
     if (mag != context.magFilter) {
         glTexParameteri(target, GL_TEXTURE_MAG_FILTER, mag);
+        assert_gl();
         context.magFilter = mag;
     }
 }
@@ -174,7 +176,7 @@ ITexture::Type_e GLTexture::getType() const {
             return Type_2D;
         default:
             return Type_Unknown;
-    }
+}
 }
 }
 }
