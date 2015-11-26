@@ -7,6 +7,10 @@
 #include "es/system/string/internal/Cpp11StringConverter.hpp"
 #include "es/system/string/internal/CucharStringConverter.hpp"
 
+#if defined(BUILD_Windows)
+#include "Windows.h"
+#endif
+
 namespace es {
 
 namespace {
@@ -23,10 +27,6 @@ ProcessContext::ProcessContext() {
 
 ProcessContext::~ProcessContext() {
 
-}
-
-IProcessContext::PlatformType_e ProcessContext::getPlatform() const {
-    return PlatformType_OSX;
 }
 
 void ProcessContext::onBootProcess() {

@@ -63,8 +63,11 @@ public:
             jmethodID method_newThread = nullptr;
             jmethodID method_getDatabasePath = nullptr;
             jmethodID method_isAndroidDebugable = nullptr;
+            jmethodID method_getSdkVersion = nullptr;
         } processContextImpl;
     } protoground;
+
+    mutable IProcessContext::VersionInfo versionCache;
 
 
     Impl(JavaVM *newVM) : vm(newVM) {
@@ -171,6 +174,11 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
         assert(impl->protoground.processContextImpl.clazz.hasObject());
         impl->protoground.processContextImpl.clazz.globalRef().multiThread(true);
 
+        // getSdkVersion
+        impl->protoground.processContextImpl.method_getSdkVersion =
+                impl->protoground.processContextImpl.clazz.getMethod("getSdkVersion", "()I", true);
+        assert(impl->protoground.processContextImpl.method_getSdkVersion);
+
         // getDatabasePath
         impl->protoground.processContextImpl.method_getDatabasePath =
                 impl->protoground.processContextImpl.clazz.getMethod("getDatabasePath", "(Landroid/content/Context;Ljava/lang/String;)Ljava/lang/String;", true);
@@ -266,6 +274,84 @@ bool AndroidProcessContext::isApkDebuggalbe() const {
             impl->android.application.obj.getJobject()
     );
 }
+
+bool AndroidProcessContext::getPlatformVersion(IProcessContext::VersionInfo *result) const {
+    if (impl->versionCache.major) {
+        *result = impl->versionCache;
+        return true;
+    }
+
+    JNIEnv *env = impl->protoground.processContextImpl.clazz.getEnv();
+    assert(env);
+
+    const int sdkInt = env->CallStaticIntMethod(
+            impl->protoground.processContextImpl.clazz.getJclass(),
+            impl->protoground.processContextImpl.method_getSdkVersion
+    );
+
+    switch (sdkInt) {
+        case 14:
+            result->major = 4;
+            result->minor = 0;
+            result->displayName = "Android 4.0";
+            break;
+        case 15:
+            result->major = 4;
+            result->minor = 0;
+            result->displayName = "Android 4.0.3";
+            break;
+        case 16:
+            result->major = 4;
+            result->minor = 1;
+            result->displayName = "Android 4.1";
+            break;
+        case 17:
+            result->major = 4;
+            result->minor = 2;
+            result->displayName = "Android 4.2";
+            break;
+        case 18:
+            result->major = 4;
+            result->minor = 3;
+            result->displayName = "Android 4.3";
+            break;
+        case 19:
+            result->major = 4;
+            result->minor = 4;
+            result->displayName = "Android 4.4";
+            break;
+        case 20:
+            result->major = 4;
+            result->minor = 4;
+            result->displayName = "Android Wear 4.4";
+            break;
+        case 21:
+            result->major = 5;
+            result->minor = 0;
+            result->displayName = "Android 5.0";
+            break;
+        case 22:
+            result->major = 5;
+            result->minor = 1;
+            result->displayName = "Android 5.1";
+            break;
+        case 23:
+            result->major = 6;
+            result->minor = 0;
+            result->displayName = "Android 6.0";
+            break;
+        default:
+            result->major = 6;
+            result->minor = 0;
+            result->displayName = "Android 6.0 or Later";
+            break;
+    }
+
+    impl->versionCache = *result;
+
+    return true;
+}
+
 }
 
 extern "C" {

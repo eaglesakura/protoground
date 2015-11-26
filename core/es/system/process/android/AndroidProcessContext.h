@@ -42,7 +42,10 @@ public:
 
     virtual void newThread(const std::string &name, const ThreadCallback callback) override;
 
-    /**
+
+    virtual bool getPlatformVersion(VersionInfo *result) const;
+
+/**
      * Databaseをopenするためのpathを取得する
      */
     virtual string getDatabasePath(const string &basePath) const;

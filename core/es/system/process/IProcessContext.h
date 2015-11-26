@@ -20,12 +20,17 @@ public:
         /**
          * Androidで実行されている
          */
-                PlatformType_Android,
+        PlatformType_Android,
 
         /**
          * Mac OSXで実行されている
          */
-                PlatformType_OSX,
+        PlatformType_OSX,
+
+        /**
+         * Windowsで実行されている
+         */
+        PlatformType_Windows,
     };
 
     enum CpuArchitecture_e {
@@ -40,6 +45,17 @@ public:
         CpuArchitecture_Mips64,
         CpuArchitecture_ARM64v8a,
         CpuArchitecture_Unknown,
+    };
+
+    struct VersionInfo {
+        // メジャーバージョン
+        uint32_t major = 0;
+
+        // マイナーバージョン
+        uint32_t minor = 0;
+
+        // 表示用の名称
+        string displayName;
     };
 
     virtual CpuArchitecture_e getCpuArchitecture() const;
@@ -65,6 +81,12 @@ public:
      * 実行されているプラットフォームを取得する
      */
     virtual PlatformType_e getPlatform() const = 0;
+
+    /**
+     * 実行されているプラットフォームのバージョン情報を取得する。
+     * 正常にバージョンを返せた場合はtrue, それ以外はfalseを返却する。
+     */
+    virtual bool getPlatformVersion(VersionInfo *result) const = 0;
 
     /**
      * 現在のプロセス情報を取得する

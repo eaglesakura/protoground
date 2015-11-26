@@ -3,10 +3,19 @@ package com.eaglesakura.protoground;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 import java.io.File;
 
 class ProcessContextImpl {
+
+    /**
+     *
+     * @return
+     */
+    static int getSdkVersion() {
+        return Build.VERSION.SDK_INT;
+    }
 
     /**
      * Android Packageがデバッグとしてビルドされている場合true

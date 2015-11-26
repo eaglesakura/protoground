@@ -18,6 +18,10 @@ public:
      */
     virtual PlatformType_e getPlatform() const override;
 
+
+    // プラットフォームバージョン取得
+    bool getPlatformVersion(VersionInfo* result) const override;
+
     /**
      * プロセス起動時に呼び出す
      */
@@ -25,6 +29,8 @@ public:
 
 private:
     ProcessContext();
+
+    mutable VersionInfo versionCahe;
 };
 
 }
