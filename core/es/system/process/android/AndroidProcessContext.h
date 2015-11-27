@@ -39,13 +39,17 @@ public:
      */
     virtual PlatformType_e getPlatform() const override;
 
-
     virtual void newThread(const std::string &name, const ThreadCallback callback) override;
 
 
-    virtual bool getPlatformVersion(VersionInfo *result) const;
+    virtual bool getPlatformVersion(VersionInfo *result) const override;
 
-/**
+    /**
+     * VM側のエンディアン情報を取得する
+     */
+    Endian_e getVirtualMachineEndian() const;
+
+    /**
      * Databaseをopenするためのpathを取得する
      */
     virtual string getDatabasePath(const string &basePath) const;

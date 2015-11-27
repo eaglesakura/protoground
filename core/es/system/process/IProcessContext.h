@@ -20,17 +20,17 @@ public:
         /**
          * Androidで実行されている
          */
-        PlatformType_Android,
+                PlatformType_Android,
 
         /**
          * Mac OSXで実行されている
          */
-        PlatformType_OSX,
+                PlatformType_OSX,
 
         /**
          * Windowsで実行されている
          */
-        PlatformType_Windows,
+                PlatformType_Windows,
     };
 
     enum CpuArchitecture_e {
@@ -46,6 +46,19 @@ public:
         CpuArchitecture_ARM64v8a,
         CpuArchitecture_Unknown,
     };
+
+    /**
+     * エンディアンの種類を取得する
+     */
+    enum Endian_e {
+        Endian_Little,
+        Endian_Big,
+    };
+
+    /**
+     * コンパイル時のエンディアン情報
+     */
+    const static Endian_e COMPILE_ENDIAN;
 
     struct VersionInfo {
         // メジャーバージョン

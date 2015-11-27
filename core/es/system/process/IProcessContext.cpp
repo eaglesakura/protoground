@@ -4,6 +4,13 @@
 
 namespace es {
 
+namespace {
+static int ENDIAN_CHECK_INT = 0x0011223344;
+}
+
+const IProcessContext::Endian_e IProcessContext::COMPILE_ENDIAN =
+        ((uint8_t *) &ENDIAN_CHECK_INT)[0] == 0x00 ? IProcessContext::Endian_Big : IProcessContext::Endian_Little;
+
 IProcessContext::IProcessContext() {
     HashStringTable::global();
     assetManager.reset(new AssetManager());

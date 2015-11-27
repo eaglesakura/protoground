@@ -57,7 +57,7 @@ bool ProcessContext::getPlatformVersion(VersionInfo* result) const {
         // Windows10 or later
         versionCahe.major = 10;
         versionCahe.minor = 0;
-        versionCahe.displayName = "Windows 10";
+        versionCahe.displayName = "Windows 10 or Later";
     }
 
     *result = versionCahe;

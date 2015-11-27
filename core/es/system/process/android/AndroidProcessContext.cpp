@@ -64,11 +64,13 @@ public:
             jmethodID method_getDatabasePath = nullptr;
             jmethodID method_isAndroidDebugable = nullptr;
             jmethodID method_getSdkVersion = nullptr;
+            jmethodID method_getEndianCheckCode = nullptr;
         } processContextImpl;
     } protoground;
 
     mutable IProcessContext::VersionInfo versionCache;
 
+    Endian_e endianCache;
 
     Impl(JavaVM *newVM) : vm(newVM) {
         assert(vm);
@@ -175,6 +177,11 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
         impl->protoground.processContextImpl.clazz.globalRef().multiThread(true);
 
         // getSdkVersion
+        impl->protoground.processContextImpl.method_getEndianCheckCode =
+                impl->protoground.processContextImpl.clazz.getMethod("getEndianCheckCode", "()I", true);
+        assert(impl->protoground.processContextImpl.method_getEndianCheckCode);
+
+        // getSdkVersion
         impl->protoground.processContextImpl.method_getSdkVersion =
                 impl->protoground.processContextImpl.clazz.getMethod("getSdkVersion", "()I", true);
         assert(impl->protoground.processContextImpl.method_getSdkVersion);
@@ -195,6 +202,20 @@ void AndroidProcessContext::onCreateApplication(JNIEnv *env, jobject context) {
         assert(impl->protoground.processContextImpl.method_isAndroidDebugable);
 
 
+    }
+
+    // エンディアン判定を行う
+    {
+        const jint checkCode = env->CallStaticIntMethod(
+                impl->protoground.processContextImpl.clazz.getJclass(),
+                impl->protoground.processContextImpl.method_getEndianCheckCode
+        );
+
+        if (((uint8_t *) (&checkCode))[0] == 0x00) {
+            impl->endianCache = Endian_Big;
+        } else {
+            impl->endianCache = Endian_Little;
+        }
     }
 
     // デフォルトのアセットを追加する
@@ -258,6 +279,10 @@ string AndroidProcessContext::getDatabasePath(const string &basePath) const {
         jc::lang::string_wrapper jFullPath(fullPath, env, false);
         return jFullPath.asString();
     }
+}
+
+IProcessContext::Endian_e AndroidProcessContext::getVirtualMachineEndian() const {
+    return impl->endianCache;
 }
 
 Object::QueryResult_e AndroidProcessContext::queryInterface(const int64_t interfaceId, void **resultInterfacePtr) const {

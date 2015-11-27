@@ -10,7 +10,15 @@ import java.io.File;
 class ProcessContextImpl {
 
     /**
+     * エンディアンチェック用のコードを返却する
      *
+     * @return
+     */
+    static int getEndianCheckCode() {
+        return 0x12345678;
+    }
+
+    /**
      * @return
      */
     static int getSdkVersion() {
