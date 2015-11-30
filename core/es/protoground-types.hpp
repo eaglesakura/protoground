@@ -68,6 +68,10 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
 #define ES_GRAPHICS_OPENGL  1
 #endif
 
+#if defined(BUILD_Windows)
+#define ES_GRAPHICS_OPENGL 1
+#endif
+
 #if !defined(DEBUG) && (!defined(NDEBUG) || defined(ES_BUILD_GTEST_MODE))
 #define DEBUG 1
 #endif
