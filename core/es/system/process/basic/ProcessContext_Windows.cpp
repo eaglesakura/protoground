@@ -1,4 +1,4 @@
-#include "ProcessContext.h"
+ï»¿#include "ProcessContext.h"
 
 #if defined(BUILD_Windows)
 #include "es/internal/protoground-internal.hpp"
@@ -13,7 +13,7 @@ IProcessContext::PlatformType_e ProcessContext::getPlatform() const {
 
 bool ProcessContext::getPlatformVersion(VersionInfo* result) const {
     if (versionCahe.major) {
-        // ƒLƒƒƒbƒVƒ…‚ğg—p‚·‚é
+        // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä½¿ç”¨ã™ã‚‹
         *result = versionCahe;
         return true;
     }
@@ -21,7 +21,7 @@ bool ProcessContext::getPlatformVersion(VersionInfo* result) const {
     OSVERSIONINFOEX verInfo = { 0 };
     verInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
     if (!GetVersionEx((OSVERSIONINFO*) &verInfo)) {
-        // ³í‚Éæ“¾‚Å‚«‚È‚©‚Á‚½
+        // æ­£å¸¸ã«å–å¾—ã§ããªã‹ã£ãŸ
         return false;
     }
 
