@@ -2,6 +2,19 @@
 #include "es/internal/protoground-internal.hpp"
 #include <GLFW/glfw3.h>
 
+#if defined(BUILD_Cygwin) && defined(PGD_GLFW_DUMMY_FUNCTIONS)
+// Cygwin用にカスタムビルドしたGLFW用のダミー関数
+extern "C" {
+int __ms_vsnprintf(char *, const char *, ...) {
+    return 0;
+}
+
+void _wassert(bool) {
+
+}
+}
+#endif
+
 namespace es {
 
 std::atomic<int> GlfwDevice::existDevices;
@@ -38,6 +51,10 @@ void GlfwDevice::swapBuffers() {
 
 std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const unsigned width, const unsigned height, const bool resizeable, const std::string &title, const std::shared_ptr<GlfwDevice> sharedContext) {
 
+    glfwSetErrorCallback([](int error, const char *msg) {
+        eslog("GLFW Error(%x) Message(%s)", error, msg);
+    });
+
     std::shared_ptr<GlfwDevice> result;
     if (!sharedContext && !existDevices) {
         if (!glfwInit()) {
@@ -45,10 +62,6 @@ std::shared_ptr<GlfwDevice> GlfwDevice::createInstance(const unsigned width, con
         }
     }
 
-
-    glfwSetErrorCallback([](int error, const char *msg) {
-        eslog("GLFW Error(%x) Message(%s)", error, msg);
-    });
 
     glfwWindowHint(GLFW_VISIBLE, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, resizeable ? GL_TRUE : GL_FALSE);

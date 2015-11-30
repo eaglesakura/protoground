@@ -30,6 +30,7 @@
 */
 #pragma once
 #ifndef     __PRG_GL_COMPAT_H__
+#define     __PRG_GL_COMPAT_H__
 
 #if defined(__MACH__)
 
@@ -57,7 +58,7 @@ typedef int GLint;
 typedef unsigned char GLboolean;
 typedef int GLsizei;
 typedef khronos_uint8_t GLubyte;
-#elif defined(_WIN32) || defined(_WIN64)
+#elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__) || defined(__GCC__)
 
 typedef unsigned int GLenum;
 typedef unsigned char GLboolean;
@@ -80,6 +81,10 @@ typedef unsigned long long GLuint64;
 typedef signed long int GLintptr;
 typedef char GLchar;
 typedef signed   long  int GLsizeiptr;
+
+#else
+
+#error not support!!
 
 #endif
 

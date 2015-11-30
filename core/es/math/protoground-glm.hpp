@@ -4,25 +4,28 @@
 
 #define GLM_FORCE_RADIANS
 
-#if defined(BUILD_Windows_Cygwin)
+#if defined(BUILD_Cygwin)
+
 #include <cmath>
 #include <complex>
+
 namespace std {
-    template<typename T>
-    inline T log2(T value) {
-        return ::log2(value);
-    }
-
-    template<typename T>
-    inline T trunc(T value) {
-        return ::trunc(value);
-    }
-
-    template <typename T>
-    inline T round(T value) {
-        return ::round(value);
-    }
+template<typename T>
+inline T log2(T value) {
+    return ::log2(value);
 }
+
+template<typename T>
+inline T trunc(T value) {
+    return ::trunc(value);
+}
+
+template<typename T>
+inline T round(T value) {
+    return ::round(value);
+}
+}
+
 #endif
 
 #include <glm/glm.hpp>
@@ -110,7 +113,7 @@ inline void multiply(vec3 *result, const mat4 &m, const vec3 &v) {
  * vec3メモリに強制変換する
  */
 inline const vec3 &asVec3(const vec4 &v) {
-    return *((vec3 *) (&v));
+    return *((vec3 * )(&v));
 }
 
 inline bool equals(const float a, const float b) {

@@ -18,6 +18,12 @@
 #define BUILD_Windows
 #define BUILD_64bit
 
+#if defined(__CYGWIN__)
+#define  BUILD_Cygwin
+#else
+#define  BUILD_VisualStudio
+#endif
+
 #pragma warning(disable:4819)
 
 #else
@@ -77,7 +83,7 @@ static_assert(sizeof(void *) == 8, "sizeof(void*) != 64bit");
 #define PGD_DATA_ALIGN(type, __BYTES__)       type __attribute__((aligned(__BYTES__)))
 
 
-#if defined(BUILD_Windows)
+#if defined(BUILD_VisualStudio)
 
  /**
  * ファイル書き込みを行うオブジェクトのメモリサイズを指定する

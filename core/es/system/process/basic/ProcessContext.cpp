@@ -6,10 +6,7 @@
 
 #include "es/system/string/internal/Cpp11StringConverter.hpp"
 #include "es/system/string/internal/CucharStringConverter.hpp"
-
-#if defined(BUILD_Windows)
-#include "Windows.h"
-#endif
+#include "es/system/string/internal/IconvStringConverter.hpp"
 
 namespace es {
 
@@ -18,8 +15,10 @@ static std::shared_ptr<ProcessContext> gInstance;
 }
 
 ProcessContext::ProcessContext() {
-#if defined(BUILD_Windows)
+#if defined(BUILD_VisualStudio)
     stringConverter.reset(new internal::CucharStringConverter());
+#elif defined(BUILD_Cygwin)
+    stringConverter.reset(new internal::IconvStringConverter());
 #else
     stringConverter.reset(new internal::Cpp11StringConverter());
 #endif

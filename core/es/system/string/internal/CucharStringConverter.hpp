@@ -2,13 +2,13 @@
 
 #include "es/system/string/IStringConverter.h"
 
-#if defined(BUILD_Windows) || (defined(BUILD_Android) && __ANDROID_API__ >= 20) /* Check Support Platform */
+#if defined(BUILD_VisualStudio) || (defined(BUILD_Android) && __ANDROID_API__ >= 20) /* Check Support Platform */
 
 #include "es/memory/SafeArray.hpp"
 #include "es/util/Util.h"
 
 #include <vector>
-// #include <cuchar> // ::std::mbrtoc32
+#include <cuchar> // ::std::mbrtoc32
 #include <uchar.h>  // not support <cuchar>
 
 namespace es {

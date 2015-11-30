@@ -29,7 +29,7 @@ namespace es {
 internal::Logger::LogFunctionPtr internal::Logger::func = logAndroid;
 }
 
-#elif defined(BUILD_Windows)
+#elif defined(BUILD_VisualStudio)
 
 #include <Windows.h>
 #include <string.h>

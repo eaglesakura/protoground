@@ -5,6 +5,9 @@
 // for Windows
 #include <cstdarg>
 #include <iosfwd>
+// for Windows-Cygwin
+#include <stdarg.h>
+#include <stdio.h>
 
 // for Android
 #include <iterator>
