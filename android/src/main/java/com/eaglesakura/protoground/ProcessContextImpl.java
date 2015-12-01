@@ -15,7 +15,7 @@ class ProcessContextImpl {
      * @return
      */
     static int getEndianCheckCode() {
-        return 0x12345678;
+        return 0x0011223344;
     }
 
     /**

@@ -5,7 +5,7 @@
 namespace es {
 
 namespace {
-static int ENDIAN_CHECK_INT = 0x0011223344;
+static int32_t ENDIAN_CHECK_INT = 0x0011223344;
 }
 
 const IProcessContext::Endian_e IProcessContext::COMPILE_ENDIAN =

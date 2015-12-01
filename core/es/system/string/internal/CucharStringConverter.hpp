@@ -8,7 +8,6 @@
 #include "es/util/Util.h"
 
 #include <vector>
-#include <cuchar> // ::std::mbrtoc32
 #include <uchar.h>  // not support <cuchar>
 
 namespace es {
@@ -26,7 +25,7 @@ public:
     virtual wide_string toWideString(const string &utf8) override {
         // C func
         std::vector<wide_char> buffer;
-        std::mbstate_t state{}; // zero-initialized to initial state
+        std::mbstate_t state{0x00}; // zero-initialized to initial state
         char32_t c32;
         const char *head = utf8.c_str();
         const char *end = utf8.c_str() + utf8.length();
@@ -47,7 +46,7 @@ public:
     virtual string toUtf8String(const wide_string &wide) override {
         // C func
         std::vector<char> buffer;
-        std::mbstate_t state{}; // zero-initialized to initial state
+        std::mbstate_t state{0x00}; // zero-initialized to initial state
         char utf8[4];
         const char32_t *head = wide.c_str();
         int state_len = -1;

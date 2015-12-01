@@ -10,6 +10,8 @@ void *pglEglGetGlProcAddress(void *, char *name) {
     void *addr = (void *) eglGetProcAddress(name);
     if (!addr) {
         eslog("GL Proc fail(%s)", name);
+    } else {
+        eslog("%s = %x", name, addr);
     }
     return addr;
 }

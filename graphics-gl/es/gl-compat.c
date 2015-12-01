@@ -14,11 +14,12 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
         return;
     }
 
-#define     PGD_LAOD_OPENGL_PROC(ret, name) name = (getGlProcAddress)(userData, #name);
+#define     PGD_LAOD_OPENGL_PROC(ret, name) name = getGlProcAddress(userData, #name);
 
 /******************************************************************************/
 /*                         OpenGL ES 2.0 compat                               */
 /******************************************************************************/
+#if !defined(__internal__PGD_GRAPHICS_GLES20)
     PGD_LAOD_OPENGL_PROC(void, glActiveTexture);
 
     PGD_LAOD_OPENGL_PROC(void, glAttachShader);
@@ -302,12 +303,13 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
     PGD_LAOD_OPENGL_PROC(void, glVertexAttribPointer);
 
     PGD_LAOD_OPENGL_PROC(void, glViewport);
-
+#endif /* __internal__PGD_GRAPHICS_GLES20 */
     pgdGraphicsGlCompat = PgdGraphicsOpenGlCompat_ES20;
 
 /******************************************************************************/
 /*                         OpenGL ES 3.0 compat                               */
 /******************************************************************************/
+#if !defined(__internal__PGD_GRAPHICS_GLES30)
 
     PGD_LAOD_OPENGL_PROC(void, glReadBuffer);
 
@@ -516,6 +518,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
     PGD_LAOD_OPENGL_PROC(void, glTexStorage3D);
 
     PGD_LAOD_OPENGL_PROC(void, glGetInternalformativ);
+#endif /* __internal__PGD_GRAPHICS_GLES30 */
 
 #if defined(__MACH__)
     // Mac OSでは2つの関数を許容する
@@ -673,7 +676,7 @@ void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getGlProcAddress, void *userD
 /******************************************************************************/
 /*                         OpenGL ES 2.0 compat                               */
 /******************************************************************************/
-
+#if !defined(__internal__PGD_GRAPHICS_GLES20)
 PGD_OPENGL_FUNCTION_STUB(void, glActiveTexture)(GLenum texture) = 0;
 
 PGD_OPENGL_FUNCTION_STUB(void, glAttachShader)(GLuint program, GLuint shader) = 0;
@@ -958,9 +961,13 @@ PGD_OPENGL_FUNCTION_STUB(void, glVertexAttribPointer)(GLuint index, GLint size, 
 
 PGD_OPENGL_FUNCTION_STUB(void, glViewport)(GLint x, GLint y, GLsizei width, GLsizei height) = 0;
 
+#endif /* __internal__PGD_GRAPHICS_GLES20 */
+
 /******************************************************************************/
 /*                         OpenGL ES 3.0 compat                               */
 /******************************************************************************/
+
+#if !defined(__internal__PGD_GRAPHICS_GLES30)
 
 PGD_OPENGL_FUNCTION_STUB(void, glReadBuffer)(GLenum mode) = 0;
 
@@ -1169,6 +1176,8 @@ PGD_OPENGL_FUNCTION_STUB(void, glTexStorage2D)(GLenum target, GLsizei levels, GL
 PGD_OPENGL_FUNCTION_STUB(void, glTexStorage3D)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth) = 0;
 
 PGD_OPENGL_FUNCTION_STUB(void, glGetInternalformativ)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint *params) = 0;
+
+#endif /* __internal__PGD_GRAPHICS_GLES30 */
 
 /******************************************************************************/
 /*                         OpenGL ES 3.1 compat                               */

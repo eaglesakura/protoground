@@ -108,6 +108,14 @@ void GLDevice::syncPlatform() {
     }
     assert_gl();
 
+    // clear color
+    {
+        GLfloat rgba[4] = {0};
+        glGetFloatv(GL_COLOR_CLEAR_VALUE, rgba);
+        assert_gl();
+        surface.backbuffer = Color::fromRGBAf(rgba[0], rgba[1], rgba[2], rgba[3]);
+    }
+
     // viewport
     {
         GLint xywh[4] = {0};
@@ -148,12 +156,15 @@ void GLDevice::clearBuffer(const uint32_t clearFlags) {
         flag |= GL_DEPTH_BUFFER_BIT;
     }
     if (clearFlags & ClearFlag_Stancil) {
-        flag |= GL_DEPTH_BUFFER_BIT;
+        flag |= GL_STENCIL_BUFFER_BIT;
     }
 
     if (!flag) {
         return;
     }
+
+    auto state = getCurrentState();
+    glClearColor(state.backbuffer.rf(), state.backbuffer.gf(), state.backbuffer.bf(), state.backbuffer.af());
     glClear(flag);
     assert_gl();
 }

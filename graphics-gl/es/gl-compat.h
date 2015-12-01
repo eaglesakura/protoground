@@ -37,27 +37,26 @@
 #include <OpenGL/gltypes.h>
 
 #elif defined(__ANDROID__)
-#include <KHR/khrplatform.h>
-typedef khronos_int8_t GLbyte;
-typedef khronos_float_t GLclampf;
-typedef khronos_int32_t GLfixed;
-typedef short GLshort;
-typedef unsigned short GLushort;
-typedef void GLvoid;
-typedef struct __GLsync *GLsync;
-typedef khronos_int64_t GLint64;
-typedef khronos_uint64_t GLuint64;
-typedef unsigned int GLenum;
-typedef unsigned int GLuint;
-typedef char GLchar;
-typedef khronos_float_t GLfloat;
-typedef khronos_ssize_t GLsizeiptr;
-typedef khronos_intptr_t GLintptr;
-typedef unsigned int GLbitfield;
-typedef int GLint;
-typedef unsigned char GLboolean;
-typedef int GLsizei;
-typedef khronos_uint8_t GLubyte;
+
+/**
+ * AndroidはARMv7でのsoftfloat <--> hardfloat呼び出し規約問題があるため、
+ * 通常のヘッダとリンカーを利用する。
+ *
+ * それを利用しない場合、floatを引数にもつ関数が
+ * 呼び出し規約の違いにより正常に呼び出されないという問題が発生する。
+ */
+#if defined(PGD_GRAPHICS_SUPPORT_GLES20)
+// 明示的なGLES20 only
+#include <GLES2/gl2.h>
+#define __internal__PGD_GRAPHICS_GLES20 1
+
+#else
+// 基本的にはGLES30対応
+#include <GLES3/gl3.h>
+#define __internal__PGD_GRAPHICS_GLES20 1
+#define __internal__PGD_GRAPHICS_GLES30 1
+#endif
+
 #elif defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__) || defined(__GCC__)
 
 typedef unsigned int GLenum;
@@ -97,7 +96,7 @@ typedef void *(*pgdGetGlProcAddress_ptr)(void *pUserData, char *procName);
 /**
  * OpenGL関数ポインタの初期化を行う
  */
-extern void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getProcAddress, void *pUserData);
+void pgdGlCompatInitialize(pgdGetGlProcAddress_ptr getProcAddress, void *pUserData);
 
 typedef enum ePgdGraphicsOpenGlCompat_e {
     PgdGraphicsOpenGlCompat_Unknown = 0,
@@ -110,13 +109,14 @@ typedef enum ePgdGraphicsOpenGlCompat_e {
 /**
  * OpenGL互換バージョンを取得する
  */
-extern PgdGraphicsOpenGlCompat_e pgdGlGetCompatVersion();
+PgdGraphicsOpenGlCompat_e pgdGlGetCompatVersion();
 
 #define     PGD_OPENGL_FUNCTION(ret, name)     extern  ret (*name)
 
 /******************************************************************************/
 /*                         OpenGL ES 2.0 compat                               */
 /******************************************************************************/
+#if !defined(__internal__PGD_GRAPHICS_GLES20)
 #define GL_DEPTH_BUFFER_BIT               0x00000100
 #define GL_STENCIL_BUFFER_BIT             0x00000400
 #define GL_COLOR_BUFFER_BIT               0x00004000
@@ -703,9 +703,12 @@ PGD_OPENGL_FUNCTION(void, glVertexAttribPointer)(GLuint index, GLint size, GLenu
 
 PGD_OPENGL_FUNCTION(void, glViewport)(GLint x, GLint y, GLsizei width, GLsizei height);
 
+#endif /* __internal__PGD_GRAPHICS_GLES20 */
+
 /******************************************************************************/
 /*                         OpenGL ES 3.0 compat                               */
 /******************************************************************************/
+#if !defined(__internal__PGD_GRAPHICS_GLES30)
 typedef unsigned short GLhalf;
 #define GL_READ_BUFFER                    0x0C02
 #define GL_UNPACK_ROW_LENGTH              0x0CF2
@@ -1220,6 +1223,8 @@ PGD_OPENGL_FUNCTION(void, glTexStorage2D)(GLenum target, GLsizei levels, GLenum 
 PGD_OPENGL_FUNCTION(void, glTexStorage3D)(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth);
 
 PGD_OPENGL_FUNCTION(void, glGetInternalformativ)(GLenum target, GLenum internalformat, GLenum pname, GLsizei bufSize, GLint *params);
+
+#endif /* __internal__PGD_GRAPHICS_GLES30 */
 
 /******************************************************************************/
 /*                         OpenGL ES 3.1 compat                               */
