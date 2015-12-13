@@ -140,6 +140,12 @@ public:
          */
                 GPUFamily_IntelHdGraphics,
 
+
+        /**
+         * WorkStation
+         */
+                GPUFamily_Quadro,
+
         /**
          * not found...
          */

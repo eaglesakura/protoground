@@ -86,6 +86,7 @@ public:
                     {"Adreno",   GPUFamily_Adreno},
                     {"GeForce",  GPUFamily_GeForce},
                     {"Intel HD", GPUFamily_IntelHdGraphics},
+                    {"Quadro",   GPUFamily_Quadro},
             };
 
             for (int i = 0; i < (sizeof(gpu_groups) / sizeof(GPUFamilyGroup)); ++i) {
@@ -259,8 +260,11 @@ public:
             eslog("GL_RENDERER = %s", renderer.c_str());
 
             // エクステンション一覧を出力する
+            eslog("GL_EXTENSIONS[%d]", extensions.size());
+            int ex_index = 1;
             for (const string &name: extensions) {
-                eslog("GL_EXTENSIONS = %s", name.c_str());
+                eslog("GL_EXTENSION[%03d] = %s", ex_index, name.c_str());
+                ++ex_index;
             }
 
             eslog("GL_MAX_VERTEX_ATTRIBS = %d", maxVertexAttrbs);
