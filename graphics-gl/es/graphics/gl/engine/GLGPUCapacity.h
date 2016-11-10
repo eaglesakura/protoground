@@ -37,6 +37,7 @@ public:
         GLVersion_ES20 = 30200,
         GLVersion_ES30 = 40300,
         GLVersion_ES31 = 45310,
+        GLVersion_ES32 = 45320,
         GLVersion_41 = 41301,
         GLVersion_Unknown = 0,
     };

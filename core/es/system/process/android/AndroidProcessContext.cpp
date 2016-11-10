@@ -365,10 +365,20 @@ bool AndroidProcessContext::getPlatformVersion(IProcessContext::VersionInfo *res
             result->minor = 0;
             result->displayName = "Android 6.0";
             break;
-        default:
-            result->major = 6;
+        case 24:
+            result->major = 7;
             result->minor = 0;
-            result->displayName = "Android 6.0 or Later";
+            result->displayName = "Android 7.0";
+            break;
+        case 25:
+            result->major = 7;
+            result->minor = 1;
+            result->displayName = "Android 7.1";
+            break;
+        default:
+            result->major = 7;
+            result->minor = 1;
+            result->displayName = "Android 7.1 or Later";
             break;
     }
 

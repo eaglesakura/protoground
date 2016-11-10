@@ -118,7 +118,10 @@ public:
                 // ES2.0以上しかサポートしない
                 assert(major >= 2);
 
-                if (major == 3 && minor == 1) {
+                if(major >= 3 && minor >= 2) {
+                    // GLES 3.2 or later
+                    glVersion = GLVersion_ES32;
+                } else if (major == 3 && minor == 1) {
                     glVersion = GLVersion_ES31;
                 } else if (major == 3 && minor == 0) {
                     glVersion = GLVersion_ES30;
@@ -131,6 +134,7 @@ public:
                 }
 #endif
             }
+            eslog("OpenGL Version[%d.%d] Checked[%d]", major, minor, glVersion);
         }
 // エクステンション一覧を取得する
         std::vector<string> extensions;
